@@ -1,0 +1,102 @@
+<h2>Administrateur</h2>
+
+<form id="form-cours" novalidate>
+    <div class="form-group center">
+        <fieldset>
+            <h3>Ajouter un cours</h3>
+
+            <!--Nom du cour-->
+            <div>
+                <label for="nom">
+                    <p class="form-p">Nom du cours : </p>
+                    <input type="text" name="nom" id="nom" placeholder="Entre le nom du cous" required=""
+                        pattern="[A-Za-z]{3,}">
+                    <span class="validity"></span>
+                    <div id="error-nom" class="error"></div>
+                </label>
+            </div>
+
+            <!--La date du debut du cour-->
+            <div>
+                <label for="date_debut">
+                    <p class="form-p">Date de début :</p>
+                    <input type="datetime-local" name="date_debut" id="date_debut" required=""
+                        pattern="\d{4}-\d{2}-\d{2}">
+                    <span class="validity"></span>
+                    <div id="error-date_debut" class="error"></div>
+                </label>
+            </div>
+
+            <!--Le nombre de cour-->
+            <div>
+                <label for="nb_cours">
+                    <p class="form-p"> Nombre de cours :</p>
+                    <input type="number" name="nb_cours" id="nb_cours" placeholder="Entre le nombre de cour" required=""
+                        pattern="[0-9]">
+                    <span class="validity"></span>
+                    <div id="error-nb_cours" class="error">fuck</div>
+                </label>
+            </div>
+
+            <!--Capacité dans le cour-->
+            <div>
+                <label for="capacite">
+                    <p class="form-p"> Capacité :</p>
+                    <input type="number" name="capacite" id="capacite" placeholder="Entre la capacité" required=""
+                        pattern="[0-9]">
+                    <span class="validity"></span>
+                    <div id="error-capacite" class="error">fuck</div>
+                </label>
+            </div>
+
+            <!--Description-->
+            <div>
+                <label for="description">
+                    <p class="form-p">Description :</p>
+                    <textarea name="description" id="description" cols="30" rows="5"
+                        placeholder="Enter une description sur le nouveau cour:" required="" minlength="10"
+                        maxlength="200"></textarea>
+                    <div id="error-description" class="error"></div>
+                </label>
+            </div>
+
+            <!--Submit button-->
+            <div>
+                <input type="submit" class="btn btn-primary" name="submit" id="submit" value="Soumettre">
+            </div>
+        </fieldset>
+    </div>
+</form>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th colspan="7" style="position = center">Liste des cours </th>
+        </tr>
+        <tr>
+            <th scope="col">Nom</th>
+            <th scope="col">Dates</th>
+            <th scope="col">Nombre de cours</th>
+            <th scope="col">Capacite</th>
+            <th scope="col">Description</th>
+            <th scope="col">Nombre d'incription</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!--On affiche les cours-->
+        {{#each cours}}
+        <tr>
+            <th scope="row">{{this.nom}}</th>
+            <td>{{this.dates}}</td>
+            <td>{{this.nb_cours}}</td>
+            <td>{{this.capacite}}</td>
+            <td>{{this.description}}</td>
+            <td class="capaciteC">{{this.nbInscription}} / {{this.capacite}}</td>
+            <th><input type="button" class="btn btn-danger liste-boutons" name="delete" id="{{this.id_cours}}"
+                    value="Supprimer"></th>
+        </tr>
+        {{/each}}
+
+    </tbody>
+</table>

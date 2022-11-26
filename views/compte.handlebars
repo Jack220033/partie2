@@ -1,0 +1,32 @@
+<h2>Compte</h2> <br>
+<br>
+<table class="table">
+    <thead>
+        <tr>
+            <th colspan="7" style="position = center">Liste des comptes </th>
+        </tr>
+        <tr>
+            <th scope="col">Nom</th>
+            <th scope="col">Dates</th>
+            <th scope="col">Nonbre de cours</th>
+            <th scope="col">Capacite</th>
+            <th scope="col">Description</th>
+            <th scope="col">Nombre d'incription</th>
+            <th scope="col">Désinscrire</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each compte}}
+        <tr>
+            <th scope="row">{{this.nom}}</th>
+            <td>{{this.dates}}</td>
+            <td>{{this.nb_cours}}</td>
+            <td>{{this.capacite}}</td>
+            <td>{{this.description}}</td>
+            <td>{{this.nbInscription}} / {{this.capacite}}</td>
+            <td><input type="button" name="desincrire" id="{{this.id_cours}}" value="Désinscrire" class="liste-boutons">
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
