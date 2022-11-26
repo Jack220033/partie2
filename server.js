@@ -4,8 +4,14 @@ import { engine } from 'express-handlebars';
 import helmet from 'helmet';
 import cors from 'cors';
 import compression from 'compression';
+import session from 'express-session';
+import memorystore from 'memorystore';
+import passport from 'passport';
+import { addUtilisateur } from './model/utilisateur.js';
 import { addCours, checkCours, deleteActivity, getCoursInscritServer, desincrireActivity, inscriptionActivity, getCoursNonInscritServer, getCoursServeur } from './model/methodeServeur.js';
 import { validationForm } from './validation.js'
+import './authentification.js';
+
 
 // Création du serveur web
 let app = express();
@@ -19,11 +25,24 @@ app.set('view engine', 'handlebars');
 //Confuguration de handlebars
 app.set('views', './views');
 
+// Créer le constructeur de base de données
+const MemoryStore = memorystore(session);
+
 // Ajout de middlewares
 app.use(helmet());
 app.use(cors());
 app.use(compression());
 app.use(json());
+app.use(session({
+    cookie: { maxAge: 1800000 },
+    name: process.env.npm_package_name,
+    store: new MemoryStore({ checkPeriod: 1800000 }),
+    resave: false,
+    saveUninitialized: false,
+    secret: process.env.SESSION_SECRET
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(express.static('public'));
 
 // Programmation de routes
@@ -67,6 +86,22 @@ app.get('/compte', async (request, response) => {
         compte: await getCoursInscritServer()
     });
 
+})
+
+app.get('/inscription', (request, response) => {
+    response.render('authentification', {
+        titre: 'Inscription',
+        scripts: ['/js/inscription.js'],
+        accept: request.session.accept,
+    });
+})
+
+app.get('/connexion', (request, response) => {
+    response.render('authentification', {
+        titre: 'Connexion',
+        scripts: ['/js/connexion.js'],
+        accept: request.session.accept,
+    });
 })
 
 app.post('/api/admin', async (request, response) => {
