@@ -47,3 +47,25 @@ main {
     margin-left: auto;
     margin-right: auto;
 }
+
+.right {
+    position: relative;
+    align-items: right;
+}
+
+header nav input {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.forgetPassword{
+    text-decoration: underline;
+    border: none;
+    font-size: 15px;
+    color: blue;
+    background-color: white;
+    margin-bottom: 1rem;
+    cursor: pointer;
+}

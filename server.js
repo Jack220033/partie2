@@ -92,6 +92,7 @@ app.get('/inscription', (request, response) => {
     response.render('authentification', {
         titre: 'Inscription',
         scripts: ['/js/inscription.js'],
+        styles: ['/css/general.css'],
         accept: request.session.accept,
     });
 })
@@ -100,6 +101,7 @@ app.get('/connexion', (request, response) => {
     response.render('authentification', {
         titre: 'Connexion',
         scripts: ['/js/connexion.js'],
+        styles: ['/css/general.css'],
         accept: request.session.accept,
     });
 })
@@ -151,6 +153,66 @@ app.delete('/api/compte', async (request, response) => {
 
     response.status(200).end();
 
+});
+
+app.post('/inscription', async (request, response, next) => {
+    //valider les donner recu du client
+    if (true) {
+        try {
+            await addUtilisateur(request.body.nomUtilisateur, request.body.motDePasse);
+            response.status(201).end();
+        }
+        catch (error) {
+            if (error.code === 'SQLITE_CONSTRAINT') {
+                console.log(request.body);
+                response.status(409).end();
+            }
+            else {
+                next(error);
+            }
+        }
+    }
+    else {
+        response.status(400).end();
+    }
+});
+
+app.post('/connexion', (request, response, next) => {
+    //valider les donner recu du client
+    if (true) {
+        passport.authenticate('local', ( error, utilisateur, info ) => {
+            if(error) {
+                next(error);
+            }
+            else if(!utilisateur) {
+                response.status(401).json(info);
+            }
+            else {
+                request.logIn(utilisateur, (error) => {
+                    if(error){
+                        next(error);
+                    }
+                    else {
+                        response.status(200).end();
+                    }
+                });
+            }
+        })(request, response, next);
+    }
+    else {
+        response.status(400).end();
+    }
+});
+
+app.post('/deconnexion', (request, response, next) => {
+    request.logOut((error) => {
+        if(error) {
+            next(error);
+        }
+        else {
+            response.redirect('/');
+        }
+    })
 });
 
 // Démarrage du serveur
