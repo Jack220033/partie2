@@ -7,7 +7,8 @@ import compression from 'compression';
 import session from 'express-session';
 import memorystore from 'memorystore';
 import passport from 'passport';
-import { addUtilisateur } from './model/utilisateur.js';
+import middlewareSse from './middlewareSse.js';
+import { addcourriel } from './model/courriel.js';
 import { addCours, checkCours, deleteActivity, getCoursInscritServer, desincrireActivity, inscriptionActivity, getCoursNonInscritServer, getCoursServeur } from './model/methodeServeur.js';
 import { validationForm } from './validation.js'
 import './authentification.js';
@@ -43,16 +44,21 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(middlewareSse());
 app.use(express.static('public'));
 
 // Programmation de routes
 app.get('/', async (request, response) => {
-    response.render('accueil', {
-        titre: 'BLAK.inc',
-        h1: 'BLAK.inc',
-        styles: ['/css/general.css'],
-        scripts: ['/js/accueil.js'],
-    });
+    if (request.user) {
+        response.render('accueil', {
+            titre: 'BLAK.inc',
+            h1: 'BLAK.inc',
+            styles: ['/css/general.css'],
+            scripts: ['/js/accueil.js'],
+        });
+    }
+
+
 
 });
 
@@ -62,7 +68,8 @@ app.get('/admin', async (request, response) => {
         h1: 'BLAK.inc',
         styles: ['/css/general.css'],
         scripts: ['/js/admin.js'],
-        cours: await getCoursServeur()
+        cours: await getCoursServeur(),
+        aAcces: request.user.acces > 0
     });
 });
 
@@ -142,24 +149,38 @@ app.delete('/api/cours', async (request, response) => {
 
 app.post('/api/cours', async (request, response) => {
 
-    let id = await inscriptionActivity(request.body.id_cours, request.body.id_utilisateur);
+    let id = await inscriptionActivity(request.body.id_cours, request.body.id_courriel);
     response.status(200).json({ id: id });
 
 });
 
 app.delete('/api/compte', async (request, response) => {
 
-    await desincrireActivity(request.body.id_cours, request.body.id_utilisateur);
+    await desincrireActivity(request.body.id_cours, request.body.id_courriel);
 
     response.status(200).end();
 
+});
+
+app.get('/stream', (request, response) => {
+    if(request.user) {
+        response.initStream();
+    }
+    else{
+        response.status(401).end();
+    }
+});
+
+app.post('/accept', (request, response) => {
+    request.session.accept = true;
+    response.status(200).end();
 });
 
 app.post('/inscription', async (request, response, next) => {
     //valider les donner recu du client
     if (true) {
         try {
-            await addUtilisateur(request.body.nomUtilisateur, request.body.motDePasse);
+            await addcourriel(request.body.courriel, request.body.motDePasse);
             response.status(201).end();
         }
         catch (error) {
@@ -180,16 +201,16 @@ app.post('/inscription', async (request, response, next) => {
 app.post('/connexion', (request, response, next) => {
     //valider les donner recu du client
     if (true) {
-        passport.authenticate('local', ( error, utilisateur, info ) => {
-            if(error) {
+        passport.authenticate('local', (error, courriel, info) => {
+            if (error) {
                 next(error);
             }
-            else if(!utilisateur) {
+            else if (!courriel) {
                 response.status(401).json(info);
             }
             else {
-                request.logIn(utilisateur, (error) => {
-                    if(error){
+                request.logIn(courriel, (error) => {
+                    if (error) {
                         next(error);
                     }
                     else {
@@ -206,7 +227,7 @@ app.post('/connexion', (request, response, next) => {
 
 app.post('/deconnexion', (request, response, next) => {
     request.logOut((error) => {
-        if(error) {
+        if (error) {
             next(error);
         }
         else {

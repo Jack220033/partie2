@@ -1,6 +1,8 @@
 import { existsSync } from 'fs';
 import sqlite3 from 'sqlite3';
 import { open } from 'sqlite';
+import {hash} from 'bcrypt';
+
 
 /**
  * Constante indiquant si la base de données existe au démarrage du serveur 
@@ -12,8 +14,11 @@ const IS_NEW = !existsSync(process.env.DB_FILE)
  * Crée une base de données par défaut pour le serveur. Des données fictives
  * pour tester le serveur y ont été ajouté.
  */
-const createDatabase = async (connectionPromise) => {
+const createDatabase = async (connectionPromise, motDePassHash) => {
     let connection = await connectionPromise;
+
+    let motDePassHash = await hash(motDePasse, 10);
+
 
     await connection.exec(
         `CREATE TABLE IF NOT EXISTS type_utilisateur(

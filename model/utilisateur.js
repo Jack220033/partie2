@@ -1,7 +1,7 @@
 import connectionPromise from './connexion.js';
 import {hash} from 'bcrypt';
 
-export const addUtilisateur = async (nomUtilisateur, motDePasse) => {
+export const addUtilisateur = async (courriel, motDePasse) => {
     let connexion = await connectionPromise;
 
     let motDePassHash = await hash(motDePasse, 10);
@@ -9,19 +9,19 @@ export const addUtilisateur = async (nomUtilisateur, motDePasse) => {
     await connexion.run(
         `INSERT INTO utilisateur (nom_utilisateur, mot_de_passe, acces)
         VALUES (?, ?, 0)`,
-        [nomUtilisateur, motDePassHash]
+        [courriel, motDePassHash]
     ); 
 }
 
-export const getUtilisateurByNom = async (nomUtilisateur) => {
+export const getUtilisateurByNom = async (courriel) => {
     let connexion = await connectionPromise;
 
-    let utilisateur = await connexion.get(
+    let courriel = await connexion.get(
         `SELECT id_utilisateur, nom_utilisateur, mot_de_passe, acces
         FROM utilisateur
         WHERE nom_utilisateur = ?`,
-        [nomUtilisateur]
+        [courriel]
     )
 
-    return utilisateur;
+    return courriel;
 }
