@@ -1,25 +1,25 @@
 import { compare } from "bcrypt";
 import passport from "passport";
 import { Strategy } from "passport-local";
-//import { getUtilisateurByNom } from "./model/utilisateur.js";
+import { getUtilisateurByCourriel } from "./model/methodeServeur.js";
 
 let config = {
-    usernameField: 'nomUtilisateur',
-    passwordField: 'motDePasse'
+    courrielField: 'courriel',
+    passwordField: 'mot_passe'
 }
 
-passport.use(new Strategy(config, async (nomUtilisateur, motDePasse, done) => {
+passport.use(new Strategy(config, async (courriel, mot_passe, done) => {
     try {
-        let utilisateur = await getUtilisateurByNom(nomUtilisateur);
+        let utilisateur = await getUtilisateurByCourriel(courriel);
 
         if (!utilisateur) {
             return done(null, false, { erreur: 'erreur_nom_utilisateur' });
         }
 
-        let valide = await compare(motDePasse, utilisateur.mot_de_passe);
+        let valide = await compare(mot_passe, utilisateur.mot_passe);
 
         if (!valide) {
-            return done(null, false, { erreur: 'erreur_mot_de_passe' });
+            return done(null, false, { erreur: 'erreur_mot_passe' });
         }
         return done(null, utilisateur);
     }
@@ -31,12 +31,12 @@ passport.use(new Strategy(config, async (nomUtilisateur, motDePasse, done) => {
 }));
 
 passport.serializeUser((utilisateur, done) => {
-    done(null, utilisateur.nom_utilisateur);
+    done(null, utilisateur.courriel);
 });
 
-passport.deserializeUser(async (nomUtilisateur, done) => {
+passport.deserializeUser(async (courriel, done) => {
     try {
-        let utilisateur = await getUtilisateurByNom(nomUtilisateur);
+        let utilisateur = await getUtilisateurByCourriel(courriel);
         done(null, utilisateur);
     }
     catch (error) {

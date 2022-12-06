@@ -8,8 +8,7 @@ import session from 'express-session';
 import memorystore from 'memorystore';
 import passport from 'passport';
 import middlewareSse from './middlewareSse.js';
-//import { addcourriel } from './model/courriel.js';
-import { addCours, checkCours, deleteActivity, getCoursInscritServer, desincrireActivity, inscriptionActivity, getCoursNonInscritServer, getCoursServeur } from './model/methodeServeur.js';
+import { addCours, checkCours, deleteActivity, getCoursInscritServer, desincrireActivity, inscriptionActivity, getCoursNonInscritServer, getCoursServeur, addUtilisateur } from './model/methodeServeur.js';
 import { validationForm } from './validation.js'
 import './authentification.js';
 
@@ -49,17 +48,13 @@ app.use(express.static('public'));
 
 // Programmation de routes
 app.get('/', async (request, response) => {
-    if (request.user) {
         response.render('accueil', {
             titre: 'BLAK.inc',
             h1: 'BLAK.inc',
             styles: ['/css/general.css'],
             scripts: ['/js/accueil.js'],
+            accept: request.session.accept,
         });
-    }
-
-
-
 });
 
 app.get('/admin', async (request, response) => {
@@ -69,7 +64,8 @@ app.get('/admin', async (request, response) => {
         styles: ['/css/general.css'],
         scripts: ['/js/admin.js'],
         cours: await getCoursServeur(),
-        aAcces: request.user.acces > 0
+        aAcces: request.user.acces > 0,
+        accept: request.session.accept,
     });
 });
 
@@ -80,7 +76,8 @@ app.get('/cours', async (request, response) => {
         h1: 'BLAK.inc',
         styles: ['/css/general.css'],
         scripts: ['/js/cours.js'],
-        cours: await getCoursNonInscritServer()
+        cours: await getCoursNonInscritServer(),
+        accept: request.session.accept,
     });
 })
 
@@ -90,7 +87,8 @@ app.get('/compte', async (request, response) => {
         h1: 'BLAK.inc',
         styles: ['/css/general.css'],
         scripts: ['/js/compte.js'],
-        compte: await getCoursInscritServer()
+        compte: await getCoursInscritServer(),
+        accept: request.session.accept,
     });
 
 })
@@ -180,7 +178,7 @@ app.post('/inscription', async (request, response, next) => {
     //valider les donner recu du client
     if (true) {
         try {
-            await addcourriel(request.body.courriel, request.body.motDePasse);
+            await addUtilisateur(request.body.courriel, request.body.motDePasse);
             response.status(201).end();
         }
         catch (error) {
@@ -207,6 +205,7 @@ app.post('/connexion', (request, response, next) => {
             }
             else if (!courriel) {
                 response.status(401).json(info);
+                console.log(courriel);
             }
             else {
                 request.logIn(courriel, (error) => {

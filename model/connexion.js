@@ -33,7 +33,6 @@ const createDatabase = async (connectionPromise, motDePassHash) => {
             mot_passe TEXT NOT NULL,
             prenom TEXT NOT NULL,
             nom TEXT NOT NULL,
-            est_coche INTEGER NOT NULL,
             CONSTRAINT fk_type_utilisateur 
                 FOREIGN KEY (id_type_utilisateur)
                 REFERENCES type_utilisateur(id_type_utilisateur) 
@@ -70,16 +69,16 @@ const createDatabase = async (connectionPromise, motDePassHash) => {
             ('regulier'),
             ('administrateur');
 
-        INSERT INTO utilisateur (id_type_utilisateur, courriel, mot_passe, prenom, nom, est_coche) VALUES 
-            (2, 'admin@admin.com', 'admin', 'Admin', 'Admin',0),
-            (1, 'john_doe@gmail.com', 'passw0rd', 'John', 'Doe',1),
-            (1, 'sera@gmail.com', 'passw0rd', 'Seraphina', 'Lopez',0),
-            (1, 'arlo_shield@gmail.com', 'passw0rd', 'Arlo', 'Shield',1),
-            (1, 'blyke_ray@gmail.com', 'passw0rd', 'Blyke', 'Leclerc',1),
-            (1, 'remi_fast@gmail.com', 'passw0rd', 'Remi', 'Smith',0),
-            (1, 'isen_radar@gmail.com', 'passw0rd', 'Isen', 'Turner',0),
-            (1, 'elaine_doc@gmail.com', 'passw0rd', 'Elaine', 'Nelson',1),
-            (1, 'zeke_the_form@gmail.com', 'passw0rd', 'Zeke', 'Anderson',0);
+        INSERT INTO utilisateur (id_type_utilisateur, courriel, mot_passe, prenom, nom) VALUES 
+            (2, 'admin@admin.com', 'admin', 'Admin', 'Admin'),
+            (1, 'john_doe@gmail.com', 'passw0rd', 'John', 'Doe'),
+            (1, 'sera@gmail.com', 'passw0rd', 'Seraphina', 'Lopez'),
+            (1, 'arlo_shield@gmail.com', 'passw0rd', 'Arlo', 'Shield'),
+            (1, 'blyke_ray@gmail.com', 'passw0rd', 'Blyke', 'Leclerc'),
+            (1, 'remi_fast@gmail.com', 'passw0rd', 'Remi', 'Smith'),
+            (1, 'isen_radar@gmail.com', 'passw0rd', 'Isen', 'Turner'),
+            (1, 'elaine_doc@gmail.com', 'passw0rd', 'Elaine', 'Nelson'),
+            (1, 'zeke_the_form@gmail.com', 'passw0rd', 'Zeke', 'Anderson');
             
         INSERT INTO cours (nom, date_debut, nb_cours, capacite, description) VALUES 
             ('Badminton pour débutant', 1662508800000, 10, 12, 'Cours de badminton monttrant les bases du sport. C''est un bon cours à suivre si vous n''avez jamais joué et que vous voulez apprendre les rudiments du sport et ses règlements.'),

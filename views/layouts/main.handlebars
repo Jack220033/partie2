@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="{{this}}">
     {{/each}}
 
+    <script type="module" src="/js/accept-cookie.js"></script>
+
     {{#each scripts}}
     <script type="module" src="{{this}}"></script>
     {{/each}}
@@ -29,11 +31,11 @@
     <main>
 
         <!--Message pour accpter les cookies qui son utiliser sur le siteweb-->
-         {{#unless accept}}
-            <div id="message-cookie">
-                Ce site web utilise des cookies. Si vous naviguez sur ce site web, vous acceptez l'utilisation des cookies. 
-                <input type="button" value="Accepter" id="button-cookie">
-            </div>
+        {{#unless accept}}
+        <div id="message-cookie">
+            Ce site web utilise des cookies. Si vous naviguez sur ce site web, vous acceptez l'utilisation des cookies.
+            <input type="button" value="Accepter" id="button-cookie">
+        </div>
         {{/unless}}
 
         <!--Dans le folder layouts-->

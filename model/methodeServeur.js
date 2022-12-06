@@ -1,4 +1,5 @@
 import connectionPromise from './connexion.js';
+import {hash} from 'bcrypt';
 
 export const getCoursDB = async () => {
     let connexion = await connectionPromise;
@@ -151,4 +152,31 @@ export const nbInscriptions = async (id_cours) => {
     );
 
     return resultat.length;
+}
+
+
+
+export const addUtilisateur = async (Courriel, motDePasse) => {
+    let connexion = await connectionPromise;
+
+    let motDePassHash = await hash(motDePasse, 10);
+
+    await connexion.run(
+        `INSERT INTO utilisateur (id_type_utilisateur, courriel, mot_passe, prenom, nom)
+        VALUES (1, ?, ?, "test1", 'test2')`,
+        [Courriel, motDePassHash]
+    ); 
+}
+
+export const getUtilisateurByCourriel = async (Courriel) => {
+    let connexion = await connectionPromise;
+
+     let courriel = await connexion.get(
+        `SELECT id_utilisateur, courriel, mot_passe
+        FROM utilisateur
+        WHERE courriel = ?`,
+        [Courriel]
+    )
+
+    return courriel;
 }
