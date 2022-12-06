@@ -27,7 +27,7 @@ const createDatabase = async (connectionPromise, motDePassHash) => {
         );
 
         CREATE TABLE IF NOT EXISTS utilisateur(
-            id_utilisateur INTEGER PRIMARY KEY,
+            id_utilisateur INTEGER PRIMARY KEY AUTOINCREMENT,
             id_type_utilisateur INTEGER NOT NULL,
             courriel TEXT NOT NULL UNIQUE,
             mot_passe TEXT NOT NULL,

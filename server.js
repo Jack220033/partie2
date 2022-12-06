@@ -147,14 +147,14 @@ app.delete('/api/cours', async (request, response) => {
 
 app.post('/api/cours', async (request, response) => {
 
-    let id = await inscriptionActivity(request.body.id_cours, request.body.id_courriel);
+    let id = await inscriptionActivity(request.body.id_cours, request.body.id_utilisateur);
     response.status(200).json({ id: id });
 
 });
 
 app.delete('/api/compte', async (request, response) => {
 
-    await desincrireActivity(request.body.id_cours, request.body.id_courriel);
+    await desincrireActivity(request.body.id_cours, request.body.id_utilisateur);
 
     response.status(200).end();
 
