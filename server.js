@@ -206,6 +206,7 @@ app.post('/connexion', (request, response, next) => {
             else if (!courriel) {
                 response.status(401).json(info);
                 console.log(courriel);
+                console.log(info);
             }
             else {
                 request.logIn(courriel, (error) => {

@@ -7,7 +7,7 @@ formAuth.addEventListener('submit', async (event) => {
 
     let data = {
         courriel: inputCourriel.value,
-        motDePasse: inputMotDePasse.value
+        mot_passe: inputMotDePasse.value
     }
 
     let response = await fetch('/connexion', {

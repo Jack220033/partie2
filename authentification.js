@@ -4,8 +4,8 @@ import { Strategy } from "passport-local";
 import { getUtilisateurByCourriel } from "./model/methodeServeur.js";
 
 let config = {
-    courrielField: 'courriel',
-    passwordField: 'mot_passe'
+    usernameField: 'courriel',
+    passwordField: 'mot_passe',
 }
 
 passport.use(new Strategy(config, async (courriel, mot_passe, done) => {
