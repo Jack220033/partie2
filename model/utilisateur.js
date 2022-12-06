@@ -1,3 +1,4 @@
+/*
 import connectionPromise from './connexion.js';
 import {hash} from 'bcrypt';
 
@@ -25,3 +26,4 @@ export const getUtilisateurByNom = async (courriel) => {
 
     return courriel;
 }
+*/

@@ -17,7 +17,7 @@ const IS_NEW = !existsSync(process.env.DB_FILE)
 const createDatabase = async (connectionPromise, motDePassHash) => {
     let connection = await connectionPromise;
 
-    let motDePassHash = await hash(motDePasse, 10);
+    //let motDePassHash = await hash(motDePasse, 10);
 
 
     await connection.exec(

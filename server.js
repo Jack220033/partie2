@@ -8,7 +8,7 @@ import session from 'express-session';
 import memorystore from 'memorystore';
 import passport from 'passport';
 import middlewareSse from './middlewareSse.js';
-import { addcourriel } from './model/courriel.js';
+//import { addcourriel } from './model/courriel.js';
 import { addCours, checkCours, deleteActivity, getCoursInscritServer, desincrireActivity, inscriptionActivity, getCoursNonInscritServer, getCoursServeur } from './model/methodeServeur.js';
 import { validationForm } from './validation.js'
 import './authentification.js';

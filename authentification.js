@@ -1,7 +1,7 @@
 import { compare } from "bcrypt";
 import passport from "passport";
 import { Strategy } from "passport-local";
-import { getUtilisateurByNom } from "./model/utilisateur.js";
+//import { getUtilisateurByNom } from "./model/utilisateur.js";
 
 let config = {
     usernameField: 'nomUtilisateur',
