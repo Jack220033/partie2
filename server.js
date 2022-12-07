@@ -11,6 +11,8 @@ import middlewareSse from './middlewareSse.js';
 import { addCours, checkCours, deleteActivity, getCoursInscritServer, desincrireActivity, inscriptionActivity, getCoursNonInscritServer, getCoursServeur, addUtilisateur } from './model/methodeServeur.js';
 import { validationAjoutCours } from './validationAjoutCours.js'
 import { validationInscription } from './validationInscription.js';
+import { addCours, checkCours, deleteActivity, getCoursInscritServer, desincrireActivity, inscriptionActivity, getCoursNonInscritServer, getCoursServeur, addUtilisateur, utilisateur } from './model/methodeServeur.js';
+import { validationForm } from './validation.js'
 import './authentification.js';
 
 
@@ -102,6 +104,32 @@ app.get('/cours', async (request, response) => {
 
     
 });
+    response.render('admin', {
+        titre: 'BLAK.inc',
+        h1: 'BLAK.inc',
+        styles: ['/css/general.css'],
+        scripts: ['/js/admin.js'],
+        cours: await getCoursServeur(),
+        utilisateur: await utilisateur(),
+        user: request.user,
+        aAcces: request.user.id_type_utilisateur = 2,
+        accept: request.session.accept,
+    });
+});
+
+app.get('/cours', async (request, response) => {
+    response.render('cours', {
+        titre: 'BLAK.inc',
+        h1: 'BLAK.inc',
+        styles: ['/css/general.css'],
+        scripts: ['/js/cours.js'],
+        cours: await getCoursNonInscritServer(request.user.id_utilisateur),
+        user: request.user,
+        aAcces: request.user.id_type_utilisateur > 1,
+        accept: request.session.accept,
+    });
+    console.log(utilisateur());
+})
 
 app.get('/compte', async (request, response) => {
     if(request.user === undefined) response.status(403).end();
