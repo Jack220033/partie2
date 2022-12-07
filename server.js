@@ -8,6 +8,7 @@ import session from 'express-session';
 import memorystore from 'memorystore';
 import passport from 'passport';
 import middlewareSse from './middlewareSse.js';
+import { addCours, checkCours, deleteActivity, getCoursInscritServer, desincrireActivity, inscriptionActivity, getCoursNonInscritServer, getCoursServeur, addUtilisateur, utilisateur } from './model/methodeServeur.js';
 import { validationForm } from './validation.js'
 import './authentification.js';
 
@@ -71,6 +72,7 @@ app.get('/admin', async (request, response) => {
         styles: ['/css/general.css'],
         scripts: ['/js/admin.js'],
         cours: await getCoursServeur(),
+        utilisateur: await utilisateur(),
         user: request.user,
         aAcces: request.user.id_type_utilisateur = 2,
         accept: request.session.accept,
