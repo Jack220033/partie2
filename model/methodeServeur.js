@@ -186,6 +186,17 @@ export const getUtilisateurByCourriel = async (Courriel) => {
     return courriel;
 }
 
+export const changerAccesUtilisateur = async (id_utilisateur, id_type_utilisateur) => {
+    let connexion = await connectionPromise;
+
+    let resultat = await connexion.run(
+        `UPDATE utlisateur
+        SET id_type_utilisateur = ?
+        WHERE id_utilisateur = ?`,
+        [id_utilisateur, id_type_utilisateur]
+    );
+    return resultat.lastID;
+    
 export const utilisateur = async (Utilisateur) => {
     let connexion = await connectionPromise;
 

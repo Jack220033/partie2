@@ -8,8 +8,10 @@ import session from 'express-session';
 import memorystore from 'memorystore';
 import passport from 'passport';
 import middlewareSse from './middlewareSse.js';
+import { addCours, checkCours, deleteActivity, getCoursInscritServer, desincrireActivity, inscriptionActivity, getCoursNonInscritServer, getCoursServeur, addUtilisateur } from './model/methodeServeur.js';
+import { validationAjoutCours } from './validationAjoutCours.js'
+import { validationInscription } from './validationInscription.js';
 import { addCours, checkCours, deleteActivity, getCoursInscritServer, desincrireActivity, inscriptionActivity, getCoursNonInscritServer, getCoursServeur, addUtilisateur, utilisateur } from './model/methodeServeur.js';
-import { validationForm } from './validation.js'
 import './authentification.js';
 
 
@@ -66,7 +68,43 @@ app.get('/', async (request, response) => {
 });
 
 app.get('/admin', async (request, response) => {
-    response.render('admin', {
+    if(request.user === undefined){
+        response.status(403).end();
+    }
+    else if(request.user.id_type_utilisateur>1){
+        response.render('admin', {
+            titre: 'BLAK.inc',
+            h1: 'BLAK.inc',
+            styles: ['/css/general.css'],
+            scripts: ['/js/admin.js'],
+            cours: await getCoursServeur(),
+            utilisateur: await utilisateur(),
+            user: request.user,
+            aAcces: request.user.id_type_utilisateur > 1,
+            accept: request.session.accept,
+        });
+    }
+    else response.status(403).end();
+});
+
+app.get('/cours', async (request, response) => {
+    if(request.user === undefined) response.status(403).end();
+    else {
+        response.render('cours', {
+            titre: 'BLAK.inc',
+            h1: 'BLAK.inc',
+            styles: ['/css/general.css'],
+            scripts: ['/js/cours.js'],
+            cours: await getCoursNonInscritServer(request.user.id_utilisateur),
+            user: request.user,
+            aAcces: request.user.id_type_utilisateur > 1,
+            accept: request.session.accept,
+        });
+    }
+
+    
+});
+/*    response.render('admin', {
         titre: 'BLAK.inc',
         h1: 'BLAK.inc',
         styles: ['/css/general.css'],
@@ -77,7 +115,7 @@ app.get('/admin', async (request, response) => {
         aAcces: request.user.id_type_utilisateur = 2,
         accept: request.session.accept,
     });
-});
+});*/
 
 app.get('/cours', async (request, response) => {
     response.render('cours', {
@@ -94,27 +132,34 @@ app.get('/cours', async (request, response) => {
 })
 
 app.get('/compte', async (request, response) => {
-    response.render('compte', {
-        titre: 'BLAK.inc',
-        h1: 'BLAK.inc',
-        styles: ['/css/general.css'],
-        scripts: ['/js/compte.js'],
-        compte: await getCoursInscritServer(request.user.id_utilisateur),
-        user: request.user,
-        aAcces: request.user.id_type_utilisateur > 1,
-        accept: request.session.accept,
-    });
-})
+    if(request.user === undefined) response.status(403).end();
+    else {
+        response.render('compte', {
+            titre: 'BLAK.inc',
+            h1: 'BLAK.inc',
+            styles: ['/css/general.css'],
+            scripts: ['/js/compte.js'],
+            compte: await getCoursInscritServer(request.user.id_utilisateur),
+            user: request.user,
+            aAcces: request.user.id_type_utilisateur > 1,
+            accept: request.session.accept,
+        });
+    }
+    
+});
 
 app.get('/inscription', (request, response) => {
-    response.render('authentification', {
-        titre: 'Inscription',
-        scripts: ['/js/inscription.js'],
-        styles: ['/css/general.css'],
-        user: request.user,
-        accept: request.session.accept,
-    });
-})
+    if(request.user === undefined) response.status(403).end();
+    else {
+        response.render('authentification', {
+            titre: 'Inscription',
+            scripts: ['/js/inscription.js'],
+            styles: ['/css/general.css'],
+            user: request.user,
+            accept: request.session.accept,
+        });
+    }
+});
 
 app.get('/connexion', (request, response) => {
     response.render('authentification', {
@@ -124,63 +169,75 @@ app.get('/connexion', (request, response) => {
         user: request.user,
         accept: request.session.accept,
     });
-})
-
-app.post('/api/admin', async (request, response) => {
-    let id = await addCours(request.body.nom, request.body.date_debut, request.body.nb_cours, request.body.capacite, request.body.description);
-    response.status(201).json({ id: id });
 });
 
-app.post('/api/adminvalidation', async (request, response) => {
-    if (validationForm(request.body)) {
+app.post('/api/admin', async (request, response) => {
+    if(request.user === undefined) response.status(403).end();
+    
+    else if (request.user.id_type_utilisateur>1 && validationAjoutCours(request.body)){
+        let id = await addCours(request.body.nom, request.body.date_debut, request.body.nb_cours, request.body.capacite, request.body.description);
+        response.status(201).json({ id: id });
+    }
+    else response.status(403).end();
+});
+
+/*app.post('/api/adminvalidation', async (request, response) => {
+    if (validationAjoutCours(request.body)) {
         let id = await addCours(request.body.nom, request.body.date_debut, request.body.nb_cours, request.body.capacite, request.body.description);
         console.log(request.body);
         response.status(200).json({ id: id });
     }
     else {
-        console.log(request.body);
+        
         response.status(400).end();
     }
-});
+});*/
 
 
 app.patch('/api/admin', async (request, response) => {
-    if (!request.user) {
-        response.sendStatus(401);
+    if(request.user === undefined) response.status(403).end();
+
+    else if(request.user.id_type_utilisateur>1){
+        let id = changerAccesUtilisateur(request.body.id_utilisateur, request.body.id_type_utilisateur);
+        response.status(201).json({ id: id });
     }
-    else if (request.user.id_type_utilisateur !== 2) {
-        response.sendStatus(403);
-    }
-    else {
-        await checkCours(request.body.id);
-        response.status(200).end();
-    }
+    else response.status(403).end();
 });
 
-app.patch('/compte', async (request, response) => {
+/*app.patch('/compte', async (request, response) => {
     await checkCours(request.body.id);
     response.status(200).end();
 
-});
+});*/
 
 app.delete('/api/cours', async (request, response) => {
+    if(request.user === undefined) response.status(403).end();
+    
+    else if (request.user.id_type_utilisateur>1){
+        let changes = await deleteActivity(request.body.id_cours);
+        response.status(200).json({ changes: changes });
+    }
+    else response.status(403).end();
 
-    let changes = await deleteActivity(request.body.id_cours);
-    response.status(200).json({ changes: changes });
+    
 });
 
 app.post('/api/cours', async (request, response) => {
-
-    let id = await inscriptionActivity(request.body.id_cours, request.user.id_utilisateur);
-    response.status(200).json({ id: id });
+    if(request.user === undefined) response.status(403).end();
+    else {
+        let id = await inscriptionActivity(request.body.id_cours, request.user.id_utilisateur);
+        response.status(200).json({ id: id });
+    }
 
 });
 
 app.delete('/api/compte', async (request, response) => {
-
-    await desincrireActivity(request.body.id_cours, request.user.id_utilisateur);
-
-    response.status(200).end();
+    if(request.user === undefined) response.status(403).end();
+    else {
+        await desincrireActivity(request.body.id_cours, request.user.id_utilisateur);
+        response.status(200).end();
+    }
+    
 
 });
 
@@ -200,14 +257,14 @@ app.post('/accept', (request, response) => {
 
 app.post('/inscription', async (request, response, next) => {
     //valider les donner recu du client
-    if (true) {
+    if (validationInscription(request.body)) {
         try {
             await addUtilisateur(request.body.courriel, request.body.motDePasse, request.body.nom, request.body.prenom);
             response.status(201).end();
         }
         catch (error) {
             if (error.code === 'SQLITE_CONSTRAINT') {
-                console.log(request.body);
+                //console.log(request.body);
                 response.status(409).end();
             }
             else {

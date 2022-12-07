@@ -11,7 +11,7 @@ formAuth.addEventListener('submit', async (event) => {
         courriel: inputCourriel.value,
         motDePasse: inputMotDePasse.value,
         nom: inputNom.value,
-        prenom: inputPrenom.value
+        prenom: inputPrenom.value,
     }
 
     let response = await fetch('/inscription', {
