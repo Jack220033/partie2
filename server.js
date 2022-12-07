@@ -96,7 +96,7 @@ app.get('/compte', async (request, response) => {
         h1: 'BLAK.inc',
         styles: ['/css/general.css'],
         scripts: ['/js/compte.js'],
-        compte: await getCoursInscritServer(),
+        compte: await getCoursInscritServer(request.user.id_utilisateur),
         user: request.user,
         accept: request.session.accept,
     });

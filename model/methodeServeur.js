@@ -113,7 +113,7 @@ export const checkCours = async (id) => {
     return resultat.changes;
 }
 
-export const getCoursInscritDB = async () => {
+export const getCoursInscritDB = async (id_utilisateur) => {
     let connexion = await connectionPromise;
 
     let resultat = await connexion.all(
@@ -124,14 +124,14 @@ export const getCoursInscritDB = async () => {
             SELECT id_cours
             FROM cours_utilisateur
             WHERE id_utilisateur = ?);`
-            
+            [id_utilisateur]
     );
 
     return resultat;
 
 }
-export const getCoursInscritServer = async () => {
-    let coursInscrit = await getCoursInscritDB();
+export const getCoursInscritServer = async (id_utilisateur) => {
+    let coursInscrit = await getCoursInscritDB(id_utilisateur);
     for (let cour of coursInscrit) {
         let capaciteCourante = await nbInscriptions(cour.id_cours);
 
