@@ -6,10 +6,9 @@ let checkboxes = document.querySelectorAll('#liste-cours input');
 const desincrireCoursServeur = async (event) => {
 
     let data = {
-        id_cours: event.currentTarget.id,
-        id_utilisateur: 1
+        id_cours: event.currentTarget.id
     }
-    console.log(data);
+    
 
 
     fetch('/api/compte', {

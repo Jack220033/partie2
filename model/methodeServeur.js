@@ -17,7 +17,7 @@ export const getCoursServeur = async () => {
         let capaciteCourante = await nbInscriptions(cour.id_cours);
 
         cour.nbInscription = capaciteCourante;
-        console.log(cour);
+        
 
     }
 
@@ -25,7 +25,7 @@ export const getCoursServeur = async () => {
 }
 
 
-export const getCoursNonInscritDB = async () => {
+export const getCoursNonInscritDB = async (id_utilisateur) => {
     let connexion = await connectionPromise;
 
     let resultat = await connexion.all(`SELECT datetime(date_debut/1000, 'unixepoch', 'localtime') 
@@ -34,18 +34,22 @@ export const getCoursNonInscritDB = async () => {
                                         WHERE id_cours NOT IN (
                                             SELECT id_cours
                                             FROM cours_utilisateur
-                                            WHERE id_utilisateur = 1);`);
+                                            WHERE id_utilisateur = ?);`,
+                                            [id_utilisateur]
+                                            );
+
 
     return resultat;
 }
-export const getCoursNonInscritServer = async () => {
-    let coursNonInscrit = await getCoursNonInscritDB();
+export const getCoursNonInscritServer = async (id_utilisateur) => {
+    let coursNonInscrit = await getCoursNonInscritDB(id_utilisateur);
     for (let cour of coursNonInscrit) {
         let capaciteCourante = await nbInscriptions(cour.id_cours);
 
         cour.nbInscription = capaciteCourante;
-        console.log(cour);
+        
     }
+    
 
     return coursNonInscrit;
 }
@@ -61,7 +65,7 @@ export const addCours = async (nom, date_debut, nb_cours, capacite, description)
         VALUES (?,?,?,?,?)`,
         [nom, date_debut, nb_cours, capacite, description]
     );
-    console.log(nom);
+    
     return resultat.lastID;
 }
 
@@ -113,7 +117,7 @@ export const checkCours = async (id) => {
     return resultat.changes;
 }
 
-export const getCoursInscritDB = async () => {
+export const getCoursInscritDB = async (id_utilisateur) => {
     let connexion = await connectionPromise;
 
     let resultat = await connexion.all(
@@ -123,14 +127,15 @@ export const getCoursInscritDB = async () => {
         WHERE id_cours IN (
             SELECT id_cours
             FROM cours_utilisateur
-            WHERE id_utilisateur = 1);`
+            WHERE id_utilisateur = ?);`,
+            [id_utilisateur]
     );
 
     return resultat;
 
 }
-export const getCoursInscritServer = async () => {
-    let coursInscrit = await getCoursInscritDB();
+export const getCoursInscritServer = async (id_utilisateur) => {
+    let coursInscrit = await getCoursInscritDB(id_utilisateur);
     for (let cour of coursInscrit) {
         let capaciteCourante = await nbInscriptions(cour.id_cours);
 

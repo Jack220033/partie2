@@ -4,8 +4,7 @@ const inscrireActivity = (event) => {
     event.preventDefault();
 
     let data = {
-        id_cours: event.currentTarget.id,
-        id_utilisateur: 1
+        id_cours: event.currentTarget.id        
     }
 
     fetch('/api/cours', {
