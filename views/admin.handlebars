@@ -69,7 +69,7 @@
     </div>
 </form>
 
-
+<!--Tableau qui affiche toute les cours qui son disponible-->
 <table class="table">
     <thead>
         <tr>
@@ -89,6 +89,9 @@
         {{#each cours}}
         <tr>
             <th scope="row">{{this.nom}}</th>
+            <details>
+                <summary>Utilisateur</summary>
+            </details>
             <td>{{this.dates}}</td>
             <td>{{this.nb_cours}}</td>
             <td>{{this.capacite}}</td>
@@ -103,7 +106,29 @@
 </table>
 
 <!--On affiche toute les utilisateur-->
-<div>Nom:</div>
-<div>{{user.nom}}</div> 
+<table class="table">
+    <thead>
+        <tr>
+            <th colspan="7" style="position = center">Utilisateur</th>
+        </tr>
+        <tr>
+            <th scope="col">Nom</th>
+            <th scope="col">prenom</th>
+            <th scope="col">Courriel</th>
+            <th scope="col">Nom du cour</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!--On affiche les cours-->
+        {{#each utilisateur}}
+        <tr>
+            <th scope="row">{{this.nom}}</th>
+            <td>{{this.prenom}}</td>
+            <td>{{this.courriel}}</td>
+        </tr>
+        {{/each}}
+
+    </tbody>
+</table>
 
 {{/if}}
