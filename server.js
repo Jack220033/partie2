@@ -12,7 +12,6 @@ import { addCours, checkCours, deleteActivity, getCoursInscritServer, desincrire
 import { validationAjoutCours } from './validationAjoutCours.js'
 import { validationInscription } from './validationInscription.js';
 import { addCours, checkCours, deleteActivity, getCoursInscritServer, desincrireActivity, inscriptionActivity, getCoursNonInscritServer, getCoursServeur, addUtilisateur, utilisateur } from './model/methodeServeur.js';
-import { validationForm } from './validation.js'
 import './authentification.js';
 
 
@@ -79,6 +78,7 @@ app.get('/admin', async (request, response) => {
             styles: ['/css/general.css'],
             scripts: ['/js/admin.js'],
             cours: await getCoursServeur(),
+            utilisateur: await utilisateur(),
             user: request.user,
             aAcces: request.user.id_type_utilisateur > 1,
             accept: request.session.accept,
@@ -104,7 +104,7 @@ app.get('/cours', async (request, response) => {
 
     
 });
-    response.render('admin', {
+/*    response.render('admin', {
         titre: 'BLAK.inc',
         h1: 'BLAK.inc',
         styles: ['/css/general.css'],
@@ -115,7 +115,7 @@ app.get('/cours', async (request, response) => {
         aAcces: request.user.id_type_utilisateur = 2,
         accept: request.session.accept,
     });
-});
+});*/
 
 app.get('/cours', async (request, response) => {
     response.render('cours', {
