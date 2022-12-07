@@ -17,7 +17,6 @@ export const getCoursServeur = async () => {
         let capaciteCourante = await nbInscriptions(cour.id_cours);
 
         cour.nbInscription = capaciteCourante;
-        console.log(cour);
         
 
     }
@@ -26,7 +25,6 @@ export const getCoursServeur = async () => {
 }
 
 
-export const getCoursNonInscritDB = async () => {
 export const getCoursNonInscritDB = async (id_utilisateur) => {
     let connexion = await connectionPromise;
 
@@ -36,7 +34,6 @@ export const getCoursNonInscritDB = async (id_utilisateur) => {
                                         WHERE id_cours NOT IN (
                                             SELECT id_cours
                                             FROM cours_utilisateur
-                                            WHERE id_utilisateur = 1);`);
                                             WHERE id_utilisateur = ?);`,
                                             [id_utilisateur]
                                             );
