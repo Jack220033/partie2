@@ -167,16 +167,13 @@ app.post('/api/admin', async (request, response) => {
 
 
 app.patch('/api/admin', async (request, response) => {
-    if (!request.user) {
-        response.sendStatus(401);
+    if(request.user === undefined) response.status(403).end();
+
+    else if(request.user.id_type_utilisateur>1){
+        let id = changerAccesUtilisateur(request.body.id_utilisateur, request.body.id_type_utilisateur);
+        response.status(201).json({ id: id });
     }
-    else if (request.user.id_type_utilisateur !== 2) {
-        response.sendStatus(403);
-    }
-    else {
-        await checkCours(request.body.id);
-        response.status(200).end();
-    }
+    else response.status(403).end();
 });
 
 /*app.patch('/compte', async (request, response) => {
