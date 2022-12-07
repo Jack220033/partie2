@@ -1,5 +1,5 @@
 import connectionPromise from './connexion.js';
-import {hash} from 'bcrypt';
+import { hash } from 'bcrypt';
 
 export const getCoursDB = async () => {
     let connexion = await connectionPromise;
@@ -17,7 +17,7 @@ export const getCoursServeur = async () => {
         let capaciteCourante = await nbInscriptions(cour.id_cours);
 
         cour.nbInscription = capaciteCourante;
-        
+
 
     }
 
@@ -35,8 +35,8 @@ export const getCoursNonInscritDB = async (id_utilisateur) => {
                                             SELECT id_cours
                                             FROM cours_utilisateur
                                             WHERE id_utilisateur = ?);`,
-                                            [id_utilisateur]
-                                            );
+        [id_utilisateur]
+    );
 
 
     return resultat;
@@ -47,9 +47,9 @@ export const getCoursNonInscritServer = async (id_utilisateur) => {
         let capaciteCourante = await nbInscriptions(cour.id_cours);
 
         cour.nbInscription = capaciteCourante;
-        
+
     }
-    
+
 
     return coursNonInscrit;
 }
@@ -65,7 +65,7 @@ export const addCours = async (nom, date_debut, nb_cours, capacite, description)
         VALUES (?,?,?,?,?)`,
         [nom, date_debut, nb_cours, capacite, description]
     );
-    
+
     return resultat.lastID;
 }
 
@@ -128,7 +128,7 @@ export const getCoursInscritDB = async (id_utilisateur) => {
             SELECT id_cours
             FROM cours_utilisateur
             WHERE id_utilisateur = ?);`,
-            [id_utilisateur]
+        [id_utilisateur]
     );
 
     return resultat;
@@ -170,13 +170,13 @@ export const addUtilisateur = async (Courriel, motDePasse) => {
         `INSERT INTO utilisateur (id_type_utilisateur, courriel, mot_passe, prenom, nom)
         VALUES (1, ?, ?, "test1", 'test2')`,
         [Courriel, motDePassHash]
-    ); 
+    );
 }
 
 export const getUtilisateurByCourriel = async (Courriel) => {
     let connexion = await connectionPromise;
 
-     let courriel = await connexion.get(
+    let courriel = await connexion.get(
         `SELECT id_utilisateur, courriel, mot_passe, id_type_utilisateur
         FROM utilisateur
         WHERE courriel = ?`,

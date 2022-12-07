@@ -74,6 +74,10 @@
    text-align: center;
  }
 
- .space{
+ .space-top{
   margin-top: 2rem;
+ }
+
+ .space-bottom{
+  margin-bottom: 1rem;
  }

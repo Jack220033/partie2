@@ -89,14 +89,12 @@
         {{#each cours}}
         <tr>
             <th scope="row">{{this.nom}}
-                <div class="space">
+                <div class="space-top">
                     <details>
-                        <summary>Inscrition</summary>
+                        <summary class="space-bottom">Inscrition</summary>
                         <table class="table">
                             <thead>
-                                <tr>
-                                    <th colspan="7" style="position = center">Utilisateur</th>
-                                </tr>
+
                                 <tr>
                                     <th scope="col">Nom</th>
                                     <th scope="col">prenom</th>
@@ -141,6 +139,7 @@
             <th scope="col">Nom</th>
             <th scope="col">prenom</th>
             <th scope="col">Courriel</th>
+            <th scope="col">Type d'acces</th>
         </tr>
     </thead>
     <tbody>
@@ -156,13 +155,13 @@
             <th>
                 <!--Dropdwon pour selectioner quel acces que on donne a l'utilisateur-->
                 <select name="admin" id="admin">
-                    <option value="" selected="selected"></option>
+                    <option value="" selected="selected">Select</option>
                     <option value="Admin">Admin</option>
                     <option value="Regulier">Regulier</option>
                 </select>
                 <!--Boutton qui soumet les changement apporter au compte de l'utilisateur-->
                 <input type="submit" class="btn btn-danger liste-boutons" name="modify" id="{{this.utilisateur}}"
-                    value="Modifier">
+                    value="Modifier" style="background-color: black; border-color: black;">
             </th>
         </tr>
         {{/each}}
