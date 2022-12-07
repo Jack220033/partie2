@@ -1,7 +1,33 @@
 <h2>{{titre}}</h2>
+<p>
+    Admin <br>
+    test@test.com <br>
+    test <br>
+</p>
+
+<p>
+    regulier <br>
+    test1@test.com <br>
+    123
+</p>
 
 <form id="form-auth" novalidate>
     <div class="form-group center">
+
+        {{#if user}}
+        <div>
+            <label>
+                <p>Nom:</p>
+                <input type="text" id="input-nom">
+            </label>
+        </div>
+        <div>
+            <label>
+                <p>Prenom:</p>
+                <input type="text" id="input-prenom">
+            </label>
+        </div>
+        {{/if}}
         <div>
             <label>
                 <p>Courriel:</p>

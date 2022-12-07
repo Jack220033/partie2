@@ -1,13 +1,17 @@
 let formAuth = document.getElementById('form-auth');
 let inputCourriel = document.getElementById('input-email');
 let inputMotDePasse = document.getElementById('input-mot-de-passe');
+let inputNom = document.getElementById('input-nom');
+let inputPrenom = document.getElementById('input-presnom');
 
 formAuth.addEventListener('submit', async (event) => {
     event.preventDefault();
 
     let data = {
         courriel: inputCourriel.value,
-        motDePasse: inputMotDePasse.value
+        motDePasse: inputMotDePasse.value,
+        nom: inputNom.value,
+        prenom: inputPrenom.value
     }
 
     let response = await fetch('/inscription', {

@@ -48,13 +48,20 @@ app.use(express.static('public'));
 
 // Programmation de routes
 app.get('/', async (request, response) => {
+    if (request.user) {
         response.render('accueil', {
             titre: 'BLAK.inc',
             h1: 'BLAK.inc',
             styles: ['/css/general.css'],
             scripts: ['/js/accueil.js'],
+            user: request.user,
             accept: request.session.accept,
         });
+    }
+    else {
+        response.redirect('/connexion')
+    }
+
 });
 
 app.get('/admin', async (request, response) => {
@@ -64,11 +71,12 @@ app.get('/admin', async (request, response) => {
         styles: ['/css/general.css'],
         scripts: ['/js/admin.js'],
         cours: await getCoursServeur(),
-        aAcces: request.user.acces > 0,
+        user: request.user = 2,
+        isAdmin: request?.user?.id_type_utilisateur > 2,
+        aAcces: request.user.id_type_utilisateur = 2,
         accept: request.session.accept,
     });
 });
-
 
 app.get('/cours', async (request, response) => {
     response.render('cours', {
@@ -77,6 +85,7 @@ app.get('/cours', async (request, response) => {
         styles: ['/css/general.css'],
         scripts: ['/js/cours.js'],
         cours: await getCoursNonInscritServer(),
+        user: request.user,
         accept: request.session.accept,
     });
 })
@@ -88,6 +97,7 @@ app.get('/compte', async (request, response) => {
         styles: ['/css/general.css'],
         scripts: ['/js/compte.js'],
         compte: await getCoursInscritServer(),
+        user: request.user,
         accept: request.session.accept,
     });
 
@@ -98,6 +108,7 @@ app.get('/inscription', (request, response) => {
         titre: 'Inscription',
         scripts: ['/js/inscription.js'],
         styles: ['/css/general.css'],
+        user: request.user,
         accept: request.session.accept,
     });
 })
@@ -107,6 +118,7 @@ app.get('/connexion', (request, response) => {
         titre: 'Connexion',
         scripts: ['/js/connexion.js'],
         styles: ['/css/general.css'],
+        user: request.user,
         accept: request.session.accept,
     });
 })
@@ -128,9 +140,18 @@ app.post('/api/adminvalidation', async (request, response) => {
     }
 });
 
+
 app.patch('/api/admin', async (request, response) => {
-    await checkCours(request.body.id);
-    response.status(200).end();
+    if (!request.user) {
+        response.sendStatus(401);
+    }
+    else if (request.user.id_type_utilisateur !== 2) {
+        response.sendStatus(403);
+    }
+    else {
+        await checkCours(request.body.id);
+        response.status(200).end();
+    }
 });
 
 app.patch('/compte', async (request, response) => {
@@ -161,10 +182,10 @@ app.delete('/api/compte', async (request, response) => {
 });
 
 app.get('/stream', (request, response) => {
-    if(request.user) {
+    if (request.user) {
         response.initStream();
     }
-    else{
+    else {
         response.status(401).end();
     }
 });

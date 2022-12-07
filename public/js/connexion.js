@@ -17,7 +17,7 @@ formAuth.addEventListener('submit', async (event) => {
     });
 
     if(response.ok) {
-        window.location.replace('/compte');
+        window.location.replace('/'                                            );
     }
     else if(response.status === 401) {
         let info = await response.json();
