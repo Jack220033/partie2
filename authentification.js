@@ -31,7 +31,7 @@ passport.use(new Strategy(config, async (courriel, mot_passe, done) => {
 }));
 
 passport.serializeUser((utilisateur, done) => {
-    console.log(utilisateur.id_utilisateur);
+    
     done(null, {
         id_utilisateur: utilisateur.id_utilisateur,
         courriel: utilisateur.courriel,
@@ -49,7 +49,7 @@ passport.deserializeUser(async (user, done) => {
     }
     catch (error) {
         done(error);
-        console.log('cest la lerreur');
+        
     }
 });
 

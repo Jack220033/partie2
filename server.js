@@ -8,7 +8,6 @@ import session from 'express-session';
 import memorystore from 'memorystore';
 import passport from 'passport';
 import middlewareSse from './middlewareSse.js';
-import { addCours, checkCours, deleteActivity, getCoursInscritServer, desincrireActivity, inscriptionActivity, getCoursNonInscritServer, getCoursServeur, addUtilisateur } from './model/methodeServeur.js';
 import { validationForm } from './validation.js'
 import './authentification.js';
 
@@ -73,7 +72,7 @@ app.get('/admin', async (request, response) => {
         scripts: ['/js/admin.js'],
         cours: await getCoursServeur(),
         user: request.user,
-        aAcces: request.user.id_type_utilisateur > 1,
+        aAcces: request.user.id_type_utilisateur = 2,
         accept: request.session.accept,
     });
 });
@@ -84,11 +83,12 @@ app.get('/cours', async (request, response) => {
         h1: 'BLAK.inc',
         styles: ['/css/general.css'],
         scripts: ['/js/cours.js'],
-        cours: await getCoursNonInscritServer(),
+        cours: await getCoursNonInscritServer(request.user.id_utilisateur),
         user: request.user,
         aAcces: request.user.id_type_utilisateur > 1,
         accept: request.session.accept,
     });
+    console.log(utilisateur());
 })
 
 app.get('/compte', async (request, response) => {
@@ -169,14 +169,14 @@ app.delete('/api/cours', async (request, response) => {
 
 app.post('/api/cours', async (request, response) => {
 
-    let id = await inscriptionActivity(request.body.id_cours, request.body.id_utilisateur);
+    let id = await inscriptionActivity(request.body.id_cours, request.user.id_utilisateur);
     response.status(200).json({ id: id });
 
 });
 
 app.delete('/api/compte', async (request, response) => {
 
-    await desincrireActivity(request.body.id_cours, request.body.id_utilisateur);
+    await desincrireActivity(request.body.id_cours, request.user.id_utilisateur);
 
     response.status(200).end();
 
