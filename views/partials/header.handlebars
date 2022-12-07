@@ -15,11 +15,13 @@
           <a class="nav-link" href="/compte">Compte</a>
         </li>
         {{/if}}
-        {{#if isAdmin}}
+
+        {{#if aAcces}}
         <li class="nav-item">
           <a class="nav-link" href="/admin">Administrateur</a>
         </li>
         {{/if}}
+
         {{#unless user}}
         <li class="nav-item right">
           <a class="nav-link" href="/inscription">Inscription</a>
@@ -28,6 +30,7 @@
           <a class="nav-link" href="/connexion">Connexion</a>
         </li>
         {{/unless}}
+        
         {{#if user}}
         <li class="nav-item">
           <form method="post" action="/deconnexion">

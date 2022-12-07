@@ -14,11 +14,8 @@ const IS_NEW = !existsSync(process.env.DB_FILE)
  * Crée une base de données par défaut pour le serveur. Des données fictives
  * pour tester le serveur y ont été ajouté.
  */
-const createDatabase = async (connectionPromise, motDePassHash) => {
+const createDatabase = async (connectionPromise) => {
     let connection = await connectionPromise;
-
-    //let motDePassHash = await hash(motDePasse, 10);
-
 
     await connection.exec(
         `CREATE TABLE IF NOT EXISTS type_utilisateur(
