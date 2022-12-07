@@ -20,3 +20,4 @@ const inscrireActivity = (event) => {
 for (let btn of buttons) {
     btn.addEventListener('click', inscrireActivity);
 }
+
