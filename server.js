@@ -71,11 +71,11 @@ app.get('/admin', async (request, response) => {
         styles: ['/css/general.css'],
         scripts: ['/js/admin.js'],
         cours: await getCoursServeur(),
-        user: request.user = 2,
-        isAdmin: request?.user?.id_type_utilisateur > 2,
-        aAcces: request.user.id_type_utilisateur = 2,
+        user: request.user,
+        aAcces: request.user.id_type_utilisateur > 0,
         accept: request.session.accept,
     });
+    console.log(request.user.id_type_utilisateur > 0)
 });
 
 app.get('/cours', async (request, response) => {
@@ -199,7 +199,7 @@ app.post('/inscription', async (request, response, next) => {
     //valider les donner recu du client
     if (true) {
         try {
-            await addUtilisateur(request.body.courriel, request.body.motDePasse);
+            await addUtilisateur(request.body.courriel, request.body.motDePasse, request.body.nom, request.body.prenom);
             response.status(201).end();
         }
         catch (error) {

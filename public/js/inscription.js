@@ -2,7 +2,7 @@ let formAuth = document.getElementById('form-auth');
 let inputCourriel = document.getElementById('input-email');
 let inputMotDePasse = document.getElementById('input-mot-de-passe');
 let inputNom = document.getElementById('input-nom');
-let inputPrenom = document.getElementById('input-presnom');
+let inputPrenom = document.getElementById('input-prenom');
 
 formAuth.addEventListener('submit', async (event) => {
     event.preventDefault();
