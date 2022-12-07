@@ -31,16 +31,24 @@ passport.use(new Strategy(config, async (courriel, mot_passe, done) => {
 }));
 
 passport.serializeUser((utilisateur, done) => {
-    done(null, utilisateur.courriel);
+    console.log(utilisateur.id_utilisateur);
+    done(null, {
+        id_utilisateur: utilisateur.id_utilisateur,
+        courriel: utilisateur.courriel,
+    });
 });
 
-passport.deserializeUser(async (courriel, done) => {
+passport.deserializeUser(async (user, done) => {
+     
+    
+    
     try {
-        let utilisateur = await getUtilisateurByCourriel(courriel);
+        let utilisateur = await getUtilisateurByCourriel(user.courriel);
         done(null, utilisateur);
     }
     catch (error) {
         done(error);
+        console.log('cest la lerreur');
     }
 });
 

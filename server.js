@@ -73,7 +73,7 @@ app.get('/admin', async (request, response) => {
         cours: await getCoursServeur(),
         user: request.user = 2,
         isAdmin: request?.user?.id_type_utilisateur > 2,
-        aAcces: request.user.id_type_utilisateur = 2,
+        aAcces: request.user.id_type_utilisateur < 2,
         accept: request.session.accept,
     });
 });
@@ -96,7 +96,7 @@ app.get('/compte', async (request, response) => {
         h1: 'BLAK.inc',
         styles: ['/css/general.css'],
         scripts: ['/js/compte.js'],
-        compte: await getCoursInscritServer(),
+        compte: await getCoursInscritServer(request.user.id_utilisateur),
         user: request.user,
         accept: request.session.accept,
     });
