@@ -35,6 +35,7 @@ passport.serializeUser((utilisateur, done) => {
     done(null, {
         id_utilisateur: utilisateur.id_utilisateur,
         courriel: utilisateur.courriel,
+        id_type_utilisateur: utilisateur.id_type_utilisateur
     });
 });
 

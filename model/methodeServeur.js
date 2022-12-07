@@ -113,7 +113,7 @@ export const checkCours = async (id) => {
     return resultat.changes;
 }
 
-export const getCoursInscritDB = async (id_utilisateur) => {
+export const getCoursInscritDB = async () => {
     let connexion = await connectionPromise;
 
     let resultat = await connexion.all(
@@ -123,15 +123,14 @@ export const getCoursInscritDB = async (id_utilisateur) => {
         WHERE id_cours IN (
             SELECT id_cours
             FROM cours_utilisateur
-            WHERE id_utilisateur = ?);`
-            [id_utilisateur]
+            WHERE id_utilisateur = 1);`
     );
 
     return resultat;
 
 }
-export const getCoursInscritServer = async (id_utilisateur) => {
-    let coursInscrit = await getCoursInscritDB(id_utilisateur);
+export const getCoursInscritServer = async () => {
+    let coursInscrit = await getCoursInscritDB();
     for (let cour of coursInscrit) {
         let capaciteCourante = await nbInscriptions(cour.id_cours);
 
@@ -173,7 +172,7 @@ export const getUtilisateurByCourriel = async (Courriel) => {
     let connexion = await connectionPromise;
 
      let courriel = await connexion.get(
-        `SELECT id_utilisateur, courriel, mot_passe
+        `SELECT id_utilisateur, courriel, mot_passe, id_type_utilisateur
         FROM utilisateur
         WHERE courriel = ?`,
         [Courriel]

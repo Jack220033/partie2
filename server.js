@@ -55,6 +55,7 @@ app.get('/', async (request, response) => {
             styles: ['/css/general.css'],
             scripts: ['/js/accueil.js'],
             user: request.user,
+            aAcces: request.user.id_type_utilisateur > 1,
             accept: request.session.accept,
         });
     }
@@ -72,10 +73,9 @@ app.get('/admin', async (request, response) => {
         scripts: ['/js/admin.js'],
         cours: await getCoursServeur(),
         user: request.user,
-        aAcces: request.user.id_type_utilisateur > 0,
+        aAcces: request.user.id_type_utilisateur > 1,
         accept: request.session.accept,
     });
-    console.log(request.user.id_type_utilisateur > 0)
 });
 
 app.get('/cours', async (request, response) => {
@@ -86,6 +86,7 @@ app.get('/cours', async (request, response) => {
         scripts: ['/js/cours.js'],
         cours: await getCoursNonInscritServer(),
         user: request.user,
+        aAcces: request.user.id_type_utilisateur > 1,
         accept: request.session.accept,
     });
 })
@@ -98,9 +99,9 @@ app.get('/compte', async (request, response) => {
         scripts: ['/js/compte.js'],
         compte: await getCoursInscritServer(request.user.id_utilisateur),
         user: request.user,
+        aAcces: request.user.id_type_utilisateur > 1,
         accept: request.session.accept,
     });
-
 })
 
 app.get('/inscription', (request, response) => {
