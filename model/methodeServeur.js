@@ -5,8 +5,8 @@ export const getCoursDB = async () => {
     let connexion = await connectionPromise;
 
     let resultat = await connexion.all(`SELECT datetime(date_debut/1000, 'unixepoch', 'localtime') 
-                                        AS  dates, nom, nb_cours, capacite, description, id_cours 
-                                        FROM cours;`
+                                            AS  dates, nom, nb_cours, capacite, description, id_cours 
+                                            FROM cours;`
     );
     return resultat;
 }
@@ -197,11 +197,12 @@ export const changerAccesUtilisateur = async (id_utilisateur, id_type_utilisateu
     );
     return resultat.lastID;
 }
+
 export const utilisateur = async (Utilisateur) => {
     let connexion = await connectionPromise;
 
-    let utilisateur = await connexion.get(
-        `SELECT nom, prenom, courriel
+    let utilisateur = await connexion.all(
+        `SELECT nom, prenom, courriel, id_type_utilisateur
         FROM utilisateur`,
         [Utilisateur]
     )

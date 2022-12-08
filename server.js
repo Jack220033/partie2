@@ -1,4 +1,6 @@
 import 'dotenv/config';
+import https from 'https';
+import { readFile } from 'fs/promises';
 import express, { json, request, response } from 'express';
 import { engine } from 'express-handlebars';
 import helmet from 'helmet';
@@ -335,5 +337,16 @@ app.post('/deconnexion', (request, response, next) => {
 });
 
 // Démarrage du serveur
-app.listen(process.env.PORT);
-console.log('Serveur démarré: http://localhost:' + process.env.PORT);
+if (process.env.NODE_ENV === 'production') {
+    app.listen(process.env.PORT);
+    console.log('Serveur démarré: http://localhost:' + process.env.PORT);
+}
+else {
+    const credentials = {
+        key: await readFile('./security/localhost.key'),
+        cert: await readFile('./security/localhost.cert')
+    }
+
+    https.createServer(credentials, app).listen(process.env.PORT)
+    console.log('Serveur démarré: https://localhost:' + process.env.PORT);
+}

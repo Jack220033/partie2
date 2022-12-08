@@ -90,11 +90,12 @@
         <tr>
             <th scope="row">{{this.nom}}
                 <div class="space-top">
+
+                    {{!-- On met les utilisateur qui son inscrit dans le cours --}}
                     <details>
                         <summary class="space-bottom">Inscrition</summary>
                         <table class="table">
                             <thead>
-
                                 <tr>
                                     <th scope="col">Nom</th>
                                     <th scope="col">prenom</th>
@@ -102,20 +103,18 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <!--On affiche les utilisateurs qui son inscrit dans les cours-->
                                 {{#each utilisateur}}
                                 <tr>
                                     <th scope="row">{{this.nom}}</th>
                                     <td>{{this.prenom}}</td>
-                                    <td>{{this.courriel}}</td>
                                 </tr>
                                 {{/each}}
-
                             </tbody>
                         </table>
                     </details>
                 </div>
             </th>
+            <!--On continue a affiche les cours-->
             <td>{{this.dates}}</td>
             <td>{{this.nb_cours}}</td>
             <td>{{this.capacite}}</td>
@@ -128,45 +127,46 @@
 
     </tbody>
 </table>
-
 <!--On affiche toute les utilisateur qui se trouve dans la base de donnee pour modifier le id type utilisateur-->
-<table class="table">
-    <thead>
-        <tr>
-            <th colspan="7" style="position = center">Modification d'acces</th>
-        </tr>
-        <tr>
-            <th scope="col">Nom</th>
-            <th scope="col">prenom</th>
-            <th scope="col">Courriel</th>
-            <th scope="col">Type d'acces</th>
-        </tr>
-    </thead>
-    <tbody>
-        <!--On affiche toute les utilisateur qui se trouve dans la base de donnee pour modifier le id type utilisateur-->
-        {{#each utilisateur}}
-        <tr>
-            <!--Afficher les informations sur les utilisateur-->
-            <th scope="row">{{this.nom}}</th>
-            <td>{{this.prenom}}</td>
-            <td>{{this.courriel}}</td>
-            <td>{{this.id_type_utilisateur}}</td>
+<details>
+    <summary><b>Utilisateur</b></summary>
+    <table class="table">
+        <thead>
+            <tr>
+                <th colspan="7" style="position = center">Modification d'acces</th>
+            </tr>
+            <tr>
+                <th scope="col">Nom</th>
+                <th scope="col">prenom</th>
+                <th scope="col">Courriel</th>
+                <th scope="col">Type d'acces</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!--On affiche toute les utilisateur qui se trouve dans la base de donnee pour modifier le id type utilisateur-->
+            {{#each utilisateur}}
+            <tr>
+                <!--Afficher les informations sur les utilisateur-->
+                <th scope="row">{{this.nom}}</th>
+                <td>{{this.prenom}}</td>
+                <td>{{this.courriel}}</td>
+                <td>{{this.id_type_utilisateur}}</td>
 
-            <!--Changer l'acces de l'utilisateur -->
-            <th>
-                <!--Dropdwon pour selectioner quel acces que on donne a l'utilisateur-->
-                <select name="admin" id="admin">
-                    <option value="" selected="selected">Select</option>
-                    <option value="Admin">Admin</option>
-                    <option value="Regulier">Regulier</option>
-                </select>
-                <!--Boutton qui soumet les changement apporter au compte de l'utilisateur-->
-                <input type="submit" class="btn btn-danger liste-boutons" name="modify" id="{{this.utilisateur}}"
-                    value="Modifier" style="background-color: black; border-color: black;">
-            </th>
-        </tr>
-        {{/each}}
-    </tbody>
-</table>
-
+                <!--Changer l'acces de l'utilisateur -->
+                <th>
+                    <!--Dropdwon pour selectioner quel acces que on donne a l'utilisateur-->
+                    <select name="admin" id="admin">
+                        <option value="" selected="selected">Select</option>
+                        <option value="Admin">Admin</option>
+                        <option value="Regulier">Regulier</option>
+                    </select>
+                    <!--Boutton qui soumet les changement apporter au compte de l'utilisateur-->
+                    <input type="submit" class="btn btn-danger liste-boutons" name="modify" id="{{this.utilisateur}}"
+                        value="Modifier" style="background-color: black; border-color: black;">
+                </th>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</details>
 {{/if}}
