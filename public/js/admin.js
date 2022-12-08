@@ -9,7 +9,12 @@ let form = document.getElementById('form-cours');
 let checkboxes = document.querySelectorAll('#liste-cours input');
 let buttons = document.querySelectorAll('.liste-boutons');
 let capaciteC = document.querySelectorAll('.capaciteC');
+//let admin = document.getElementById('idAdmin');
+//let regulier = document.getElementById('idRegulier');
+let options = document.querySelectorAll('.option-acces');
+let boutonAcces = document.querySelectorAll('.bouton-acces');
 
+//console.log(option.value);
 
 // Nom
 let inputNom = document.getElementById('nom');
@@ -174,6 +179,23 @@ const deleteActivityServeur = async (event) => {
     location.reload();
 }
 
+const changeUserAccessServeur = async (event) => {
+    event.preventDefault();
+
+    let data = {
+        id_utilisateur: event.currentTarget.id,
+        id_type_utilisateur: options.item(event.currentTarget.id).value,
+    }
+
+    let response = await fetch('/api/admin', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+    });
+
+    location.reload();
+}
+
 
 // Soumission
 form.addEventListener('submit', async (event) => {
@@ -225,3 +247,19 @@ for (let btn of buttons) {
 for (let capacite of capaciteC) {
     console.log(capacite);
 }
+
+for(let acces of options){
+    
+
+}
+
+
+for (let btn of boutonAcces) {
+    btn.addEventListener('click', (event) => {
+        event.preventDefault();
+        
+        console.log(options.item(event.currentTarget.id.parseInt));
+    });
+}
+
+

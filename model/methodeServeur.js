@@ -198,13 +198,13 @@ export const changerAccesUtilisateur = async (id_utilisateur, id_type_utilisateu
     return resultat.lastID;
 }
 
-export const utilisateur = async (Utilisateur) => {
+export const utilisateur = async () => {
     let connexion = await connectionPromise;
 
     let utilisateur = await connexion.all(
-        `SELECT nom, prenom, courriel, id_type_utilisateur
-        FROM utilisateur`,
-        [Utilisateur]
+        `SELECT nom, prenom, courriel, id_type_utilisateur, id_utilisateur
+        FROM utilisateur`
+        
     )
     return utilisateur
 }

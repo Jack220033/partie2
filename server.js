@@ -88,6 +88,7 @@ app.get('/admin', async (request, response) => {
     else response.status(403).end();
 });
 
+
 app.get('/cours', async (request, response) => {
     if (request.user === undefined) response.status(403).end();
     else {

@@ -155,13 +155,13 @@
                 <!--Changer l'acces de l'utilisateur -->
                 <th>
                     <!--Dropdwon pour selectioner quel acces que on donne a l'utilisateur-->
-                    <select name="admin" id="admin">
+                    <select name="admin" class="option-acces" id="{{this.id_utilisateur}}">
                         <option value="" selected="selected">Select</option>
-                        <option value="Admin">Admin</option>
-                        <option value="Regulier">Regulier</option>
+                        <option value="Admin" id="idAdmin">Admin</option>
+                        <option value="Regulier" id="idRegulier">Regulier</option>
                     </select>
                     <!--Boutton qui soumet les changement apporter au compte de l'utilisateur-->
-                    <input type="submit" class="btn btn-danger liste-boutons" name="modify" id="{{this.utilisateur}}"
+                    <input type="button" class="btn btn-danger bouton-acces" name="modify" id="{{this.id_utilisateur}}"
                         value="Modifier" style="background-color: black; border-color: black;">
                 </th>
             </tr>
