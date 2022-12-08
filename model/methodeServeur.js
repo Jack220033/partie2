@@ -140,7 +140,6 @@ export const getCoursInscritServer = async (id_utilisateur) => {
         let capaciteCourante = await nbInscriptions(cour.id_cours);
 
         cour.nbInscription = capaciteCourante;
-        //console.log(cour);
     }
     return coursInscrit;
 }
@@ -207,4 +206,20 @@ export const utilisateur = async (Utilisateur) => {
         [Utilisateur]
     )
     return utilisateur
+}
+
+export const utilisateurCours = async (id_cours) => {
+    let connexion = await connectionPromise;
+
+    let coursUtilisateur = await connexion.all (
+        `SELECT nom, prenom, courriel, id_utilisateur
+        FROM utilisateur
+        WHERE id_utilisateur IN (
+        SELECT id_utilisateur
+        FROM cours_utilisateur 
+        WHERE id_cours = ?);`,
+        [id_cours]
+    )
+    return coursUtilisateur
+    
 }

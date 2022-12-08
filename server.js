@@ -10,7 +10,7 @@ import session from 'express-session';
 import memorystore from 'memorystore';
 import passport from 'passport';
 import middlewareSse from './middlewareSse.js';
-import { addCours, checkCours, deleteActivity, getCoursInscritServer, desincrireActivity, inscriptionActivity, getCoursNonInscritServer, getCoursServeur, addUtilisateur, utilisateur } from './model/methodeServeur.js';
+import { addCours, checkCours, deleteActivity, getCoursInscritServer, desincrireActivity, inscriptionActivity, getCoursNonInscritServer, getCoursServeur, addUtilisateur, utilisateur, utilisateurCours } from './model/methodeServeur.js';
 import { validationAjoutCours } from './validationAjoutCours.js'
 import { validationInscription } from './validationInscription.js';
 import './authentification.js';
@@ -73,12 +73,22 @@ app.get('/admin', async (request, response) => {
         response.status(403).end();
     }
     else if (request.user.id_type_utilisateur > 1) {
+
+        // Cree un tableau avec les utilisateur qui son dans les cours
+        let listeCours = await getCoursServeur();
+
+        for(let cours of listeCours) {
+            let UtilisateurCours = await utilisateurCours(cours.id_cours);
+
+            cours.utilisateur = UtilisateurCours
+        }
+
         response.render('admin', {
             titre: 'BLAK.inc',
             h1: 'BLAK.inc',
             styles: ['/css/general.css'],
             scripts: ['/js/admin.js'],
-            cours: await getCoursServeur(),
+            cours: listeCours,
             utilisateur: await utilisateur(),
             user: request.user,
             aAcces: request.user.id_type_utilisateur > 1,

@@ -88,7 +88,7 @@
         <!--On affiche les cours-->
         {{#each cours}}
         <tr>
-            <th scope="row">{{this.nom}}
+            <th scope="col">{{this.nom}}
                 <div class="space-top">
 
                     {{!-- On met les utilisateur qui son inscrit dans le cours --}}
@@ -103,12 +103,13 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {{#each utilisateur}}
                                 <tr>
-                                    <th scope="row">{{this.nom}}</th>
+                                    {{#each this.utilisateur}}
+                                    <td>{{this.nom}}</td>
                                     <td>{{this.prenom}}</td>
+                                    <td>{{this.courriel}}</td>
+                                    {{/each}}
                                 </tr>
-                                {{/each}}
                             </tbody>
                         </table>
                     </details>
