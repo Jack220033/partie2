@@ -196,7 +196,7 @@ export const changerAccesUtilisateur = async (id_utilisateur, id_type_utilisateu
         [id_utilisateur, id_type_utilisateur]
     );
     return resultat.lastID;
-    
+}
 export const utilisateur = async (Utilisateur) => {
     let connexion = await connectionPromise;
 

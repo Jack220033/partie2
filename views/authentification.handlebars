@@ -13,7 +13,7 @@
 
 <form id="form-auth" novalidate>
     <div class="form-group center">
-
+        {{#if inscription}}
         <div>
             <label>
                 <p>Nom:</p>
@@ -26,6 +26,7 @@
                 <input type="text" id="input-prenom">
             </label>
         </div>
+        {{/if}}
         <div>
             <label>
                 <p>Courriel:</p>

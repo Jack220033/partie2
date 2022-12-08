@@ -8,10 +8,9 @@ import session from 'express-session';
 import memorystore from 'memorystore';
 import passport from 'passport';
 import middlewareSse from './middlewareSse.js';
-import { addCours, checkCours, deleteActivity, getCoursInscritServer, desincrireActivity, inscriptionActivity, getCoursNonInscritServer, getCoursServeur, addUtilisateur } from './model/methodeServeur.js';
+import { addCours, checkCours, deleteActivity, getCoursInscritServer, desincrireActivity, inscriptionActivity, getCoursNonInscritServer, getCoursServeur, addUtilisateur, utilisateur } from './model/methodeServeur.js';
 import { validationAjoutCours } from './validationAjoutCours.js'
 import { validationInscription } from './validationInscription.js';
-import { addCours, checkCours, deleteActivity, getCoursInscritServer, desincrireActivity, inscriptionActivity, getCoursNonInscritServer, getCoursServeur, addUtilisateur, utilisateur } from './model/methodeServeur.js';
 import './authentification.js';
 
 
@@ -68,10 +67,10 @@ app.get('/', async (request, response) => {
 });
 
 app.get('/admin', async (request, response) => {
-    if(request.user === undefined){
+    if (request.user === undefined) {
         response.status(403).end();
     }
-    else if(request.user.id_type_utilisateur>1){
+    else if (request.user.id_type_utilisateur > 1) {
         response.render('admin', {
             titre: 'BLAK.inc',
             h1: 'BLAK.inc',
@@ -88,7 +87,7 @@ app.get('/admin', async (request, response) => {
 });
 
 app.get('/cours', async (request, response) => {
-    if(request.user === undefined) response.status(403).end();
+    if (request.user === undefined) response.status(403).end();
     else {
         response.render('cours', {
             titre: 'BLAK.inc',
@@ -102,7 +101,7 @@ app.get('/cours', async (request, response) => {
         });
     }
 
-    
+
 });
 /*    response.render('admin', {
         titre: 'BLAK.inc',
@@ -132,7 +131,7 @@ app.get('/cours', async (request, response) => {
 })
 
 app.get('/compte', async (request, response) => {
-    if(request.user === undefined) response.status(403).end();
+    if (request.user === undefined) response.status(403).end();
     else {
         response.render('compte', {
             titre: 'BLAK.inc',
@@ -145,17 +144,17 @@ app.get('/compte', async (request, response) => {
             accept: request.session.accept,
         });
     }
-    
 });
 
 app.get('/inscription', (request, response) => {
-    if(request.user === undefined) response.status(403).end();
+    if (request.user === undefined) response.status(403).end();
     else {
         response.render('authentification', {
             titre: 'Inscription',
             scripts: ['/js/inscription.js'],
             styles: ['/css/general.css'],
             user: request.user,
+            inscription: request.user,
             accept: request.session.accept,
         });
     }
@@ -172,9 +171,9 @@ app.get('/connexion', (request, response) => {
 });
 
 app.post('/api/admin', async (request, response) => {
-    if(request.user === undefined) response.status(403).end();
-    
-    else if (request.user.id_type_utilisateur>1 && validationAjoutCours(request.body)){
+    if (request.user === undefined) response.status(403).end();
+
+    else if (request.user.id_type_utilisateur > 1 && validationAjoutCours(request.body)) {
         let id = await addCours(request.body.nom, request.body.date_debut, request.body.nb_cours, request.body.capacite, request.body.description);
         response.status(201).json({ id: id });
     }
@@ -193,11 +192,10 @@ app.post('/api/admin', async (request, response) => {
     }
 });*/
 
-
 app.patch('/api/admin', async (request, response) => {
-    if(request.user === undefined) response.status(403).end();
+    if (request.user === undefined) response.status(403).end();
 
-    else if(request.user.id_type_utilisateur>1){
+    else if (request.user.id_type_utilisateur > 1) {
         let id = changerAccesUtilisateur(request.body.id_utilisateur, request.body.id_type_utilisateur);
         response.status(201).json({ id: id });
     }
@@ -211,33 +209,52 @@ app.patch('/api/admin', async (request, response) => {
 });*/
 
 app.delete('/api/cours', async (request, response) => {
-    if(request.user === undefined) response.status(403).end();
-    
-    else if (request.user.id_type_utilisateur>1){
+    if (request.user === undefined) response.status(403).end();
+
+    else if (request.user.id_type_utilisateur > 1) {
         let changes = await deleteActivity(request.body.id_cours);
         response.status(200).json({ changes: changes });
     }
     else response.status(403).end();
 
-    
+
 });
 
 app.post('/api/cours', async (request, response) => {
-    if(request.user === undefined) response.status(403).end();
-    else {
-        let id = await inscriptionActivity(request.body.id_cours, request.user.id_utilisateur);
-        response.status(200).json({ id: id });
+    if (!request.user) {
+        response.status(401).end();
     }
+    else if (request.user.acces <= 0) {
+        response.status(403).end();
+    }
+    else {
+        let id = await addCours(request.body.nom, request.body.description, request.body.capacite, request.body.date_debut, request.body.nb_cours)
+        response.status(201).json({ id: id });
+        response.pushJson({
+            id: id,
+            nom: request.body.nom,
+            description: request.body.description,
+            capacite: request.body.capacite,
+            date_debut: request.body.date_debut,
+            nb_cours: request.body.nb_cours
+        }, 'add-cours')
+    }
+
+    // if (request.user === undefined) response.status(403).end();
+    // else {
+    //     let id = await inscriptionActivity(request.body.id_cours, request.user.id_utilisateur);
+    //     response.status(200).json({ id: id });
+    // }
 
 });
 
 app.delete('/api/compte', async (request, response) => {
-    if(request.user === undefined) response.status(403).end();
+    if (request.user === undefined) response.status(403).end();
     else {
         await desincrireActivity(request.body.id_cours, request.user.id_utilisateur);
         response.status(200).end();
     }
-    
+
 
 });
 
