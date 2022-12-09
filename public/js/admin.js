@@ -13,6 +13,7 @@ let capaciteC = document.querySelectorAll('.capaciteC');
 //let regulier = document.getElementById('idRegulier');
 let options = document.querySelectorAll('.option-acces');
 let boutonAcces = document.querySelectorAll('.bouton-acces');
+let formAcces = document.querySelectorAll('.form-acces');
 
 //console.log(option.value);
 
@@ -182,12 +183,16 @@ const deleteActivityServeur = async (event) => {
 const changeUserAccessServeur = async (event) => {
     event.preventDefault();
 
+    let target = parseInt(event.currentTarget.id);
+
+    let selection = parseInt(options.item(target-1).value);
+
     let data = {
-        id_utilisateur: event.currentTarget.id,
-        id_type_utilisateur: options.item(event.currentTarget.id).value,
+        id_utilisateur: parseInt(event.currentTarget.id),
+        id_type_utilisateur: selection,
     }
 
-    let response = await fetch('/api/admin', {
+    await fetch('/api/admin', {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
@@ -244,22 +249,8 @@ for (let btn of buttons) {
 }
 
 
-for (let capacite of capaciteC) {
-    console.log(capacite);
-}
-
-for(let acces of options){
-    
-
-}
-
-
 for (let btn of boutonAcces) {
-    btn.addEventListener('click', (event) => {
-        event.preventDefault();
-        
-        console.log(options.item(event.currentTarget.id.parseInt));
-    });
+    btn.addEventListener('click', changeUserAccessServeur);
 }
 
 

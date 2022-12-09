@@ -188,13 +188,13 @@ export const getUtilisateurByCourriel = async (Courriel) => {
 export const changerAccesUtilisateur = async (id_utilisateur, id_type_utilisateur) => {
     let connexion = await connectionPromise;
 
-    let resultat = await connexion.run(
-        `UPDATE utlisateur
+    await connexion.run(
+        `UPDATE utilisateur
         SET id_type_utilisateur = ?
         WHERE id_utilisateur = ?`,
-        [id_utilisateur, id_type_utilisateur]
+        [id_type_utilisateur, id_utilisateur]
     );
-    return resultat.lastID;
+    
 }
 
 export const utilisateur = async () => {

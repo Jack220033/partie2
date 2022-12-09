@@ -10,7 +10,7 @@ import session from 'express-session';
 import memorystore from 'memorystore';
 import passport from 'passport';
 import middlewareSse from './middlewareSse.js';
-import { addCours, checkCours, deleteActivity, getCoursInscritServer, desincrireActivity, inscriptionActivity, getCoursNonInscritServer, getCoursServeur, addUtilisateur, utilisateur, utilisateurCours } from './model/methodeServeur.js';
+import { addCours, checkCours, deleteActivity, getCoursInscritServer, desincrireActivity, inscriptionActivity, getCoursNonInscritServer, getCoursServeur, addUtilisateur, utilisateur, utilisateurCours, changerAccesUtilisateur } from './model/methodeServeur.js';
 import { validationAjoutCours } from './validationAjoutCours.js'
 import { validationInscription } from './validationInscription.js';
 import './authentification.js';
@@ -22,11 +22,19 @@ let app = express();
 //Creation de l'engine dans Express
 app.engine('handlebars', engine());
 
+
+
+
+
 //Mettre l'engine handlebars comm engin de rendu
 app.set('view engine', 'handlebars');
 
 //Confuguration de handlebars
 app.set('views', './views');
+
+
+
+
 
 // Créer le constructeur de base de données
 const MemoryStore = memorystore(session);
@@ -209,8 +217,10 @@ app.patch('/api/admin', async (request, response) => {
     if (request.user === undefined) response.status(403).end();
 
     else if (request.user.id_type_utilisateur > 1) {
-        let id = changerAccesUtilisateur(request.body.id_utilisateur, request.body.id_type_utilisateur);
-        response.status(201).json({ id: id });
+
+        await changerAccesUtilisateur(request.body.id_utilisateur, request.body.id_type_utilisateur);
+
+        response.status(201).end();
     }
     else response.status(403).end();
 });
