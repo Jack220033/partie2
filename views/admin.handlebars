@@ -84,21 +84,21 @@
             <th scope="col">Nombre d'incription</th>
         </tr>
     </thead>
-    <tbody>
+    <tbody id="cours-table">
         <!--On affiche les cours-->
         {{#each cours}}
-        <tr>
+        <tr name="{{this.id_cours}}">
             <th scope="col">{{this.nom}}
                 <div class="space-top">
 
                     {{!-- On met les utilisateur qui son inscrit dans le cours --}}
                     <details>
-                        <summary class="space-bottom">Inscrition</summary>
+                        <summary class="space-bottom">Inscrits</summary>
                         <table class="table">
                             <thead>
                                 <tr>
                                     <th scope="col">Nom</th>
-                                    <th scope="col">prenom</th>
+                                    <th scope="col">Prenom</th>
                                     <th scope="col">Courriel</th>
                                 </tr>
                             </thead>
@@ -120,7 +120,7 @@
             <td>{{this.nb_cours}}</td>
             <td>{{this.capacite}}</td>
             <td>{{this.description}}</td>
-            <td class="capaciteC">{{this.nbInscription}} / {{this.capacite}}</td>
+            <td class="capaciteC" id="Capacite-courante-{{this.id_cours}}">{{this.nbInscription}} / {{this.capacite}}</td>
             <th><input type="button" class="btn btn-danger liste-boutons" name="delete" id="{{this.id_cours}}"
                     value="Supprimer"></th>
         </tr>
@@ -128,6 +128,7 @@
 
     </tbody>
 </table>
+<input type="button" id="bouton-test" value="Ajout Cours Realtime">
 <!--On affiche toute les utilisateur qui se trouve dans la base de donnee pour modifier le id type utilisateur-->
 <details>
     <summary><b>Utilisateur</b></summary>
