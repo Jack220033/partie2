@@ -103,13 +103,13 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    {{#each this.utilisateur}}
+                                {{#each this.utilisateur}}
+                                <tr>                                    
                                     <td>{{this.nom}}</td>
                                     <td>{{this.prenom}}</td>
-                                    <td>{{this.courriel}}</td>
-                                    {{/each}}
+                                    <td>{{this.courriel}}</td>                                    
                                 </tr>
+                                {{/each}}
                             </tbody>
                         </table>
                     </details>
