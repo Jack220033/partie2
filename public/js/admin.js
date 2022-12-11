@@ -239,19 +239,19 @@ boutonTest.addEventListener('click', (event) => {
 });
 
 const deleteActivityClient = (id_cours) => {
-    let cours = document.getElementById('cours-row'+id_cours);
+    let cours = document.getElementById('cours-row' + id_cours);
     console.log(id_cours);
     console.log(cours);
     cours.remove();
-
-    
 }
+
 const updateInscriptionCoursClient = (cours) => {
     let tdCoursCapaciteCourante = document.getElementById('Capacite-courante-' + cours.id_cours);
     console.log(cours.id_cours);
     tdCoursCapaciteCourante.innerText = cours.nbInscription + ' / ' + cours.capacite;
 }
 
+// On change la permission des utilisateur pour admin ou regulier
 const addUtilisateurClient = (utilisateur) => {
     trUser = document.createElement('tr');
     trUser.id = 'user-row-'+userTable.id_utilisateur;
@@ -381,7 +381,9 @@ const addCoursServeur = async (event) => {
         date_debut: myEpoch,
         nb_cours: parseInt(inputNbCours.value),
         capacite: parseInt(inputCapacite.value),
-        description: inputDescription.value
+        description: inputDescription.value,
+        nbInscriptions: 0
+
     }
     
 

@@ -88,7 +88,7 @@ app.get('/admin', async (request, response) => {
         // Cree un tableau avec les utilisateur qui son dans les cours
         let listeCours = await getCoursServeur();
 
-        for(let cours of listeCours) {
+        for (let cours of listeCours) {
             let UtilisateurCours = await utilisateurCours(cours.id_cours);
 
             cours.utilisateur = UtilisateurCours
@@ -202,9 +202,9 @@ app.delete('/api/admin', async (request, response) => {
 app.post('/api/admin', async (request, response) => {
     if (!request.user) {
         response.status(401).end();
-    }    
-    else if (request.user.id_type_utilisateur > 1 && validationAjoutCours(request.body)){
-        
+    }
+    else if (request.user.id_type_utilisateur > 1 && validationAjoutCours(request.body)) {
+
 
         let id_cours = await addCours(request.body.nom, request.body.date_debut, request.body.nb_cours, request.body.capacite, request.body.description)
         let cours = {
@@ -217,17 +217,16 @@ app.post('/api/admin', async (request, response) => {
             nbInscription: 0,
         }
         response.status(201).json({ id_cours: id_cours });
-        response.pushJson(cours, 'add-cours')
+        response.pushJson({
+             cours: id_cours
+            }, 'add-cours');
     }
     else response.status(403).end();
-
-    
-
 });
 
 app.post('/api/cours', async (request, response) => {
     if (request.user === undefined) response.status(403).end();
-    else {        
+    else {
         let id = await inscriptionActivity(request.body.id_cours, request.user.id_utilisateur);
 
         let cours = getCoursById(request.body.id_cours);
