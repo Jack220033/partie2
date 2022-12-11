@@ -48,10 +48,19 @@
    transform: rotate(45deg);
  }
 
+input:invalid.active{
+  border: 2px solid #800;
+}
+
  .error {
    display: none;
-   color: #a00;
+   background-color: #800;
+   color: #fff;
    padding: .5rem;
+ }
+
+ .error-field.active {
+  display: block;
  }
 
  .form-group {

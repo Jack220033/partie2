@@ -147,17 +147,16 @@ app.get('/compte', async (request, response) => {
 
 // Rendement de la page d'inscription
 app.get('/inscription', (request, response) => {
-    if (request.user === undefined) response.status(403).end();
-    else {
-        response.render('authentification', {
-            titre: 'Inscription',
-            scripts: ['/js/inscription.js'],
-            styles: ['/css/general.css'],
-            user: request.user,
-            inscription: request.user,
-            accept: request.session.accept,
-        });
-    }
+
+    response.render('authentification', {
+        titre: 'Inscription',
+        scripts: ['/js/inscription.js'],
+        styles: ['/css/general.css'],
+        // user: request.user,
+        inscription: request.user,
+        accept: request.session.accept,
+    });
+
 });
 
 // Rendement de la page de connexion
@@ -170,7 +169,6 @@ app.get('/connexion', (request, response) => {
         accept: request.session.accept,
     });
 });
-
 
 app.patch('/api/admin', async (request, response) => {
     if (request.user === undefined) response.status(403).end();
@@ -192,7 +190,9 @@ app.delete('/api/admin', async (request, response) => {
     else if (request.user.id_type_utilisateur > 1) {
         let id_cours = await deleteActivity(request.body.id_cours);
         response.status(200).json({ id_cours: id_cours });
-        response.pushJson(id_cours, 'delete-cours');
+        response.pushJson({
+            id_cours: id_cours
+        }, 'delete-cours');
     }
     else response.status(403).end();
 
@@ -218,8 +218,8 @@ app.post('/api/admin', async (request, response) => {
         }
         response.status(201).json({ id_cours: id_cours });
         response.pushJson({
-             cours: id_cours
-            }, 'add-cours');
+            cours: cours
+        }, 'add-cours');
     }
     else response.status(403).end();
 });

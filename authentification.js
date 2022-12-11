@@ -13,7 +13,7 @@ passport.use(new Strategy(config, async (courriel, mot_passe, done) => {
         let utilisateur = await getUtilisateurByCourriel(courriel);
 
         if (!utilisateur) {
-            return done(null, false, { erreur: 'erreur_nom_utilisateur' });
+            return done(null, false, { erreur: 'erreur_nom_utilisateur'});
         }
 
         let valide = await compare(mot_passe, utilisateur.mot_passe);
@@ -41,8 +41,6 @@ passport.serializeUser((utilisateur, done) => {
 
 passport.deserializeUser(async (user, done) => {
      
-    
-    
     try {
         let utilisateur = await getUtilisateurByCourriel(user.courriel);
         done(null, utilisateur);
@@ -52,4 +50,3 @@ passport.deserializeUser(async (user, done) => {
         
     }
 });
-

@@ -13,30 +13,39 @@
 
 <form id="form-auth" novalidate>
     <div class="form-group center">
-        {{!-- {{#if inscription}} --}}
         <div>
             <label>
                 <p>Nom:</p>
-                <input type="text" id="input-nom">
+                <input type="text" id="input-nom" required>
+                <span class="validity"></span>
+                <div id="error-nom" class="error"></div>
             </label>
         </div>
         <div>
             <label>
                 <p>Prenom:</p>
-                <input type="text" id="input-prenom">
+                <input type="text" id="input-prenom" required>
+                <span class="validity"></span>
+                <div id="error-nom" class="error"></div>
             </label>
         </div>
-        {{!-- {{/if}} --}}
+        {{!-- {{#unless inscription}}
+        {{>inscription}}
+        {{/unless}} --}}
         <div>
             <label>
                 <p>Courriel:</p>
-                <input type="email" id="input-email">
+                <input type="email" id="input-email" required>
+                <span class="validity"></span>
+                <div id="error-courriel" class="error"></div>
             </label>
         </div>
         <div>
             <label>
                 <p>Mot de passe:</p>
-                <input type="password" id="input-mot-de-passe">
+                <input type="password" id="input-mot-de-passe" required>
+                <span class="validity"></span>
+                <div id="error-password" class="error"></div>
             </label>
         </div>
         <div>

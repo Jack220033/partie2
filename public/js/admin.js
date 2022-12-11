@@ -32,8 +32,16 @@ let inputDate = document.getElementById('date_debut');
 let errorDate = document.getElementById('error-date_debut');
 
 const validateDate = () => {
-    return inputDate !== null;
+    
+    if(inputDate.validity.valid){
+        errorDate.style.display = 'none';
+    }
+    else if (inputDate.validity.valueMissing){
+        errorDate.innerText = 'Ce champ est requis';
+        errorDate.style.display = 'block'; 
+    }
 
+    // return inputDate !== null;
 }
 
 form.addEventListener('submit', validateDate);
@@ -45,6 +53,10 @@ let errorNbCours = document.getElementById('error-nb_cours');
 const validateNbCours = () => {
     if (inputNbCours.validity.valid) {
         errorNbCours.style.display = 'none';
+    }
+    else if( inputNbCours.validity.valueMissing) {
+        errorNbCours.innerText = 'Ce champ est requis';
+        errorNbCours.style.display = 'block'
     }
     else if (inputNbCours.validity.rangeUnderflow) {
         errorNbCours.innerText = 'La valeur doit être supérieure à 5';
@@ -64,6 +76,10 @@ let errorCapacite = document.getElementById('error-capacite');
 const validateCapacite = () => {
     if (inputCapacite.validity.valid) {
         errorCapacite.style.display = 'none';
+    }
+    else if (inputCapacite.validity.valueMissing){
+        errorCapacite.innerText = 'Ce champ est requis';
+        errorCapacite.style.display = 'block'
     }
     else if (inputCapacite.validity.rangeUnderflow) {
         errorCapacite.innerText = 'La valeur doit être supérieure à 10';
@@ -233,7 +249,7 @@ const addCoursClient = (cours) => {
 boutonTest.addEventListener('click', (event) => {
     addCoursClient(69, 'test nom', 69, 69, 69, 56, 'Ceci est un test', {
         nom: 'that',
-        prenom: 'fuck', 
+        prenom: 'fuck2', 
         courriel: 'fuck_this@fuckthis.com',
     });
 });
