@@ -1,9 +1,4 @@
 let ul = document.getElementById('liste-cours');
-let nom = document.getElementById('nom');
-let date_debut = document.getElementById('date_debut');
-let nb_cours = document.getElementById('nb_cours');
-let capacite = document.getElementById('capacite');
-let description = document.getElementById('description');
 let deleteBtn = document.getElementById('delete');
 let form = document.getElementById('form-cours');
 let checkboxes = document.querySelectorAll('#liste-cours input');
@@ -14,6 +9,8 @@ let boutonAcces = document.querySelectorAll('.bouton-acces');
 let formAcces = document.querySelectorAll('.form-acces');
 let tableCoursBody = document.getElementById('cours-table');
 let boutonTest = document.getElementById('bouton-test');
+let userTable = document.getElementById('user-table');
+let source = new EventSource('/stream');
 
 //-----------------------Validation-------------------------------------------------------------------------------------//
 // Nom
@@ -101,6 +98,8 @@ const validateDescription = () => {
     }
 }
 form.addEventListener('submit', validateDescription);
+
+
 //----------------------------------------------- Fin Validation ---------------------------------------------------------//
 
 
@@ -118,13 +117,13 @@ const nbInscriptions = (event) => {
     });
 }
 
-const addCoursClient = (id_cours, nom, date_debut, nb_cours, capacite, nbInscription, description, utilisateur) => {
+const addCoursClient = (cours) => {
     let trCours = document.createElement('tr');
-    trCours.id = id_cours;
+    trCours.id = 'cours-row'+cours.id_cours;
 
     let thCours = document.createElement('th');
     thCours.scope = 'col';
-    thCours.innerText = nom;
+    thCours.innerText = cours.nom;
 
     let div = document.createElement('div');
     div.classList.add('space-top');
@@ -159,29 +158,29 @@ const addCoursClient = (id_cours, nom, date_debut, nb_cours, capacite, nbInscrip
     let trUserBody = document.createElement('tr');
 
     let tdUserNom = document.createElement('td');
-    tdUserNom.innerText = utilisateur.nom;
+    //tdUserNom.innerText = utilisateur.nom;
 
     let tdUserPrenom = document.createElement('td');
-    tdUserPrenom.innerText = utilisateur.prenom;
+    //tdUserPrenom.innerText = utilisateur.prenom;
 
     let tdUserCourriel = document.createElement('td');
-    tdUserCourriel.innerText = utilisateur.courriel;
+    //tdUserCourriel.innerText = utilisateur.courriel;
 
     let tdCoursDates = document.createElement('td');
-    tdCoursDates.innerText = date_debut;
+    tdCoursDates.innerText = cours.date_debut;
 
     let tdCoursNbCours = document.createElement('td');
-    tdCoursNbCours.innerText = nb_cours;
+    tdCoursNbCours.innerText = cours.nb_cours;
 
     let tdCoursCapacite = document.createElement('td');
-    tdCoursCapacite.innerText = capacite;
+    tdCoursCapacite.innerText = cours.capacite;
 
     let tdCoursDescription = document.createElement('td');
-    tdCoursDescription.innerText = description;
+    tdCoursDescription.innerText = cours.description;
 
     let tdCoursCapaciteCourrante = document.createElement('td');
     tdCoursCapaciteCourrante.classList.add('capaciteC');
-    tdCoursCapaciteCourrante.innerText = nbInscription + ' / ' + capacite;
+    tdCoursCapaciteCourrante.innerText = cours.nbInscription + ' / ' + cours.capacite;
 
     let thCoursBouton = document.createElement('th');
 
@@ -191,11 +190,11 @@ const addCoursClient = (id_cours, nom, date_debut, nb_cours, capacite, nbInscrip
     inputSupprimeCours.classList.add('btn-danger');
     inputSupprimeCours.classList.add('liste-boutons');
     inputSupprimeCours.name = 'delete';
-    inputSupprimeCours.id = id_cours;
+    inputSupprimeCours.id = cours.id_cours;
     inputSupprimeCours.value = 'Supprimer';
-    inputSupprimeCours.addEventListener('click', (event) => {
+    /*inputSupprimeCours.addEventListener('click', (event) => {
         deleteActivityClient(event.currentTarget.id);
-    });
+    });*/
     thCoursBouton.append(inputSupprimeCours);
 
     trUserBody.append(tdUserNom);
@@ -240,51 +239,92 @@ boutonTest.addEventListener('click', (event) => {
 });
 
 const deleteActivityClient = (id_cours) => {
-    let cours = document.getElementById(id_cours);
+    let cours = document.getElementById('cours-row'+id_cours);
+    console.log(id_cours);
+    console.log(cours);
     cours.remove();
 
     
 }
 const updateInscriptionCoursClient = (cours) => {
-    let tdCoursCapaciteCourrante = document.getElementById('Capacite-courante-' + cours.id_cours);
-
-    tdCoursCapaciteCourrante.innerText = cours.nbInscription + ' / ' + cours.capacite;
+    let tdCoursCapaciteCourante = document.getElementById('Capacite-courante-' + cours.id_cours);
+    console.log(cours.id_cours);
+    tdCoursCapaciteCourante.innerText = cours.nbInscription + ' / ' + cours.capacite;
 }
 
+const addUtilisateurClient = (utilisateur) => {
+    trUser = document.createElement('tr');
+    trUser.id = 'user-row-'+userTable.id_utilisateur;
 
-const addCoursServeur = async (event) => {
-    event.preventDefault();
+    thUserNom = document.createElement('th');
+    thUserNom.scope = 'row';
+    thUserNom.innerText = utilisateur.nom;
 
-    //On met la date en epoch dans la base de donner
-    const myDate = date_debut.value;
-    const myEpoch = new Date(myDate).getTime();// Your timezone!
+    tdUserPrenom = document.createElement('td');
+    tdUserPrenom.innerText = utilisateur.prenom;
 
+    tdUserCourriel = document.createElement('td');
+    tdUserCourriel.innerText = utilisateur.courriel;
+
+    tdUserAcces = document.createElement('td');
+    tdUserAcces.innerText = utilisateur.id_type_utilisateur;
+
+    thChangerAcces = document.createElement('th');
+
+    select = document.createElement('select');
+    select.name = 'admin';
+    select.classList.add('option-acces');
+    select.id = utilisateur.id_utilisateur;
+
+    optionSelected = document.createElement('option');
+    optionSelected.innerText = 'Select';
+
+    optionAdmin = document.createElement('option');
+    optionAdmin.value = '2';
+    optionAdmin.id = 'idAdmin';
+    optionAdmin.innerText = 'Admin';
+
+    optionRegulier = document.createElement('option');
+    optionRegulier.value = '1';
+    optionRegulier.id = 'idRegulier';
+    optionRegulier.innerText = 'Regulier';
+
+    bouton = document.createElement('input');
+    bouton.type = 'button';
+    bouton.classList.add('btn');
+    bouton.classList.add('btn-danger');
+    bouton.classList.add('bouton-acces');
+    bouton.name = 'modify';
+    bouton.id = utilisateur.id_utilisateur;
+    bouton.value = 'Modifier';
+    bouton.style = 'background-color: black; border-color: black;';
+
+    select.append(optionSelected);
+    select.append(optionAdmin);
+    select.append(optionRegulier);
+
+    thChangerAcces.append(select);
+    thChangerAcces.append(bouton);
+
+    trUser.append(thUserNom);
+    trUser.append(tdUserPrenom);
+    trUser.append(tdUserCourriel);
+    trUser.append(tdUserAcces);
+    trUser.append(thChangerAcces);
+
+    userTable.append(trUser);
     
 
-    let data = {
-        nom: nom.value,
-        date_debut: myEpoch,
-        nb_cours: nb_cours.value,
-        capacite: capacite.value,
-        description: description.value
-    }
-    console.log(data);
-
-    let response = await fetch('/api/admin', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-    });
-
-    if (response.ok) {
-        let data = await response.json();
-        nom.value = '',
-            date_debut.value = '',
-            nb_cours.value = '',
-            capacite.value = '',
-            description.value = ''
-    }
 }
+
+const deleteUserClient = (utilisateur) => {
+    let userRow = document.getElementById('user-row-'+utilisateur.id_utilisateur);
+
+    userRow.remove();
+}
+
+
+
 
 const deleteActivityServeur = async (event) => {
     event.preventDefault();
@@ -293,13 +333,13 @@ const deleteActivityServeur = async (event) => {
         id_cours: event.currentTarget.id
     }
 
-    let response = await fetch('/api/cours', {
+    let response = await fetch('/api/admin', {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
     });
 
-    location.reload();
+    //location.reload();
 }
 
 const changeUserAccessServeur = async (event) => {
@@ -323,14 +363,14 @@ const changeUserAccessServeur = async (event) => {
     location.reload();
 }
 
-
-// Soumission
-form.addEventListener('submit', async (event) => {
+const addCoursServeur = async (event) => {
     event.preventDefault();
 
     //On met la date en epoch dans la base de donner
-    const myDate = date_debut.value;
-    const myEpoch = new Date(myDate).getTime();// Your timezone!
+    const myDate = inputDate.value;
+    const myEpoch = new Date(myDate).getTime();
+
+    
 
     if (!form.checkValidity()) {
         return;
@@ -343,28 +383,28 @@ form.addEventListener('submit', async (event) => {
         capacite: parseInt(inputCapacite.value),
         description: inputDescription.value
     }
+    
 
-
-    let response = await fetch('/api/adminvalidation', {
+    let response = await fetch('/api/admin', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
     });
 
-    if (response.ok) {
+    if (response.ok) {        
         inputNom.value = '';
         inputDate.value = '';
         inputNbCours.value = '';
         inputCapacite.value = '';
         inputDescription.value = '';
-        location.reload();
     }
-});
-
-for (let checkbox of checkboxes) {
-    checkbox.addEventListener('change', checkCoursServeur);
-    console.log(checkbox.checked);
 }
+
+
+// Soumission ajout d'un cours
+form.addEventListener('submit', addCoursServeur);
+
+
 
 for (let btn of buttons) {
     btn.addEventListener('click', deleteActivityServeur);
@@ -375,4 +415,24 @@ for (let btn of boutonAcces) {
     btn.addEventListener('click', changeUserAccessServeur);
 }
 
+//-------------------------------- Realtime Events ---------------------------------------------
 
+source.addEventListener('add-cours', (event) => {
+    let data = JSON.parse(event.data);
+    addCoursClient(data);
+
+    let btn = document.getElementById(data.id_cours);
+    btn.addEventListener('click', deleteActivityServeur);
+});
+source.addEventListener('delete-cours', (event) => {
+    let data = JSON.parse(event.data);
+    deleteActivityClient(data);
+});
+source.addEventListener('inscription-cours-update', (event) => {
+    let data = JSON.parse(event.data);
+    updateInscriptionCoursClient(data);
+});
+source.addEventListener('desinscription-cours-update', (event) => {
+    let data = JSON.parse(event.data);
+    updateInscriptionCoursClient(data);
+});

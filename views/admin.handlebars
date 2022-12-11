@@ -87,7 +87,7 @@
     <tbody id="cours-table">
         <!--On affiche les cours-->
         {{#each cours}}
-        <tr name="{{this.id_cours}}">
+        <tr id="cours-row-{{this.id_cours}}">
             <th scope="col">{{this.nom}}
                 <div class="space-top">
 
@@ -144,10 +144,10 @@
                 <th scope="col">Type d'acces</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="user-table">
             <!--On affiche toute les utilisateur qui se trouve dans la base de donnee pour modifier le id type utilisateur-->
             {{#each utilisateur}}
-            <tr>
+            <tr id="user-row-{{this.id_utilisateur}}">
                 <!--Afficher les informations sur les utilisateur-->
                 <th scope="row">{{this.nom}}</th>
                 <td>{{this.prenom}}</td>

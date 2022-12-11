@@ -77,6 +77,8 @@ export const deleteActivity = async (id_cours) => {
         `DELETE FROM cours WHERE id_cours = ?`,
         [id_cours]
     );
+
+    return id_cours;
 }
 
 
@@ -221,5 +223,18 @@ export const utilisateurCours = async (id_cours) => {
         [id_cours]
     )
     return coursUtilisateur
+    
+}
+
+export const getCoursById = async (id_cours) => {
+    let connexion = await connectionPromise;
+
+    let cours = await connexion.get(
+        `SELECT * FROM cours
+        WHERE id_cours = ?`,
+        [id_cours]
+    );
+
+    return cours;
     
 }
