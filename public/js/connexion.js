@@ -1,5 +1,4 @@
 let formAuth = document.getElementById('form-auth');
-let authentification = document.getElementById('form-auth');
 let inputCourriel = document.getElementById('input-email');
 let inputMotDePasse = document.getElementById('input-mot-de-passe');
 let inputNom = document.getElementById('input-nom');
@@ -34,6 +33,7 @@ formAuth.addEventListener('submit', async (event) => {
         let inputCourriel = document.getElementById('input-email');
         let errorCourriel = document.getElementById('error-courriel');
 
+        // Validation du courriel
         const validaCourriel = () => {
             if (inputCourriel.validity.valid) {
                 errorCourriel.style.display = 'none';
@@ -43,11 +43,13 @@ formAuth.addEventListener('submit', async (event) => {
                 errorCourriel.style.display = 'none';
             }
         }
+
         form.addEventListener('submit', validaCourriel);
 
         let inputPassword = document.getElementById('input-email');
         let errorPassword = document.getElementById('error-courriel');
 
+        // Validation du mot de passe
         const validPassword = () => {
             if (inputCourriel.validity.valid) {
                 errorPassword.style.display = 'none';
@@ -58,7 +60,7 @@ formAuth.addEventListener('submit', async (event) => {
             }
         }
         form.addEventListener('submit', validPassword);
-        // -------fin de la validation de la connion-------
+        // -------fin de la validation de la connxion-------
 
     }
     else {
