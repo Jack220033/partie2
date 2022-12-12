@@ -1,12 +1,15 @@
+import { addCoursClient, updateInscriptionCoursClient, deleteActivityClient } from "./methode-commune.js";
+
 let ul = document.getElementById('liste-compte');
 let desincrireBtn = document.getElementById('desincrire');
 let button = document.querySelectorAll('.liste-boutons')
 let checkboxes = document.querySelectorAll('#liste-cours input');
+let tableCoursBody = document.getElementById('cours-table');
 
 const desincrireCoursServeur = async (event) => {
 
     let data = {
-        id_cours: event.currentTarget.id
+        id_cours: parseInt(event.currentTarget.id),
     }
     
 
@@ -16,10 +19,32 @@ const desincrireCoursServeur = async (event) => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
     });
-    location.reload();
+    
 }
 
 for (let btn of button) {
     btn.addEventListener('click', desincrireCoursServeur);
 }
+
+let source = new EventSource('/stream');
+
+source.addEventListener('add-cours', (event) => {
+    let data = JSON.parse(event.data)
+    addCoursClient(data, tableCoursBody);
+})
+
+source.addEventListener('inscription-cours-update', (event) => {
+    let data = JSON.parse(event.data);
+    updateInscriptionCoursClient(data);
+});
+
+source.addEventListener('desinscription-cours-update', (event) => {
+    let data = JSON.parse(event.data);
+    updateInscriptionCoursClient(data);
+});
+
+source.addEventListener('desinscription-cours', (event) => {
+    let data = JSON.parse(event.data);
+    deleteActivityClient(data.id_cours);
+});
 

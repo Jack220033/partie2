@@ -190,9 +190,7 @@ app.delete('/api/admin', async (request, response) => {
     else if (request.user.id_type_utilisateur > 1) {
         let id_cours = await deleteActivity(request.body.id_cours);
         response.status(200).json({ id_cours: id_cours });
-        response.pushJson({
-            id_cours: id_cours
-        }, 'delete-cours');
+        response.pushJson(id_cours, 'delete-cours');
     }
     else response.status(403).end();
 
@@ -217,9 +215,7 @@ app.post('/api/admin', async (request, response) => {
             nbInscription: 0,
         }
         response.status(201).json({ id_cours: id_cours });
-        response.pushJson({
-            cours: cours
-        }, 'add-cours');
+        response.pushJson(cours, 'add-cours');
     }
     else response.status(403).end();
 });
@@ -229,10 +225,11 @@ app.post('/api/cours', async (request, response) => {
     else {
         let id = await inscriptionActivity(request.body.id_cours, request.user.id_utilisateur);
 
-        let cours = getCoursById(request.body.id_cours);
+        let cours = await getCoursById(request.body.id_cours);
 
         response.status(200).json({ id: id });
         response.pushJson(cours, 'inscription-cours-update');
+        response.pushJson(cours, 'inscription-cours');
     }
 });
 
@@ -240,9 +237,10 @@ app.delete('/api/compte', async (request, response) => {
     if (request.user === undefined) response.status(403).end();
     else {
         await desincrireActivity(request.body.id_cours, request.user.id_utilisateur);
-        let cours = getCoursById(request.body.id_cours);
+        let cours = await getCoursById(request.body.id_cours);
         response.status(200).end();
         response.pushJson(cours, 'desinscription-cours-update');
+        response.pushJson(cours, 'desinscription-cours');
     }
 
 

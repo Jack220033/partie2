@@ -1,3 +1,5 @@
+import { addCoursClient, updateInscriptionCoursClient, deleteActivityClient } from "./methode-commune.js";
+
 let ul = document.getElementById('liste-cours');
 let deleteBtn = document.getElementById('delete');
 let form = document.getElementById('form-cours');
@@ -120,7 +122,7 @@ form.addEventListener('submit', validateDescription);
 
 
 
-const nbInscriptions = (event) => {
+/*const nbInscriptions = (event) => {
     event.preventDefault();
     let data = {
         id: event.currentTarget.dataset.id
@@ -131,120 +133,9 @@ const nbInscriptions = (event) => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
     });
-}
+}*/
 
-const addCoursClient = (cours) => {
-    let trCours = document.createElement('tr');
-    trCours.id = 'cours-row'+cours.id_cours;
 
-    let thCours = document.createElement('th');
-    thCours.scope = 'col';
-    thCours.innerText = cours.nom;
-
-    let div = document.createElement('div');
-    div.classList.add('space-top');
-
-    let details = document.createElement('details');
-
-    let summary = document.createElement('summary');
-    summary.classList.add('space-bottom');
-    summary.innerText = 'Inscrits';
-
-    let table = document.createElement('table');
-    table.classList.add('table');
-
-    let thead = document.createElement('thead');
-
-    let trUserHead = document.createElement('tr');
-
-    let thNom = document.createElement('th');
-    thNom.scope = 'col';
-    thNom.innerText = 'Nom';
-
-    let thPrenom = document.createElement('th');
-    thPrenom.scope = 'col';
-    thPrenom.innerText = 'Prenom';
-
-    let thCourriel = document.createElement('th');
-    thCourriel.scope = 'col';
-    thCourriel.innerText = 'Courriel';
-
-    let tbody = document.createElement('tbody');
-
-    let trUserBody = document.createElement('tr');
-
-    let tdUserNom = document.createElement('td');
-    //tdUserNom.innerText = utilisateur.nom;
-
-    let tdUserPrenom = document.createElement('td');
-    //tdUserPrenom.innerText = utilisateur.prenom;
-
-    let tdUserCourriel = document.createElement('td');
-    //tdUserCourriel.innerText = utilisateur.courriel;
-
-    let tdCoursDates = document.createElement('td');
-    tdCoursDates.innerText = cours.date_debut;
-
-    let tdCoursNbCours = document.createElement('td');
-    tdCoursNbCours.innerText = cours.nb_cours;
-
-    let tdCoursCapacite = document.createElement('td');
-    tdCoursCapacite.innerText = cours.capacite;
-
-    let tdCoursDescription = document.createElement('td');
-    tdCoursDescription.innerText = cours.description;
-
-    let tdCoursCapaciteCourrante = document.createElement('td');
-    tdCoursCapaciteCourrante.classList.add('capaciteC');
-    tdCoursCapaciteCourrante.innerText = cours.nbInscription + ' / ' + cours.capacite;
-
-    let thCoursBouton = document.createElement('th');
-
-    let inputSupprimeCours = document.createElement('input');
-    inputSupprimeCours.type = 'button';
-    inputSupprimeCours.classList.add('btn');
-    inputSupprimeCours.classList.add('btn-danger');
-    inputSupprimeCours.classList.add('liste-boutons');
-    inputSupprimeCours.name = 'delete';
-    inputSupprimeCours.id = cours.id_cours;
-    inputSupprimeCours.value = 'Supprimer';
-    /*inputSupprimeCours.addEventListener('click', (event) => {
-        deleteActivityClient(event.currentTarget.id);
-    });*/
-    thCoursBouton.append(inputSupprimeCours);
-
-    trUserBody.append(tdUserNom);
-    trUserBody.append(tdUserPrenom);
-    trUserBody.append(tdUserCourriel);
-
-    tbody.append(trUserBody);
-
-    trUserHead.append(thNom);
-    trUserHead.append(thPrenom);
-    trUserHead.append(thCourriel);
-
-    thead.append(trUserHead);
-
-    table.append(thead);
-    table.append(tbody);
-
-    details.append(summary);
-    details.append(table);
-
-    div.append(details);
-
-    thCours.append(div);
-
-    trCours.append(thCours);
-    trCours.append(tdCoursDates);
-    trCours.append(tdCoursNbCours);
-    trCours.append(tdCoursCapacite);
-    trCours.append(tdCoursDescription);
-    trCours.append(tdCoursCapaciteCourrante);
-    trCours.append(thCoursBouton);
-
-    tableCoursBody.append(trCours);
-}
 
 boutonTest.addEventListener('click', (event) => {
     addCoursClient(69, 'test nom', 69, 69, 69, 56, 'Ceci est un test', {
@@ -253,19 +144,6 @@ boutonTest.addEventListener('click', (event) => {
         courriel: 'fuck_this@fuckthis.com',
     });
 });
-
-const deleteActivityClient = (id_cours) => {
-    let cours = document.getElementById('cours-row' + id_cours);
-    console.log(id_cours);
-    console.log(cours);
-    cours.remove();
-}
-
-const updateInscriptionCoursClient = (cours) => {
-    let tdCoursCapaciteCourante = document.getElementById('Capacite-courante-' + cours.id_cours);
-    console.log(cours.id_cours);
-    tdCoursCapaciteCourante.innerText = cours.nbInscription + ' / ' + cours.capacite;
-}
 
 // On change la permission des utilisateur pour admin ou regulier
 const addUtilisateurClient = (utilisateur) => {
@@ -346,7 +224,7 @@ const deleteActivityServeur = async (event) => {
     event.preventDefault();
 
     let data = {
-        id_cours: event.currentTarget.id
+        id_cours: parseInt(event.currentTarget.id),
     }
 
     let response = await fetch('/api/admin', {
@@ -355,7 +233,7 @@ const deleteActivityServeur = async (event) => {
         body: JSON.stringify(data)
     });
 
-    //location.reload();
+    
 }
 
 const changeUserAccessServeur = async (event) => {
@@ -436,14 +314,15 @@ for (let btn of boutonAcces) {
 //-------------------------------- Realtime Events ---------------------------------------------
 
 source.addEventListener('add-cours', (event) => {
-    let data = JSON.parse(event.data);
-    addCoursClient(data);
+    let data = JSON.parse(event.data);    
+    addCoursClient(data, tableCoursBody);
 
     let btn = document.getElementById(data.id_cours);
     btn.addEventListener('click', deleteActivityServeur);
 });
 source.addEventListener('delete-cours', (event) => {
     let data = JSON.parse(event.data);
+    console.log(data);
     deleteActivityClient(data);
 });
 source.addEventListener('inscription-cours-update', (event) => {
