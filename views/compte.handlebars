@@ -15,15 +15,15 @@
             <th scope="col">Désinscrire</th>
         </tr>
     </thead>
-    <tbody>
+    <tbody id="cours-table">
         {{#each compte}}
-        <tr>
+        <tr id="cours-row-{{this.id_cours}}">
             <th scope="row">{{this.nom}}</th>
             <td>{{this.dates}}</td>
             <td>{{this.nb_cours}}</td>
             <td>{{this.capacite}}</td>
             <td>{{this.description}}</td>
-            <td>{{this.nbInscription}} / {{this.capacite}}</td>
+            <td id="Capacite-courante-{{this.id_cours}}">{{this.nbInscription}} / {{this.capacite}}</td>
             <td><input type="button" name="desincrire" id="{{this.id_cours}}" value="Désinscrire" class="liste-boutons">
             </td>
         </tr>
