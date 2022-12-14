@@ -27,58 +27,65 @@ formAuth.addEventListener('submit', async (event) => {
         //Afficher erreur dans l'interface graphine
         console.log('utilisateur deja existant');
 
-        // Validation du nom
-        let inputNom = document.getElementById('');
-        let errorNom = document.getElementById('');
+        
+    }
+    else {
+        console.log('Erreur inconnu');
+    }
+})
 
-        const validNom = () => {
-            if(inputCourriel.validity.valid){
+// Validation pour la page de inscrition
+        // Validation du nom
+        let inputLastName = document.getElementById('input-nom');
+        let errorNom = document.getElementById('error-nom');
+
+        const validLastName = () => {
+            if (inputLastName.validity.valid) {
                 errorNom.style.display = 'none';
             }
-            else if (inputNom.validity.valueMissing){
+            else if (inputLastName.validity.valueMissing) {
                 errorNom.innerText = 'Entrer votre nom';
                 errorNom.style.display = 'block'
             }
         }
-        form.addEventListener('submit', validNom);
+        formAuth.addEventListener('submit', validLastName);
 
         // Validation du prenom
-        let inputPrenom = document.getElementById('');
-        let errorPrenom = document.getElementById('');
+        let inputName = document.getElementById('input-prenom');
+        let errorPrenom = document.getElementById('error-prenom');
 
-        const validPrenom = () => {
-            if(inputPrenom.validity.valid){
+        const validName = () => {
+            if (inputName.validity.valid) {
                 errorPrenom.style.display = 'none';
             }
-            else if(inputPrenom.validity.valueMissing){
+            else if (inputName.validity.valueMissing) {
                 errorPrenom.innerText = 'Entrer votre prenom';
                 errorPrenom.style.display = 'block';
             }
         }
-        form.addEventListener('submit', validPrenom);
-
-        // Validation pour la page de inscrition
-        let inputCourriel = document.getElementById('input-email');
-        let errorCourriel = document.getElementById('error-courriel');
+        formAuth.addEventListener('submit', validName);
 
         //  validation du courriel
-        const validaCourriel = () => {
-            if (inputCourriel.validity.valid) {
+        let inputEmail = document.getElementById('input-email');
+        let errorCourriel = document.getElementById('error-courriel');
+
+        const validaEmail = () => {
+            if (inputEmail.validity.valid) {
                 errorCourriel.style.display = 'none';
             }
-            else if (inputCourriel.validity.valueMissing) {
-                errorCourriel.innerText = 'Entrer votre courriel valide';
-                errorCourriel.style.display = 'none';
+            else if (inputEmail.validity.valueMissing) {
+                errorCourriel.innerText = 'Entrer votre courriel';
+                errorCourriel.style.display = 'block';
             }
         }
-        form.addEventListener('submit', validaCourriel);
+        formAuth.addEventListener('submit', validaEmail);
 
         //  validation du mot de passe 
-        let inputPassword = document.getElementById('input-email');
-        let errorPassword = document.getElementById('error-courriel');
-
+        let inputPassword = document.getElementById('input-mot-de-passe');
+        let errorPassword = document.getElementById('error-password');
+        
         const validPassword = () => {
-            if (inputCourriel.validity.valid) {
+            if (inputPassword.validity.valid) {
                 errorPassword.style.display = 'none';
             }
             else if (inputPassword.validity.valueMissing) {
@@ -86,10 +93,5 @@ formAuth.addEventListener('submit', async (event) => {
                 errorPassword.style.display = 'block';
             }
         }
-        form.addEventListener('submit', validPassword);
+        formAuth.addEventListener('submit', validPassword);
         // -------fin de la validation de la inscrition-------
-    }
-    else {
-        console.log('Erreur inconnu');
-    }
-})

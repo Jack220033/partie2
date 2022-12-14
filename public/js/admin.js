@@ -43,10 +43,7 @@ const validateDate = () => {
         errorDate.innerText = 'Ce champ est requis';
         errorDate.style.display = 'block'; 
     }
-
-    // return inputDate !== null;
 }
-
 form.addEventListener('submit', validateDate);
 
 //nb_cours
@@ -118,9 +115,22 @@ const validateDescription = () => {
 }
 form.addEventListener('submit', validateDescription);
 
-
 //----------------------------------------------- Fin Validation ---------------------------------------------------------//
 
+
+
+/*const nbInscriptions = (event) => {
+    event.preventDefault();
+    let data = {
+        id: event.currentTarget.dataset.id
+    }
+
+    fetch('/api/admin', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+    });
+}*/
 
 boutonTest.addEventListener('click', (event) => {
     addCoursClient(69, 'test nom', 69, 69, 69, 56, 'Ceci est un test', {
@@ -314,12 +324,9 @@ const deleteUserCoursClient = (utilisateur) => {
 // Soumission ajout d'un cours
 form.addEventListener('submit', addCoursServeur);
 
-
-
 for (let btn of buttons) {
     btn.addEventListener('click', deleteActivityServeur);
 }
-
 
 for (let btn of boutonAcces) {
     btn.addEventListener('click', changeUserAccessServeur);
