@@ -116,29 +116,6 @@ form.addEventListener('submit', validateDescription);
 
 //----------------------------------------------- Fin Validation ---------------------------------------------------------//
 
-
-
-/*const nbInscriptions = (event) => {
-    event.preventDefault();
-    let data = {
-        id: event.currentTarget.dataset.id
-    }
-
-    fetch('/api/admin', {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-    });
-}*/
-
-boutonTest.addEventListener('click', (event) => {
-    addCoursClient(69, 'test nom', 69, 69, 69, 56, 'Ceci est un test', {
-        nom: 'that',
-        prenom: 'fuck2', 
-        courriel: 'fuck_this@fuckthis.com',
-    });
-});
-
 // On change la permission des utilisateur pour admin ou regulier
 const addUtilisateurClient = (utilisateur) => {
     trUser = document.createElement('tr');

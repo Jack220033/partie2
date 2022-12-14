@@ -1,15 +1,4 @@
 <h2>{{titre}}</h2>
-<p>
-    Admin <br>
-    test@test.com <br>
-    test <br>
-</p>
-
-<p>
-    regulier <br>
-    test1@test.com <br>
-    123
-</p>
 
 <form id="form-auth" novalidate>
     <div class="form-group center">
@@ -48,7 +37,7 @@
         <div>
             <label for="password">
                 <p>Mot de passe:</p>
-                <input type="password" id="input-mot-de-passe" required>
+                <input type="password" id="input-mot-de-passe" required pattern="(?=.*[A-Z])(?=.*\d.*\d)[^\s]{9,30}">
                 <span class="validity"></span>
                 <div id="error-password" class="error"></div>
             </label>

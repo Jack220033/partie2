@@ -148,7 +148,7 @@ app.get('/compte', async (request, response) => {
 // Rendement de la page d'inscription
 app.get('/inscription', (request, response) => {
 
-    response.render('authentification', {
+    response.render('inscription', {
         titre: 'Inscription',
         scripts: ['/js/inscription.js'],
         styles: ['/css/general.css'],
@@ -156,12 +156,11 @@ app.get('/inscription', (request, response) => {
         inscription: request.user,
         accept: request.session.accept,
     });
-
 });
 
 // Rendement de la page de connexion
 app.get('/connexion', (request, response) => {
-    response.render('authentification', {
+    response.render('connexion', {
         titre: 'Connexion',
         scripts: ['/js/connexion.js'],
         styles: ['/css/general.css'],

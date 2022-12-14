@@ -27,7 +27,7 @@ formAuth.addEventListener('submit', async (event) => {
         //Afficher erreur dans l'interface graphine
         console.log('utilisateur deja existant');
 
-        
+
     }
     else {
         console.log('Erreur inconnu');
@@ -35,63 +35,81 @@ formAuth.addEventListener('submit', async (event) => {
 })
 
 // Validation pour la page de inscrition
-        // Validation du nom
-        let inputLastName = document.getElementById('input-nom');
-        let errorNom = document.getElementById('error-nom');
+// Validation du nom
+let inputLastName = document.getElementById('input-nom');
+let errorNom = document.getElementById('error-nom');
 
-        const validLastName = () => {
-            if (inputLastName.validity.valid) {
-                errorNom.style.display = 'none';
-            }
-            else if (inputLastName.validity.valueMissing) {
-                errorNom.innerText = 'Entrer votre nom';
-                errorNom.style.display = 'block'
-            }
-        }
-        formAuth.addEventListener('submit', validLastName);
+const validLastName = () => {
+    if (inputLastName.validity.valid) {
+        errorNom.style.display = 'none';
+    }
+    else if (inputLastName.validity.valueMissing) {
+        errorNom.innerText = 'Entrer votre nom';
+        errorNom.style.display = 'block'
+    }
+}
+formAuth.addEventListener('submit', validLastName);
 
-        // Validation du prenom
-        let inputName = document.getElementById('input-prenom');
-        let errorPrenom = document.getElementById('error-prenom');
+// Validation du prenom
+let inputName = document.getElementById('input-prenom');
+let errorPrenom = document.getElementById('error-prenom');
 
-        const validName = () => {
-            if (inputName.validity.valid) {
-                errorPrenom.style.display = 'none';
-            }
-            else if (inputName.validity.valueMissing) {
-                errorPrenom.innerText = 'Entrer votre prenom';
-                errorPrenom.style.display = 'block';
-            }
-        }
-        formAuth.addEventListener('submit', validName);
+const validName = () => {
+    if (inputName.validity.valid) {
+        errorPrenom.style.display = 'none';
+    }
+    else if (inputName.validity.valueMissing) {
+        errorPrenom.innerText = 'Entrer votre prenom';
+        errorPrenom.style.display = 'block';
+    }
+}
+formAuth.addEventListener('submit', validName);
 
-        //  validation du courriel
-        let inputEmail = document.getElementById('input-email');
-        let errorCourriel = document.getElementById('error-courriel');
+//  validation du courriel
 
-        const validaEmail = () => {
-            if (inputEmail.validity.valid) {
-                errorCourriel.style.display = 'none';
-            }
-            else if (inputEmail.validity.valueMissing) {
-                errorCourriel.innerText = 'Entrer votre courriel';
-                errorCourriel.style.display = 'block';
-            }
-        }
-        formAuth.addEventListener('submit', validaEmail);
+// Faire une validation pour faire sur que l'utilisateur mette .ca ou .com a la fin de son courriel
+let inputEmail = document.getElementById('input-email');
+let errorCourriel = document.getElementById('error-courriel');
 
-        //  validation du mot de passe 
-        let inputPassword = document.getElementById('input-mot-de-passe');
-        let errorPassword = document.getElementById('error-password');
-        
-        const validPassword = () => {
-            if (inputPassword.validity.valid) {
-                errorPassword.style.display = 'none';
-            }
-            else if (inputPassword.validity.valueMissing) {
-                errorPassword.innerText = 'Entrer votre mot de passe';
-                errorPassword.style.display = 'block';
-            }
-        }
-        formAuth.addEventListener('submit', validPassword);
+const validaEmail = () => {
+    if (inputEmail.validity.valid) {
+        errorCourriel.style.display = 'none';
+    }
+    else if (inputEmail.validity.typeMismatch) {
+        errorCourriel.innerText = 'Entrer un courriel valide ex: "test@test.com"';
+        errorCourriel.style.display = 'block';
+    }
+    else if (inputEmail.validity.valueMissing) {
+        errorCourriel.innerText = 'Entrer votre courriel';
+        errorCourriel.style.display = 'block';
+    }
+}
+formAuth.addEventListener('submit', validaEmail);
+
+//  validation du mot de passe 
+let inputPassword = document.getElementById('input-mot-de-passe');
+let errorPassword = document.getElementById('error-password');
+
+const validPassword = () => {
+    if (inputPassword.validity.valid) {
+        errorPassword.style.display = 'none';
+    }
+    // else if (inputPassword.validity.tooShort) {
+    //     errorPassword.innerText = 'Le mot de passe est trop cour';
+    //     errorPassword.style.display = 'block';
+    // }
+    // else if (inputPassword.validity.tooLong) {
+    //     errorPassword.innerText = 'Le mot de passe est trop long';
+    //     errorPassword.style.display = 'block';
+    // }
+    else if (inputPassword.validity.valueMissing) {
+        errorPassword.innerText = 'Entrer votre mot de passe';
+        errorPassword.style.display = 'block';
+    }
+    else if (inputPassword.validity.patternMismatch) {
+        errorPassword.innerText = 'Le mot de passe entrain ne match pas. Fait sur qui a une majucule et un caratere special';
+        errorPassword.style.display = 'block';
+    }
+}
+formAuth.addEventListener('submit', validPassword);
         // -------fin de la validation de la inscrition-------

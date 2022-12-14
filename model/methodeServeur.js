@@ -196,7 +196,7 @@ export const changerAccesUtilisateur = async (id_utilisateur, id_type_utilisateu
         WHERE id_utilisateur = ?`,
         [id_type_utilisateur, id_utilisateur]
     );
-    
+
 }
 
 export const utilisateur = async () => {
@@ -205,7 +205,7 @@ export const utilisateur = async () => {
     let utilisateur = await connexion.all(
         `SELECT nom, prenom, courriel, id_type_utilisateur, id_utilisateur
         FROM utilisateur`
-        
+
     )
     return utilisateur
 }
@@ -213,7 +213,7 @@ export const utilisateur = async () => {
 export const utilisateurCours = async (id_cours) => {
     let connexion = await connectionPromise;
 
-    let coursUtilisateur = await connexion.all (
+    let coursUtilisateur = await connexion.all(
         `SELECT nom, prenom, courriel, id_utilisateur
         FROM utilisateur
         WHERE id_utilisateur IN (
@@ -223,7 +223,7 @@ export const utilisateurCours = async (id_cours) => {
         [id_cours]
     )
     return coursUtilisateur
-    
+
 }
 
 export const getCoursById = async (id_cours) => {
@@ -240,5 +240,5 @@ export const getCoursById = async (id_cours) => {
     cours.nbInscription = capaciteCourante;
 
     return cours;
-    
+
 }

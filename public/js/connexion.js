@@ -8,10 +8,8 @@ formAuth.addEventListener('submit', async (event) => {
     event.preventDefault();
 
     let data = {
-        courriel: InputCourriel.value,
+        courriel: inputCourriel.value,
         mot_passe: inputMotDePasse.value,
-        nom: inputNom.value,
-        prenom: inputPrenom.value
     }
 
     let response = await fetch('/connexion', {
@@ -28,43 +26,44 @@ formAuth.addEventListener('submit', async (event) => {
 
         //Afficher erreur dans l'interface graphine
         console.log(info);
-
-       
-
     }
     else {
         console.log('Erreur inconnu');
     }
 })
 
- // Validation pour la page de connexion
-        // Validation du courriel
-        let inputEmail = document.getElementById('input-email');
-        let errorCourriel = document.getElementById('error-courriel');
+// Validation pour la page de connexion
+// Validation du courriel
+let inputEmail = document.getElementById('input-email');
+let errorCourriel = document.getElementById('error-courriel');
 
-        const validaEmail = () => {
-            if (inputEmail.validity.valid) {
-                errorCourriel.style.display = 'none';
-            }
-            else if (inputEmail.validity.valueMissing) {
-                errorCourriel.innerText = 'Entrer votre courriel';
-                errorCourriel.style.display = 'block';
-            }
-        }
-        formAuth.addEventListener('submit', validaEmail);
+const validaEmail = () => {
+    if (inputEmail.validity.valid) {
+        errorCourriel.style.display = 'none';
+    }
+    else if (inputEmail.validity.typeMismatch) {
+        errorCourriel.innerText = 'Entrer un courriel valide ex: "test@test.com"';
+        errorCourriel.style.display = 'block';
+    }
+    else if (inputEmail.validity.valueMissing) {
+        errorCourriel.innerText = 'Entrer votre courriel';
+        errorCourriel.style.display = 'block';
+    }
+}
+formAuth.addEventListener('submit', validaEmail);
 
-        // Validation du mot de passe
-        let inputPassword = document.getElementById('input-mot-de-passe');
-        let errorPassword = document.getElementById('error-password');
+// Validation du mot de passe
+let inputPassword = document.getElementById('input-mot-de-passe');
+let errorPassword = document.getElementById('error-password');
 
-        const validPassword = () => {
-            if (inputPassword.validity.valid) {
-                errorPassword.style.display = 'none';
-            }
-            else if (inputPassword.validity.valueMissing) {
-                errorPassword.innerText = 'Entrer votre mot de passe';
-                errorPassword.style.display = 'block';
-            }
-        }
-        formAuth.addEventListener('submit', validPassword);
+const validPassword = () => {
+    if (inputPassword.validity.valid) {
+        errorPassword.style.display = 'none';
+    }
+    else if (inputPassword.validity.valueMissing) {
+        errorPassword.innerText = 'Entrer votre mot de passe';
+        errorPassword.style.display = 'block';
+    }
+}
+formAuth.addEventListener('submit', validPassword);
         // -------fin de la validation de la connxion-------

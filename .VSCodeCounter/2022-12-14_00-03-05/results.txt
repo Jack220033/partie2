@@ -1,0 +1,66 @@
+Date : 2022-12-14 00:03:05
+Directory : c:\Users\Jack\Desktop\Web Serveur\Projet partie 2\partie2
+Total : 31 files,  6368 codes, 286 comments, 495 blanks, all 7149 lines
+
+Languages
++------------+------------+------------+------------+------------+------------+
+| language   | files      | code       | comment    | blank      | total      |
++------------+------------+------------+------------+------------+------------+
+| JSON       |          2 |      4,400 |          0 |          2 |      4,402 |
+| JavaScript |         16 |      1,197 |        114 |        339 |      1,650 |
+| Handlebars |          9 |        417 |         13 |         46 |        476 |
+| CSS        |          3 |        278 |        159 |        106 |        543 |
+| Database   |          1 |         76 |          0 |          2 |         78 |
++------------+------------+------------+------------+------------+------------+
+
+Directories
++--------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                       | files      | code       | comment    | blank      | total      |
++--------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                          |         31 |      6,368 |        286 |        495 |      7,149 |
+| model                                                                                      |          3 |        275 |         15 |         84 |        374 |
+| public                                                                                     |         11 |        812 |        194 |        262 |      1,268 |
+| public\css                                                                                 |          3 |        278 |        159 |        106 |        543 |
+| public\js                                                                                  |          8 |        534 |         35 |        156 |        725 |
+| views                                                                                      |          9 |        417 |         13 |         46 |        476 |
+| views\layouts                                                                              |          1 |         41 |          0 |         11 |         52 |
+| views\partials                                                                             |          2 |         56 |          0 |          4 |         60 |
++--------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++--------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| filename                                                                                   | language   | code       | comment    | blank      | total      |
++--------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| c:\Users\Jack\Desktop\Web Serveur\Projet partie 2\partie2\authentification.js              | JavaScript |         40 |          0 |         12 |         52 |
+| c:\Users\Jack\Desktop\Web Serveur\Projet partie 2\partie2\middlewareSse.js                 | JavaScript |         35 |         15 |          9 |         59 |
+| c:\Users\Jack\Desktop\Web Serveur\Projet partie 2\partie2\model\connexion.js               | JavaScript |         99 |         11 |         15 |        125 |
+| c:\Users\Jack\Desktop\Web Serveur\Projet partie 2\partie2\model\methodeServeur.js          | JavaScript |        176 |          0 |         69 |        245 |
+| c:\Users\Jack\Desktop\Web Serveur\Projet partie 2\partie2\model\utilisateur.js             | JavaScript |          0 |          4 |          0 |          4 |
+| c:\Users\Jack\Desktop\Web Serveur\Projet partie 2\partie2\package-lock.json                | JSON       |      4,367 |          0 |          1 |      4,368 |
+| c:\Users\Jack\Desktop\Web Serveur\Projet partie 2\partie2\package.json                     | JSON       |         33 |          0 |          1 |         34 |
+| c:\Users\Jack\Desktop\Web Serveur\Projet partie 2\partie2\public\css\general.css           | CSS        |         73 |          0 |         19 |         92 |
+| c:\Users\Jack\Desktop\Web Serveur\Projet partie 2\partie2\public\css\normalize.css         | CSS        |        146 |        159 |         74 |        379 |
+| c:\Users\Jack\Desktop\Web Serveur\Projet partie 2\partie2\public\css\style.css             | CSS        |         59 |          0 |         13 |         72 |
+| c:\Users\Jack\Desktop\Web Serveur\Projet partie 2\partie2\public\js\accept-cookie.js       | JavaScript |         12 |          0 |          3 |         15 |
+| c:\Users\Jack\Desktop\Web Serveur\Projet partie 2\partie2\public\js\accueil.js             | JavaScript |          0 |          0 |          1 |          1 |
+| c:\Users\Jack\Desktop\Web Serveur\Projet partie 2\partie2\public\js\admin.js               | JavaScript |        230 |         11 |         63 |        304 |
+| c:\Users\Jack\Desktop\Web Serveur\Projet partie 2\partie2\public\js\compte.js              | JavaScript |         36 |          0 |         15 |         51 |
+| c:\Users\Jack\Desktop\Web Serveur\Projet partie 2\partie2\public\js\connexion.js           | JavaScript |         55 |          5 |         10 |         70 |
+| c:\Users\Jack\Desktop\Web Serveur\Projet partie 2\partie2\public\js\cours.js               | JavaScript |         34 |          0 |         13 |         47 |
+| c:\Users\Jack\Desktop\Web Serveur\Projet partie 2\partie2\public\js\inscription.js         | JavaScript |         84 |         16 |         15 |        115 |
+| c:\Users\Jack\Desktop\Web Serveur\Projet partie 2\partie2\public\js\methode-commune.js     | JavaScript |         83 |          3 |         36 |        122 |
+| c:\Users\Jack\Desktop\Web Serveur\Projet partie 2\partie2\server.js                        | JavaScript |        262 |         19 |         57 |        338 |
+| c:\Users\Jack\Desktop\Web Serveur\Projet partie 2\partie2\systeme.db                       | Database   |         76 |          0 |          2 |         78 |
+| c:\Users\Jack\Desktop\Web Serveur\Projet partie 2\partie2\validationAjoutCours.js          | JavaScript |         29 |          8 |         11 |         48 |
+| c:\Users\Jack\Desktop\Web Serveur\Projet partie 2\partie2\validationInscription.js         | JavaScript |         22 |         22 |         10 |         54 |
+| c:\Users\Jack\Desktop\Web Serveur\Projet partie 2\partie2\views\accueil.handlebars         | Handlebars |         14 |          0 |          3 |         17 |
+| c:\Users\Jack\Desktop\Web Serveur\Projet partie 2\partie2\views\admin.handlebars           | Handlebars |        162 |          2 |         14 |        178 |
+| c:\Users\Jack\Desktop\Web Serveur\Projet partie 2\partie2\views\compte.handlebars          | Handlebars |         32 |          0 |          0 |         32 |
+| c:\Users\Jack\Desktop\Web Serveur\Projet partie 2\partie2\views\connexion.handlebars       | Handlebars |         38 |          5 |          6 |         49 |
+| c:\Users\Jack\Desktop\Web Serveur\Projet partie 2\partie2\views\cours.handlebars           | Handlebars |         31 |          0 |          1 |         32 |
+| c:\Users\Jack\Desktop\Web Serveur\Projet partie 2\partie2\views\inscription.handlebars     | Handlebars |         43 |          6 |          7 |         56 |
+| c:\Users\Jack\Desktop\Web Serveur\Projet partie 2\partie2\views\layouts\main.handlebars    | Handlebars |         41 |          0 |         11 |         52 |
+| c:\Users\Jack\Desktop\Web Serveur\Projet partie 2\partie2\views\partials\footer.handlebars | Handlebars |         16 |          0 |          0 |         16 |
+| c:\Users\Jack\Desktop\Web Serveur\Projet partie 2\partie2\views\partials\header.handlebars | Handlebars |         40 |          0 |          4 |         44 |
+| Total                                                                                      |            |      6,368 |        286 |        495 |      7,149 |
++--------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
