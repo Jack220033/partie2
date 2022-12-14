@@ -102,9 +102,9 @@
                                     <th scope="col">Courriel</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="user-cours-table">
                                 {{#each this.utilisateur}}
-                                <tr>                                    
+                                <tr id="user-cours-row-{{this.id_utilisateur}}">                                    
                                     <td>{{this.nom}}</td>
                                     <td>{{this.prenom}}</td>
                                     <td>{{this.courriel}}</td>                                    

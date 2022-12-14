@@ -167,11 +167,12 @@ export const addUtilisateur = async (Courriel, motDePasse) => {
 
     let motDePassHash = await hash(motDePasse, 10);
 
-    await connexion.run(
+    let resultat = await connexion.run(
         `INSERT INTO utilisateur (id_type_utilisateur, courriel, mot_passe, prenom, nom)
         VALUES (1, ?, ?, "test1", 'test2')`,
         [Courriel, motDePassHash]
     );
+    return resultat.lastID;
 }
 
 export const getUtilisateurByCourriel = async (Courriel) => {
@@ -185,6 +186,19 @@ export const getUtilisateurByCourriel = async (Courriel) => {
     )
 
     return courriel;
+}
+
+export const getUtilisateurById = async (id_utilisateur) => {
+    let connexion = await connectionPromise;
+
+    let utilisateur = await connexion.get(
+        `SELECT id_utilisateur, nom, prenom, courriel
+        FROM utilisateur
+        WHERE id_utilisateur = ?`,
+        [id_utilisateur]
+    )
+
+    return utilisateur;
 }
 
 export const changerAccesUtilisateur = async (id_utilisateur, id_type_utilisateur) => {

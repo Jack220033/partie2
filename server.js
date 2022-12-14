@@ -10,7 +10,7 @@ import session from 'express-session';
 import memorystore from 'memorystore';
 import passport from 'passport';
 import middlewareSse from './middlewareSse.js';
-import { addCours, checkCours, deleteActivity, getCoursInscritServer, desincrireActivity, inscriptionActivity, getCoursNonInscritServer, getCoursServeur, addUtilisateur, utilisateur, utilisateurCours, changerAccesUtilisateur, getCoursById } from './model/methodeServeur.js';
+import { addCours, checkCours, deleteActivity, getCoursInscritServer, desincrireActivity, inscriptionActivity, getCoursNonInscritServer, getCoursServeur, addUtilisateur, utilisateur, utilisateurCours, changerAccesUtilisateur, getCoursById, getUtilisateurById, getUtilisateurByCourriel } from './model/methodeServeur.js';
 import { validationAjoutCours } from './validationAjoutCours.js'
 import { validationInscription } from './validationInscription.js';
 import './authentification.js';
@@ -227,20 +227,30 @@ app.post('/api/cours', async (request, response) => {
 
         let cours = await getCoursById(request.body.id_cours);
 
+        let utilisateur = await getUtilisateurById(request.user.id_utilisateur);
+
         response.status(200).json({ id: id });
         response.pushJson(cours, 'inscription-cours-update');
         response.pushJson(cours, 'inscription-cours');
+        response.pushJson(utilisateur, 'inscription-cours-update-dropdown');
     }
 });
 
 app.delete('/api/compte', async (request, response) => {
+    
     if (request.user === undefined) response.status(403).end();
+
     else {
         await desincrireActivity(request.body.id_cours, request.user.id_utilisateur);
+
         let cours = await getCoursById(request.body.id_cours);
+
+        let utilisateur = await getUtilisateurById(request.user.id_utilisateur);
+
         response.status(200).end();
         response.pushJson(cours, 'desinscription-cours-update');
         response.pushJson(cours, 'desinscription-cours');
+        response.pushJson(utilisateur, 'desinscription-cours-update-dropdown');
     }
 
 
@@ -264,12 +274,16 @@ app.post('/inscription', async (request, response, next) => {
     //valider les donner recu du client
     if (validationInscription(request.body)) {
         try {
-            await addUtilisateur(request.body.courriel, request.body.motDePasse, request.body.nom, request.body.prenom);
+            let id_utilisateur = await addUtilisateur(request.body.courriel, request.body.motDePasse, request.body.nom, request.body.prenom);
+            
+            
+            let utilisateur = await getUtilisateurById(id_utilisateur);
+
             response.status(201).end();
+            response.pushJson(utilisateur, 'update-new-user');
         }
         catch (error) {
             if (error.code === 'SQLITE_CONSTRAINT') {
-                //console.log(request.body);
                 response.status(409).end();
             }
             else {

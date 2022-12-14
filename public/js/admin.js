@@ -10,6 +10,7 @@ let options = document.querySelectorAll('.option-acces');
 let boutonAcces = document.querySelectorAll('.bouton-acces');
 let formAcces = document.querySelectorAll('.form-acces');
 let tableCoursBody = document.getElementById('cours-table');
+let userCoursTable = document.getElementById('user-cours-table');
 let boutonTest = document.getElementById('bouton-test');
 let userTable = document.getElementById('user-table');
 let source = new EventSource('/stream');
@@ -121,22 +122,6 @@ form.addEventListener('submit', validateDescription);
 //----------------------------------------------- Fin Validation ---------------------------------------------------------//
 
 
-
-/*const nbInscriptions = (event) => {
-    event.preventDefault();
-    let data = {
-        id: event.currentTarget.dataset.id
-    }
-
-    fetch('/api/admin', {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-    });
-}*/
-
-
-
 boutonTest.addEventListener('click', (event) => {
     addCoursClient(69, 'test nom', 69, 69, 69, 56, 'Ceci est un test', {
         nom: 'that',
@@ -148,7 +133,7 @@ boutonTest.addEventListener('click', (event) => {
 // On change la permission des utilisateur pour admin ou regulier
 const addUtilisateurClient = (utilisateur) => {
     trUser = document.createElement('tr');
-    trUser.id = 'user-row-'+userTable.id_utilisateur;
+    trUser.id = 'user-row-' + utilisateur.id_utilisateur;
 
     thUserNom = document.createElement('th');
     thUserNom.scope = 'row';
@@ -296,6 +281,35 @@ const addCoursServeur = async (event) => {
     }
 }
 
+const addUserCoursClient = (utilisateur) => {
+
+    let tr = document.createElement('tr');
+    tr.id = 'user-cours-row-' + utilisateur.id_utilisateur;
+
+    let tdNom = document.createElement('td');
+    tdNom.innerText = utilisateur.nom;
+
+    let tdPrenom = document.createElement('td');
+    tdPrenom.innerText = utilisateur.prenom;
+
+    let tdCourriel = document.createElement('td');
+    tdCourriel.innerText = utilisateur.courriel;
+
+    tr.append(tdNom);
+    tr.append(tdPrenom);
+    tr.append(tdCourriel);
+
+    userCoursTable.append(tr);
+}
+
+const deleteUserCoursClient = (utilisateur) => {
+
+    let user = document.getElementById('user-cours-row-' + utilisateur.id_utilisateur);
+    
+    user.remove();
+
+}
+
 
 // Soumission ajout d'un cours
 form.addEventListener('submit', addCoursServeur);
@@ -320,16 +334,34 @@ source.addEventListener('add-cours', (event) => {
     let btn = document.getElementById(data.id_cours);
     btn.addEventListener('click', deleteActivityServeur);
 });
+
 source.addEventListener('delete-cours', (event) => {
     let data = JSON.parse(event.data);
-    console.log(data);
     deleteActivityClient(data);
 });
+
 source.addEventListener('inscription-cours-update', (event) => {
     let data = JSON.parse(event.data);
     updateInscriptionCoursClient(data);
 });
+
 source.addEventListener('desinscription-cours-update', (event) => {
     let data = JSON.parse(event.data);
     updateInscriptionCoursClient(data);
 });
+
+source.addEventListener('inscription-cours-update-dropdown', (event) => {
+    let data = JSON.parse(event.data);
+    addUserCoursClient(data);
+});
+
+source.addEventListener('desinscription-cours-update-dropdown', (event) => {
+    let data = JSON.parse(event.data);
+    deleteUserCoursClient(data);
+});
+
+source.addEventListener('update-new-user', (event) => {
+    let data = JSON.parse(event.data);
+    addUtilisateurClient(data);
+});
+
