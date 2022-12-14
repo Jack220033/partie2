@@ -42,10 +42,7 @@ const validateDate = () => {
         errorDate.innerText = 'Ce champ est requis';
         errorDate.style.display = 'block'; 
     }
-
-    // return inputDate !== null;
 }
-
 form.addEventListener('submit', validateDate);
 
 //nb_cours
@@ -117,7 +114,6 @@ const validateDescription = () => {
 }
 form.addEventListener('submit', validateDescription);
 
-
 //----------------------------------------------- Fin Validation ---------------------------------------------------------//
 
 
@@ -134,8 +130,6 @@ form.addEventListener('submit', validateDescription);
         body: JSON.stringify(data)
     });
 }*/
-
-
 
 boutonTest.addEventListener('click', (event) => {
     addCoursClient(69, 'test nom', 69, 69, 69, 56, 'Ceci est un test', {
@@ -300,12 +294,9 @@ const addCoursServeur = async (event) => {
 // Soumission ajout d'un cours
 form.addEventListener('submit', addCoursServeur);
 
-
-
 for (let btn of buttons) {
     btn.addEventListener('click', deleteActivityServeur);
 }
-
 
 for (let btn of boutonAcces) {
     btn.addEventListener('click', changeUserAccessServeur);
