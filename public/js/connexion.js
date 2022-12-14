@@ -8,7 +8,7 @@ formAuth.addEventListener('submit', async (event) => {
     event.preventDefault();
 
     let data = {
-        courriel: InputCourriel.value,
+        courriel: inputCourriel.value,
         mot_passe: inputMotDePasse.value,
         nom: inputNom.value,
         prenom: inputPrenom.value

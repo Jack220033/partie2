@@ -7,6 +7,8 @@ let inputPrenom = document.getElementById('input-prenom');
 formAuth.addEventListener('submit', async (event) => {
     event.preventDefault();
 
+    console.log(inputPrenom.value);
+
     let data = {
         courriel: inputCourriel.value,
         motDePasse: inputMotDePasse.value,
@@ -24,7 +26,7 @@ formAuth.addEventListener('submit', async (event) => {
         window.location.replace('/connexion');
     }
     else if (response.status === 409) {
-        //Afficher erreur dans l'interface graphine
+        //Afficher erreur dans l'interface graphique
         console.log('utilisateur deja existant');
 
         

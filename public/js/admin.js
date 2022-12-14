@@ -119,18 +119,7 @@ form.addEventListener('submit', validateDescription);
 
 
 
-/*const nbInscriptions = (event) => {
-    event.preventDefault();
-    let data = {
-        id: event.currentTarget.dataset.id
-    }
 
-    fetch('/api/admin', {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-    });
-}*/
 
 boutonTest.addEventListener('click', (event) => {
     addCoursClient(69, 'test nom', 69, 69, 69, 56, 'Ceci est un test', {
@@ -142,43 +131,43 @@ boutonTest.addEventListener('click', (event) => {
 
 // On change la permission des utilisateur pour admin ou regulier
 const addUtilisateurClient = (utilisateur) => {
-    trUser = document.createElement('tr');
+    let trUser = document.createElement('tr');
     trUser.id = 'user-row-' + utilisateur.id_utilisateur;
 
-    thUserNom = document.createElement('th');
+    let thUserNom = document.createElement('th');
     thUserNom.scope = 'row';
     thUserNom.innerText = utilisateur.nom;
 
-    tdUserPrenom = document.createElement('td');
+    let tdUserPrenom = document.createElement('td');
     tdUserPrenom.innerText = utilisateur.prenom;
 
-    tdUserCourriel = document.createElement('td');
+    let tdUserCourriel = document.createElement('td');
     tdUserCourriel.innerText = utilisateur.courriel;
 
-    tdUserAcces = document.createElement('td');
+    let tdUserAcces = document.createElement('td');
     tdUserAcces.innerText = utilisateur.id_type_utilisateur;
 
-    thChangerAcces = document.createElement('th');
+    let thChangerAcces = document.createElement('th');
 
-    select = document.createElement('select');
+    let select = document.createElement('select');
     select.name = 'admin';
     select.classList.add('option-acces');
     select.id = utilisateur.id_utilisateur;
 
-    optionSelected = document.createElement('option');
+    let optionSelected = document.createElement('option');
     optionSelected.innerText = 'Select';
 
-    optionAdmin = document.createElement('option');
+    let optionAdmin = document.createElement('option');
     optionAdmin.value = '2';
     optionAdmin.id = 'idAdmin';
     optionAdmin.innerText = 'Admin';
 
-    optionRegulier = document.createElement('option');
+    let optionRegulier = document.createElement('option');
     optionRegulier.value = '1';
     optionRegulier.id = 'idRegulier';
     optionRegulier.innerText = 'Regulier';
 
-    bouton = document.createElement('input');
+    let bouton = document.createElement('input');
     bouton.type = 'button';
     bouton.classList.add('btn');
     bouton.classList.add('btn-danger');
@@ -205,12 +194,12 @@ const addUtilisateurClient = (utilisateur) => {
     
 
 }
-
+/*
 const deleteUserClient = (utilisateur) => {
     let userRow = document.getElementById('user-row-'+utilisateur.id_utilisateur);
 
     userRow.remove();
-}
+}*/
 
 
 
@@ -227,16 +216,20 @@ const deleteActivityServeur = async (event) => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
     });
-
-    
 }
 
 const changeUserAccessServeur = async (event) => {
     event.preventDefault();
 
+    
+
     let target = parseInt(event.currentTarget.id);
 
+    
+    
     let selection = parseInt(options.item(target-1).value);
+
+    
 
     let data = {
         id_utilisateur: parseInt(event.currentTarget.id),
@@ -249,7 +242,8 @@ const changeUserAccessServeur = async (event) => {
         body: JSON.stringify(data)
     });
 
-    location.reload();
+
+    
 }
 
 const addCoursServeur = async (event) => {

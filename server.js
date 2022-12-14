@@ -273,6 +273,7 @@ app.post('/accept', (request, response) => {
 app.post('/inscription', async (request, response, next) => {
     //valider les donner recu du client
     if (validationInscription(request.body)) {
+        
         try {
             let id_utilisateur = await addUtilisateur(request.body.courriel, request.body.motDePasse, request.body.nom, request.body.prenom);
             

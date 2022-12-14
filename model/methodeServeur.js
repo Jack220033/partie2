@@ -162,15 +162,15 @@ export const nbInscriptions = async (id_cours) => {
 
 
 
-export const addUtilisateur = async (Courriel, motDePasse) => {
+export const addUtilisateur = async (Courriel, motDePasse, prenom, nom) => {
     let connexion = await connectionPromise;
 
     let motDePassHash = await hash(motDePasse, 10);
 
     let resultat = await connexion.run(
         `INSERT INTO utilisateur (id_type_utilisateur, courriel, mot_passe, prenom, nom)
-        VALUES (1, ?, ?, "test1", 'test2')`,
-        [Courriel, motDePassHash]
+        VALUES (1, ?, ?, ?, ?)`,
+        [Courriel, motDePassHash, prenom, nom]
     );
     return resultat.lastID;
 }
@@ -192,7 +192,7 @@ export const getUtilisateurById = async (id_utilisateur) => {
     let connexion = await connectionPromise;
 
     let utilisateur = await connexion.get(
-        `SELECT id_utilisateur, nom, prenom, courriel
+        `SELECT id_utilisateur, nom, prenom, courriel, id_type_utilisateur
         FROM utilisateur
         WHERE id_utilisateur = ?`,
         [id_utilisateur]

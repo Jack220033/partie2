@@ -19,24 +19,7 @@ const validateEmail = (email) => {
 // Validation du mot de passe
 const validatePassword = (password) => {
 
-    if (password.validity.valid) {
-        passwordErrorFiel.innerText = '';
-
-        //Retire les classe de css si il a pas d'erreur
-        passwordErrorFiel.classList.remove('active');
-        password.classList.remove('active');
-    }
-    else {
-        if (password.validity.valueMissing) {
-            passwordErrorFiel.innerText = 'Veuillez entrer votre mot de passe.';
-        }
-        else if (password.validity.tooShort) {
-            passwordErrorFiel.innerText = 'Votre mot de passe est trop court.';
-        }
-        //Ajouter les classe de CSS si il a des erreur
-        passwordErrorFiel.classList.add('active');
-        password.classList.add('active');
-    }
+    return typeof password === 'string' && !!password;
 
     // return typeof password === 'string' &&
     //     !!password &&
