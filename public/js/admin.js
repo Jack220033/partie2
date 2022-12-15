@@ -11,7 +11,6 @@ let boutonAcces = document.querySelectorAll('.bouton-acces');
 let formAcces = document.querySelectorAll('.form-acces');
 let tableCoursBody = document.getElementById('cours-table');
 let userCoursTable = document.getElementById('user-cours-table');
-let boutonTest = document.getElementById('bouton-test');
 let userTable = document.getElementById('user-table');
 let source = new EventSource('/stream');
 
@@ -117,14 +116,6 @@ form.addEventListener('submit', validateDescription);
 
 //----------------------------------------------- Fin Validation ---------------------------------------------------------//
 
-boutonTest.addEventListener('click', (event) => {
-    addCoursClient(69, 'test nom', 69, 69, 69, 56, 'Ceci est un test', {
-        nom: 'that',
-        prenom: 'fuck2', 
-        courriel: 'fuck_this@fuckthis.com',
-    });
-});
-
 // On change la permission des utilisateur pour admin ou regulier
 const addUtilisateurClient = (utilisateur) => {
     let trUser = document.createElement('tr');
@@ -187,18 +178,14 @@ const addUtilisateurClient = (utilisateur) => {
     trUser.append(thChangerAcces);
 
     userTable.append(trUser);
-    
-
 }
+
 /*
 const deleteUserClient = (utilisateur) => {
     let userRow = document.getElementById('user-row-'+utilisateur.id_utilisateur);
 
     userRow.remove();
 }*/
-
-
-
 
 const deleteActivityServeur = async (event) => {
     event.preventDefault();
@@ -217,15 +204,8 @@ const deleteActivityServeur = async (event) => {
 const changeUserAccessServeur = async (event) => {
     event.preventDefault();
 
-    
-
     let target = parseInt(event.currentTarget.id);
-
-    
-    
     let selection = parseInt(options.item(target-1).value);
-
-    
 
     let data = {
         id_utilisateur: parseInt(event.currentTarget.id),
@@ -237,9 +217,6 @@ const changeUserAccessServeur = async (event) => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
     });
-
-
-    
 }
 
 const addCoursServeur = async (event) => {
@@ -248,8 +225,6 @@ const addCoursServeur = async (event) => {
     //On met la date en epoch dans la base de donner
     const myDate = inputDate.value;
     const myEpoch = new Date(myDate).getTime();
-
-    
 
     if (!form.checkValidity()) {
         return;
@@ -262,10 +237,8 @@ const addCoursServeur = async (event) => {
         capacite: parseInt(inputCapacite.value),
         description: inputDescription.value,
         nbInscriptions: 0
-
     }
     
-
     let response = await fetch('/api/admin', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -303,13 +276,10 @@ const addUserCoursClient = (utilisateur) => {
 }
 
 const deleteUserCoursClient = (utilisateur) => {
-
     let user = document.getElementById('user-cours-row-' + utilisateur.id_utilisateur);
     
     user.remove();
-
 }
-
 
 // Soumission ajout d'un cours
 form.addEventListener('submit', addCoursServeur);
@@ -321,7 +291,6 @@ for (let btn of buttons) {
 for (let btn of boutonAcces) {
     btn.addEventListener('click', changeUserAccessServeur);
 }
-
 //-------------------------------- Realtime Events ---------------------------------------------
 
 source.addEventListener('add-cours', (event) => {
@@ -361,4 +330,3 @@ source.addEventListener('update-new-user', (event) => {
     let data = JSON.parse(event.data);
     addUtilisateurClient(data);
 });
-

@@ -152,8 +152,7 @@ app.get('/inscription', (request, response) => {
         titre: 'Inscription',
         scripts: ['/js/inscription.js'],
         styles: ['/css/general.css'],
-        // user: request.user,
-        inscription: request.user,
+        user: request.user,
         accept: request.session.accept,
     });
 });
@@ -180,8 +179,6 @@ app.patch('/api/admin', async (request, response) => {
     }
     else response.status(403).end();
 });
-
-
 
 app.delete('/api/admin', async (request, response) => {
     if (request.user === undefined) response.status(403).end();
@@ -236,7 +233,7 @@ app.post('/api/cours', async (request, response) => {
 });
 
 app.delete('/api/compte', async (request, response) => {
-    
+
     if (request.user === undefined) response.status(403).end();
 
     else {
@@ -251,8 +248,6 @@ app.delete('/api/compte', async (request, response) => {
         response.pushJson(cours, 'desinscription-cours');
         response.pushJson(utilisateur, 'desinscription-cours-update-dropdown');
     }
-
-
 });
 
 app.get('/stream', (request, response) => {
@@ -272,11 +267,11 @@ app.post('/accept', (request, response) => {
 app.post('/inscription', async (request, response, next) => {
     //valider les donner recu du client
     if (validationInscription(request.body)) {
-        
+
         try {
             let id_utilisateur = await addUtilisateur(request.body.courriel, request.body.motDePasse, request.body.nom, request.body.prenom);
-            
-            
+
+
             let utilisateur = await getUtilisateurById(id_utilisateur);
 
             response.status(201).end();

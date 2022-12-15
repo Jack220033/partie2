@@ -26,6 +26,10 @@ formAuth.addEventListener('submit', async (event) => {
 
         //Afficher erreur dans l'interface graphine
         console.log(info);
+
+        // Si l'utilisateur se connect avec un compte qui n'exsite pas
+        errorCourriel.innerText = "Soit le courriel ou le mot de passe a une erreur. Ou ce compte n'exsite pas";
+        errorCourriel.style.display = 'block';
     }
     else {
         console.log('Erreur inconnu');

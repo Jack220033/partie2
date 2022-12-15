@@ -53,6 +53,10 @@ main {
     align-items: right;
 }
 
+p span {
+    display: block;
+}
+
 header nav input {
     background-color: transparent;
     border: none;

@@ -45,6 +45,7 @@ const validLastName = () => {
     if (inputLastName.validity.valid) {
         errorNom.style.display = 'none';
     }
+    // Validation du champ de nom si il est vide
     else if (inputLastName.validity.valueMissing) {
         errorNom.innerText = 'Entrer votre nom';
         errorNom.style.display = 'block'
@@ -60,6 +61,7 @@ const validName = () => {
     if (inputName.validity.valid) {
         errorPrenom.style.display = 'none';
     }
+    // Validation si le champ du prenom est vide
     else if (inputName.validity.valueMissing) {
         errorPrenom.innerText = 'Entrer votre prenom';
         errorPrenom.style.display = 'block';
@@ -72,18 +74,26 @@ formAuth.addEventListener('submit', validName);
 // Faire une validation pour faire sur que l'utilisateur mette .ca ou .com a la fin de son courriel
 let inputEmail = document.getElementById('input-email');
 let errorCourriel = document.getElementById('error-courriel');
+let example = "example@gmial.com"
+
 
 const validaEmail = () => {
     if (inputEmail.validity.valid) {
         errorCourriel.style.display = 'none';
     }
+    // Validation si le champ de courriel ne respect pas le parttern
     else if (inputEmail.validity.typeMismatch) {
         errorCourriel.innerText = 'Entrer un courriel valide ex: "test@test.com"';
         errorCourriel.style.display = 'block';
     }
+    //  Validation si le champ du courriel est vide
     else if (inputEmail.validity.valueMissing) {
         errorCourriel.innerText = 'Entrer votre courriel';
         errorCourriel.style.display = 'block';
+    }
+    else if (/@gm(ia|a|i)l.com$/.test(example)) {
+        errorCourriel.innerText = "Votre courriel n'est pas valide. Fait sur de mettre .ca ou .com, etc"
+        errorCourriel.style.display = 'block'
     }
 }
 formAuth.addEventListener('submit', validaEmail);
@@ -96,20 +106,24 @@ const validPassword = () => {
     if (inputPassword.validity.valid) {
         errorPassword.style.display = 'none';
     }
-    // else if (inputPassword.validity.tooShort) {
-    //     errorPassword.innerText = 'Le mot de passe est trop cour';
-    //     errorPassword.style.display = 'block';
-    // }
-    // else if (inputPassword.validity.tooLong) {
-    //     errorPassword.innerText = 'Le mot de passe est trop long';
-    //     errorPassword.style.display = 'block';
-    // }
+    // Validation si le mot de passe est trop long
+    else if (inputPassword.validity.tooShort) {
+        errorPassword.innerText = 'Le mot de passe est trop cour';
+        errorPassword.style.display = 'block';
+    }
+    // Validation si le mot de passe est trop cours
+    else if (inputPassword.validity.tooLong) {
+        errorPassword.innerText = 'Le mot de passe est trop long';
+        errorPassword.style.display = 'block';
+    }
+    // Validation si le champ du mot de passe est vide
     else if (inputPassword.validity.valueMissing) {
         errorPassword.innerText = 'Entrer votre mot de passe';
         errorPassword.style.display = 'block';
     }
+    // si le mot de passe ne match pas le pattern
     else if (inputPassword.validity.patternMismatch) {
-        errorPassword.innerText = 'Le mot de passe entrain ne match pas. Fait sur qui a une majucule et un caratere special';
+        errorPassword.innerText = "Le mot de passe n'est pas valide. Fait sur qui a une majucule et un caratere special";
         errorPassword.style.display = 'block';
     }
 }
