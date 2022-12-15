@@ -176,6 +176,7 @@ app.patch('/api/admin', async (request, response) => {
         await changerAccesUtilisateur(request.body.id_utilisateur, request.body.id_type_utilisateur);
 
         response.status(201).end();
+        response.pushJson(request.body, 'change-user-access');
     }
     else response.status(403).end();
 });

@@ -180,12 +180,11 @@ const addUtilisateurClient = (utilisateur) => {
     userTable.append(trUser);
 }
 
-/*
-const deleteUserClient = (utilisateur) => {
-    let userRow = document.getElementById('user-row-'+utilisateur.id_utilisateur);
+const changeUserAccessClient = (utilisateur) => {
 
-    userRow.remove();
-}*/
+    let userAccess =document.getElementById('user-access-'+utilisateur.id_utilisateur);
+    userAccess.innerText = utilisateur.id_type_utilisateur;
+}
 
 const deleteActivityServeur = async (event) => {
     event.preventDefault();
@@ -329,4 +328,9 @@ source.addEventListener('desinscription-cours-update-dropdown', (event) => {
 source.addEventListener('update-new-user', (event) => {
     let data = JSON.parse(event.data);
     addUtilisateurClient(data);
+});
+
+source.addEventListener('change-user-access', (event) => {
+    let data = JSON.parse(event.data);
+    changeUserAccessClient(data);
 });
