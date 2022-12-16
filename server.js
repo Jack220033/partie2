@@ -122,6 +122,7 @@ app.get('/cours', async (request, response) => {
             user: request.user,
             aAcces: request.user.id_type_utilisateur > 1,
             accept: request.session.accept,
+            
         });
     }
 

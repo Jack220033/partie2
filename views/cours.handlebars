@@ -17,6 +17,7 @@
         </tr>
     </thead>
     <tbody id="cours-table">
+        
         {{#each cours}}
         <tr id="cours-row-{{this.id_cours}}">
             <th scope="row">{{this.nom}}</th>
@@ -28,5 +29,6 @@
             <td> <input type="button" class="liste-boutons" id="{{this.id_cours}}" value="Inscrire"></td>
         </tr>
         {{/each}}
+        
     </tbody>
 </table>

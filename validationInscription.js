@@ -26,7 +26,7 @@ const validatePassword = (password) => {
 
 // Exportation de la validation
 export const validationInscription = (body) => {
-
+    
     return validateNom(body.nom) &&
         validatePrenom(body.prenom) &&
         validateEmail(body.courriel) &&
