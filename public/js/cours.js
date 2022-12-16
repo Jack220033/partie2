@@ -19,7 +19,6 @@ const inscrireActivity = (event) => {
     });    
 }
 
-
 for (let btn of buttons) {
     btn.addEventListener('click', inscrireActivity);
 }
@@ -44,4 +43,3 @@ source.addEventListener('inscription-cours', (event) => {
     let data = JSON.parse(event.data);
     deleteActivityClient(data.id_cours);
 });
-
