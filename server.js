@@ -203,15 +203,9 @@ app.post('/api/admin', async (request, response) => {
 
 
         let id_cours = await addCours(request.body.nom, request.body.date_debut, request.body.nb_cours, request.body.capacite, request.body.description)
-        let cours = {
-            id_cours: id_cours,
-            nom: request.body.nom,
-            description: request.body.description,
-            capacite: request.body.capacite,
-            date_debut: request.body.date_debut,
-            nb_cours: request.body.nb_cours,
-            nbInscription: 0,
-        }
+        
+        let cours = await getCoursById(request.body.id_cours);
+        
         response.status(201).json({ id_cours: id_cours });
         response.pushJson(cours, 'add-cours');
     }
