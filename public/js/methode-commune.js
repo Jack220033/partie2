@@ -124,10 +124,8 @@ export const addCoursClient = (cours, parent) => {
     tableCoursBody.append(trCours);
 }
 
-
 // fonction pour supprimer un cours dans le client en temps reel
 export const deleteActivityClient = (id_cours) => {
-    console.log(id_cours);
     let cours = document.getElementById('cours-row-' + id_cours);
     cours.remove();
 }
