@@ -51,7 +51,7 @@ export const addCoursClient = (cours, parent) => {
     //tdUserCourriel.innerText = utilisateur.courriel;
 
     let tdCoursDates = document.createElement('td');
-    tdCoursDates.innerText = cours.date_debut;
+    tdCoursDates.innerText = cours.dates;
 
     let tdCoursNbCours = document.createElement('td');
     tdCoursNbCours.innerText = cours.nb_cours;
