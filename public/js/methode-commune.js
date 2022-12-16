@@ -68,15 +68,26 @@ export const addCoursClient = (cours, parent) => {
 
     let thCoursBouton = document.createElement('th');
 
-    let inputSupprimeCours = document.createElement('input');
-    inputSupprimeCours.type = 'button';
-    inputSupprimeCours.classList.add('btn');
-    inputSupprimeCours.classList.add('btn-danger');
-    inputSupprimeCours.classList.add('liste-boutons');
-    inputSupprimeCours.name = 'delete';
-    inputSupprimeCours.id = cours.id_cours;
-    inputSupprimeCours.value = 'Supprimer';
-    thCoursBouton.append(inputSupprimeCours);
+    if(parent.id === 'cours-table'){
+
+        let inputSupprimeCours = document.createElement('input');
+        inputSupprimeCours.type = 'button';
+        inputSupprimeCours.classList.add('btn');
+        inputSupprimeCours.classList.add('btn-danger');
+        inputSupprimeCours.classList.add('liste-boutons');
+        inputSupprimeCours.name = 'delete';
+        inputSupprimeCours.id = cours.id_cours;
+        inputSupprimeCours.value = 'Supprimer';
+        thCoursBouton.append(inputSupprimeCours);
+    }
+    else {
+        let inputInscrireCours = document.createElement('input');
+        inputInscrireCours.type = 'button';
+        inputInscrireCours.classList.add('liste-boutons');
+        inputInscrireCours.id = cours.id_cours;
+        inputInscrireCours.value = 'Inscrire';
+        thCoursBouton.append(inputInscrireCours);
+    }
 
     trUserBody.append(tdUserNom);
     trUserBody.append(tdUserPrenom);

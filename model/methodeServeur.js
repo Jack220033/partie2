@@ -245,8 +245,10 @@ export const getCoursById = async (id_cours) => {
     let connexion = await connectionPromise;
 
     let cours = await connexion.get(
-        `SELECT * FROM cours
-        WHERE id_cours = ?`,
+        `SELECT datetime(date_debut/1000, 'unixepoch', 'localtime') 
+        AS  dates, nom, nb_cours, capacite, description, id_cours 
+        FROM cours
+        WHERE id_cours = ?;`,
         [id_cours]
     );
 
