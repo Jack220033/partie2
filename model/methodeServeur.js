@@ -254,9 +254,7 @@ export const getCoursById = async (id_cours) => {
     );
     
 
-    let capaciteCourante = await nbInscriptions(cours.id_cours);
-
-    cours.nbInscription = capaciteCourante;
+    cours.nbInscription = await nbInscriptions(cours.id_cours);
 
     return cours;
 
