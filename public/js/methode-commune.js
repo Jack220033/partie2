@@ -1,3 +1,5 @@
+
+// fonction pour ajouter un nouveau cours dans le client en temps reel
 export const addCoursClient = (cours, parent) => {
 
     let tableCoursBody = parent;
@@ -122,11 +124,14 @@ export const addCoursClient = (cours, parent) => {
     tableCoursBody.append(trCours);
 }
 
+
+// fonction pour supprimer un cours dans le client en temps reel
 export const deleteActivityClient = (id_cours) => {
     let cours = document.getElementById('cours-row-' + id_cours);
     cours.remove();
 }
 
+// update les inscription dans un cours en temps reel
 export const updateInscriptionCoursClient = (cours) => {
     let tdCoursCapaciteCourante = document.getElementById('Capacite-courante-' + cours.id_cours);
     tdCoursCapaciteCourante.innerText = cours.nbInscription + ' / ' + cours.capacite;

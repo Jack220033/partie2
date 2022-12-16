@@ -1,7 +1,10 @@
 import {addCoursClient, updateInscriptionCoursClient, deleteActivityClient} from './methode-commune.js'
 let buttons = document.querySelectorAll('.liste-boutons');
 let tableCoursBody = document.getElementById('cours-table');
+let source = new EventSource('/stream');
 
+
+// fonction dinscription a un cours pour le serveur
 const inscrireActivity = (event) => {
     event.preventDefault();
 
@@ -20,17 +23,9 @@ const inscrireActivity = (event) => {
 for (let btn of buttons) {
     btn.addEventListener('click', inscrireActivity);
 }
-const verificationCoursDisponible = (btn) => {
-
-    if(){
-
-    }
-}
 
 
-
-let source = new EventSource('/stream');
-
+// evenement temps reel
 source.addEventListener('add-cours', (event) => {
     let data = JSON.parse(event.data)
     addCoursClient(data, tableCoursBody);

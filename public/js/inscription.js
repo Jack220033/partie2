@@ -4,10 +4,9 @@ let inputMotDePasse = document.getElementById('input-mot-de-passe');
 let inputNom = document.getElementById('input-nom');
 let inputPrenom = document.getElementById('input-prenom');
 
+// fonction qui envoie les donnees dinscription au serveur
 formAuth.addEventListener('submit', async (event) => {
     event.preventDefault();
-
-    console.log(inputPrenom.value);
 
     let data = {
         courriel: inputCourriel.value,

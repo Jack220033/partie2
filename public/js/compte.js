@@ -6,6 +6,9 @@ let button = document.querySelectorAll('.liste-boutons')
 let checkboxes = document.querySelectorAll('#liste-cours input');
 let tableCoursBody = document.getElementById('cours-table');
 
+let source = new EventSource('/stream');
+
+// fonction pour la desinscription a un cours
 const desincrireCoursServeur = async (event) => {
 
     let data = {
@@ -26,8 +29,8 @@ for (let btn of button) {
     btn.addEventListener('click', desincrireCoursServeur);
 }
 
-let source = new EventSource('/stream');
 
+// evenement temps reel
 source.addEventListener('add-cours', (event) => {
     let data = JSON.parse(event.data)
     addCoursClient(data, tableCoursBody);
