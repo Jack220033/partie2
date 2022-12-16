@@ -1,6 +1,7 @@
 import connectionPromise from './connexion.js';
 import { hash } from 'bcrypt';
 
+// retourne les cours de la base des donnees
 export const getCoursDB = async () => {
     let connexion = await connectionPromise;
 
@@ -11,6 +12,7 @@ export const getCoursDB = async () => {
     return resultat;
 }
 
+// ajoute les nombre dinscription dans les propriete les cours
 export const getCoursServeur = async () => {
     let cours = await getCoursDB();
     for (let cour of cours) {
@@ -24,7 +26,7 @@ export const getCoursServeur = async () => {
     return cours;
 }
 
-
+// retourne les cours non inscrit de la base des donnees pour un utilisateur
 export const getCoursNonInscritDB = async (id_utilisateur) => {
     let connexion = await connectionPromise;
 
@@ -41,6 +43,8 @@ export const getCoursNonInscritDB = async (id_utilisateur) => {
 
     return resultat;
 }
+
+// ajoute les nombre dinscription dans les propriete du cours
 export const getCoursNonInscritServer = async (id_utilisateur) => {
     let coursNonInscrit = await getCoursNonInscritDB(id_utilisateur);
     for (let cour of coursNonInscrit) {
@@ -54,7 +58,7 @@ export const getCoursNonInscritServer = async (id_utilisateur) => {
     return coursNonInscrit;
 }
 
-
+// ajoute un cours dans la DB
 export const addCours = async (nom, date_debut, nb_cours, capacite, description) => {
     let connexion = await connectionPromise;
 
@@ -69,6 +73,7 @@ export const addCours = async (nom, date_debut, nb_cours, capacite, description)
     return resultat.lastID;
 }
 
+// supprime un cours de la DB
 export const deleteActivity = async (id_cours) => {
 
     let connexion = await connectionPromise;
@@ -81,7 +86,7 @@ export const deleteActivity = async (id_cours) => {
     return id_cours;
 }
 
-
+// desinscrit un utilisateur de la DB
 export const desincrireActivity = async (id_cours, id_utilisateur) => {
     let connexion = await connectionPromise;
 
@@ -93,6 +98,7 @@ export const desincrireActivity = async (id_cours, id_utilisateur) => {
     return result.changes;
 }
 
+// inscrit un utilisateur dans la DB
 export const inscriptionActivity = async (id_cours, id_utilisateur) => {
 
     let connexion = await connectionPromise;
@@ -106,19 +112,7 @@ export const inscriptionActivity = async (id_cours, id_utilisateur) => {
     return result.lastID;
 }
 
-export const checkCours = async (id) => {
-    let connexion = await connectionPromise;
-
-    let resultat = await connexion.run(
-        `UPDATE utilisateur
-        SET est_coche = NOT est_coche
-        WHERE id_utilisateur = ?`,
-        [id]
-    )
-
-    return resultat.changes;
-}
-
+// retourne les cours inscrit de la base des donnees pour un utilisateur
 export const getCoursInscritDB = async (id_utilisateur) => {
     let connexion = await connectionPromise;
 
@@ -137,6 +131,7 @@ export const getCoursInscritDB = async (id_utilisateur) => {
 
 }
 
+// ajoute le nombre dinscription dans les propriete du cours
 export const getCoursInscritServer = async (id_utilisateur) => {
     let coursInscrit = await getCoursInscritDB(id_utilisateur);
     for (let cour of coursInscrit) {
@@ -147,7 +142,7 @@ export const getCoursInscritServer = async (id_utilisateur) => {
     return coursInscrit;
 }
 
-
+// retourne le nombre dinscription dun cours de la DB
 export const nbInscriptions = async (id_cours) => {
     let connexion = await connectionPromise;
 
@@ -162,7 +157,7 @@ export const nbInscriptions = async (id_cours) => {
 }
 
 
-
+// ajoute un utilisateur dans la DB
 export const addUtilisateur = async (Courriel, motDePasse, prenom, nom) => {
     let connexion = await connectionPromise;
 
@@ -176,6 +171,7 @@ export const addUtilisateur = async (Courriel, motDePasse, prenom, nom) => {
     return resultat.lastID;
 }
 
+// trouve un utilisateur avec son courriel
 export const getUtilisateurByCourriel = async (Courriel) => {
     let connexion = await connectionPromise;
 
@@ -189,6 +185,7 @@ export const getUtilisateurByCourriel = async (Courriel) => {
     return courriel;
 }
 
+// trouve un utilisateur avec son id
 export const getUtilisateurById = async (id_utilisateur) => {
     let connexion = await connectionPromise;
 
@@ -202,6 +199,7 @@ export const getUtilisateurById = async (id_utilisateur) => {
     return utilisateur;
 }
 
+// change lacces dun utilisateur dans la DB
 export const changerAccesUtilisateur = async (id_utilisateur, id_type_utilisateur) => {
     let connexion = await connectionPromise;
 
@@ -214,6 +212,7 @@ export const changerAccesUtilisateur = async (id_utilisateur, id_type_utilisateu
 
 }
 
+// retourne tous les utilisateur de la DB
 export const utilisateur = async () => {
     let connexion = await connectionPromise;
 
@@ -225,6 +224,7 @@ export const utilisateur = async () => {
     return utilisateur
 }
 
+// retourne la liste des utilisateurs inscrit dans un cours
 export const utilisateurCours = async (id_cours) => {
     let connexion = await connectionPromise;
 
@@ -241,6 +241,7 @@ export const utilisateurCours = async (id_cours) => {
 
 }
 
+// trouve un cours dans la DB avec son id
 export const getCoursById = async (id_cours) => {
     let connexion = await connectionPromise;
 

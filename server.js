@@ -10,7 +10,7 @@ import session from 'express-session';
 import memorystore from 'memorystore';
 import passport from 'passport';
 import middlewareSse from './middlewareSse.js';
-import { addCours, checkCours, deleteActivity, getCoursInscritServer, desincrireActivity, inscriptionActivity, getCoursNonInscritServer, getCoursServeur, addUtilisateur, utilisateur, utilisateurCours, changerAccesUtilisateur, getCoursById, getUtilisateurById, getUtilisateurByCourriel } from './model/methodeServeur.js';
+import { addCours, deleteActivity, getCoursInscritServer, desincrireActivity, inscriptionActivity, getCoursNonInscritServer, getCoursServeur, addUtilisateur, utilisateur, utilisateurCours, changerAccesUtilisateur, getCoursById, getUtilisateurById, getUtilisateurByCourriel } from './model/methodeServeur.js';
 import { validationAjoutCours } from './validationAjoutCours.js'
 import { validationInscription } from './validationInscription.js';
 import './authentification.js';
@@ -160,6 +160,7 @@ app.get('/connexion', (request, response) => {
     });
 });
 
+// methode pour changer lacces dun user dans la DB
 app.patch('/api/admin', async (request, response) => {
     if (request.user === undefined) response.status(403).end();
 
@@ -173,6 +174,7 @@ app.patch('/api/admin', async (request, response) => {
     else response.status(403).end();
 });
 
+// methode pour supprimer un cours de la DB
 app.delete('/api/admin', async (request, response) => {
     if (request.user === undefined) response.status(403).end();
 
@@ -186,6 +188,7 @@ app.delete('/api/admin', async (request, response) => {
 
 });
 
+// methode pour ajouter un cours dans la DB
 app.post('/api/admin', async (request, response) => {
     if (!request.user) {
         response.status(401).end();
@@ -203,6 +206,7 @@ app.post('/api/admin', async (request, response) => {
     else response.status(403).end();
 });
 
+// methode pour sinscrire dans un cours
 app.post('/api/cours', async (request, response) => {
     if (request.user === undefined) response.status(403).end();
     else {
@@ -219,6 +223,7 @@ app.post('/api/cours', async (request, response) => {
     }
 });
 
+// methode pour se desinscrire dun cours
 app.delete('/api/compte', async (request, response) => {
 
     if (request.user === undefined) response.status(403).end();
@@ -237,6 +242,7 @@ app.delete('/api/compte', async (request, response) => {
     }
 });
 
+// methode qui initialise le temps reel
 app.get('/stream', (request, response) => {
     if (request.user) {
         response.initStream();
@@ -246,11 +252,13 @@ app.get('/stream', (request, response) => {
     }
 });
 
+// methode qui gere lacceptation des cookies
 app.post('/accept', (request, response) => {
     request.session.accept = true;
     response.status(200).end();
 });
 
+// methode pour linscription dun nouvel utilisateur
 app.post('/inscription', async (request, response, next) => {
     //valider les donner recu du client
     if (validationInscription(request.body)) {
@@ -278,6 +286,7 @@ app.post('/inscription', async (request, response, next) => {
     }
 });
 
+// methode pour quun utilisateur puisse se connecter
 app.post('/connexion', (request, response, next) => {
     //valider les donner recu du client
     if (true) {
@@ -307,6 +316,7 @@ app.post('/connexion', (request, response, next) => {
     }
 });
 
+// methode pour quun utilisateur puisse se deconnecter
 app.post('/deconnexion', (request, response, next) => {
     request.logOut((error) => {
         if (error) {
