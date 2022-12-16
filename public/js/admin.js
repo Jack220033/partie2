@@ -324,6 +324,9 @@ source.addEventListener('desinscription-cours-update', (event) => {
 source.addEventListener('inscription-cours-update-dropdown', (event) => {
     let data = JSON.parse(event.data);
     addUserCoursClient(data);
+
+    let btn = document.getElementById(data.id_utilisateur);
+    btn.addEventListener('click', changeUserAccessClient);
 });
 
 source.addEventListener('desinscription-cours-update-dropdown', (event) => {
