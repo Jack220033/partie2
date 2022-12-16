@@ -15,7 +15,7 @@ let userTable = document.getElementById('user-table');
 let source = new EventSource('/stream');
 
 //-----------------------Validation-------------------------------------------------------------------------------------//
-// Nom
+// Validation Nom
 let inputNom = document.getElementById('nom');
 let errorNom = document.getElementById('error-nom');
 const validateNom = () => {
@@ -29,7 +29,7 @@ const validateNom = () => {
 }
 form.addEventListener('submit', validateNom);
 
-//Date
+// Validation Date
 let inputDate = document.getElementById('date_debut');
 let errorDate = document.getElementById('error-date_debut');
 
@@ -45,7 +45,7 @@ const validateDate = () => {
 }
 form.addEventListener('submit', validateDate);
 
-//nb_cours
+// Validation nb_cours
 let inputNbCours = document.getElementById('nb_cours');
 let errorNbCours = document.getElementById('error-nb_cours');
 
@@ -68,7 +68,7 @@ const validateNbCours = () => {
 }
 form.addEventListener('submit', validateNbCours);
 
-//Capacite
+// Validation Capacite
 let inputCapacite = document.getElementById('capacite');
 let errorCapacite = document.getElementById('error-capacite');
 
@@ -91,7 +91,7 @@ const validateCapacite = () => {
 }
 form.addEventListener('submit', validateCapacite);
 
-//Description
+// Validation Description
 let inputDescription = document.getElementById('description');
 let errorDescription = document.getElementById('error-description');
 
@@ -180,12 +180,14 @@ const addUtilisateurClient = (utilisateur) => {
     userTable.append(trUser);
 }
 
+// Changer l'acces des utilisateur du cote client
 const changeUserAccessClient = (utilisateur) => {
 
     let userAccess =document.getElementById('user-access-'+utilisateur.id_utilisateur);
     userAccess.innerText = utilisateur.id_type_utilisateur;
 }
 
+// Supprimer un cour sur le cote serveur
 const deleteActivityServeur = async (event) => {
     event.preventDefault();
 
@@ -200,6 +202,7 @@ const deleteActivityServeur = async (event) => {
     });
 }
 
+// Changer l'acces de l'utilisateur du cote serveur
 const changeUserAccessServeur = async (event) => {
     event.preventDefault();
 
@@ -218,6 +221,7 @@ const changeUserAccessServeur = async (event) => {
     });
 }
 
+// Ajout de cour sur le cote du serveur
 const addCoursServeur = async (event) => {
     event.preventDefault();
 
@@ -253,6 +257,7 @@ const addCoursServeur = async (event) => {
     }
 }
 
+// Ajout d'un utilisateur sur le cote client
 const addUserCoursClient = (utilisateur) => {
 
     let tr = document.createElement('tr');
@@ -274,6 +279,7 @@ const addUserCoursClient = (utilisateur) => {
     userCoursTable.append(tr);
 }
 
+// Supprimer un cours sur le cote client
 const deleteUserCoursClient = (utilisateur) => {
     let user = document.getElementById('user-cours-row-' + utilisateur.id_utilisateur);
     
