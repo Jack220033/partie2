@@ -15,26 +15,17 @@ import { validationAjoutCours } from './validationAjoutCours.js'
 import { validationInscription } from './validationInscription.js';
 import './authentification.js';
 
-
 // Création du serveur web
 let app = express();
 
 //Creation de l'engine dans Express
 app.engine('handlebars', engine());
 
-
-
-
-
 //Mettre l'engine handlebars comm engin de rendu
 app.set('view engine', 'handlebars');
 
 //Confuguration de handlebars
 app.set('views', './views');
-
-
-
-
 
 // Créer le constructeur de base de données
 const MemoryStore = memorystore(session);

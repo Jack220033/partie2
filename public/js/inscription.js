@@ -38,7 +38,7 @@ formAuth.addEventListener('submit', async (event) => {
     }
 })
 
-// Validation pour la page de inscrition
+// ------------------Validation pour la page de inscrition------------------
 // Validation du nom
 let inputLastName = document.getElementById('input-nom');
 let errorNom = document.getElementById('error-nom');
@@ -75,7 +75,6 @@ formAuth.addEventListener('submit', validName);
 let inputEmail = document.getElementById('input-email');
 let errorCourriel = document.getElementById('error-courriel');
 let example = "example@gmial.com"
-
 
 const validaEmail = () => {
     if (inputEmail.validity.valid) {
@@ -128,4 +127,4 @@ const validPassword = () => {
     }
 }
 formAuth.addEventListener('submit', validPassword);
-        // -------fin de la validation de la inscrition-------
+    // ------------------fin de la validation de la inscrition------------------ 
