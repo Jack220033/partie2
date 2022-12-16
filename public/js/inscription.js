@@ -27,9 +27,11 @@ formAuth.addEventListener('submit', async (event) => {
     }
     else if (response.status === 409) {
         //Afficher erreur dans l'interface graphique
-        console.log('utilisateur deja existant');
+        console.log('Utilisateur deja existant');
 
-
+        // Si l'utilisateur se connect avec un compte qui n'exsite pas
+        errorCourriel.innerText = "Il a deja un utilisateur avec cette adress courriel";
+        errorCourriel.style.display = 'block';
     }
     else {
         console.log('Erreur inconnu');
@@ -70,8 +72,6 @@ const validName = () => {
 formAuth.addEventListener('submit', validName);
 
 //  validation du courriel
-
-// Faire une validation pour faire sur que l'utilisateur mette .ca ou .com a la fin de son courriel
 let inputEmail = document.getElementById('input-email');
 let errorCourriel = document.getElementById('error-courriel');
 let example = "example@gmial.com"

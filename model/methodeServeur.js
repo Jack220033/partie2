@@ -136,6 +136,7 @@ export const getCoursInscritDB = async (id_utilisateur) => {
     return resultat;
 
 }
+
 export const getCoursInscritServer = async (id_utilisateur) => {
     let coursInscrit = await getCoursInscritDB(id_utilisateur);
     for (let cour of coursInscrit) {
