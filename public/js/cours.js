@@ -20,6 +20,12 @@ const inscrireActivity = (event) => {
 for (let btn of buttons) {
     btn.addEventListener('click', inscrireActivity);
 }
+const verificationCoursDisponible = (btn) => {
+
+    if(){
+
+    }
+}
 
 
 

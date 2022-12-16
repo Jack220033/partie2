@@ -251,6 +251,7 @@ export const getCoursById = async (id_cours) => {
         WHERE id_cours = ?;`,
         [id_cours]
     );
+    
 
     cours.nbInscription = await nbInscriptions(cours.id_cours);
 
