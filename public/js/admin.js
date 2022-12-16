@@ -160,7 +160,7 @@ const addUtilisateurClient = (utilisateur) => {
     bouton.classList.add('btn-danger');
     bouton.classList.add('bouton-acces');
     bouton.name = 'modify';
-    bouton.id = utilisateur.id_utilisateur;
+    bouton.id = 'user-access-' + utilisateur.id_utilisateur;
     bouton.value = 'Modifier';
     bouton.style = 'background-color: black; border-color: black;';
 
@@ -324,9 +324,6 @@ source.addEventListener('desinscription-cours-update', (event) => {
 source.addEventListener('inscription-cours-update-dropdown', (event) => {
     let data = JSON.parse(event.data);
     addUserCoursClient(data);
-
-    let btn = document.getElementById(data.id_utilisateur);
-    btn.addEventListener('click', changeUserAccessClient);
 });
 
 source.addEventListener('desinscription-cours-update-dropdown', (event) => {
@@ -337,6 +334,9 @@ source.addEventListener('desinscription-cours-update-dropdown', (event) => {
 source.addEventListener('update-new-user', (event) => {
     let data = JSON.parse(event.data);
     addUtilisateurClient(data);
+
+    let btn = document.getElementById('user-access-' + data.id_utilisateur);
+    btn.addEventListener('click', changeUserAccessClient);
 });
 
 source.addEventListener('change-user-access', (event) => {
