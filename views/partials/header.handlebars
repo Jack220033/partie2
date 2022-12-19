@@ -1,40 +1,41 @@
-<header>
+<header class=" bg-dark text-white">
   <h1 class="p-3 mb-2 bg-dark text-white">{{h1}} </h1>
 
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-dark text-white">
+  {{!-- class="navbar navbar-expand-lg navbar-light bg-light" --}}
     <div id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-          <a class="nav-link" href="/"><img src="/img/logo.jpg" alt="Image d'un pitogramme de internet"></a>
+          <a class="nav-link" href="/"><img src="/img/white-logo.png" alt="Image d'un pitogramme de internet"></a>
         </li>
         {{#if user}}
         <li class="nav-item">
-          <a class="nav-link" href="/cours">Cours</a>
+          <a class="nav-link text-white" href="/cours">Cours</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/compte">Compte</a>
+          <a class="nav-link text-white" href="/compte">Compte</a>
         </li>
         {{/if}}
 
         {{#if aAcces}}
         <li class="nav-item">
-          <a class="nav-link" href="/admin">Administrateur</a>
+          <a class="nav-link text-white" href="/admin">Administrateur</a>
         </li>
         {{/if}}
 
         {{#unless user}}
         <li class="nav-item right">
-          <a class="nav-link" href="/inscription">Inscription</a>
+          <a class="nav-link text-white" href="/inscription">Inscription</a>
         </li>
         <li class="nav-item right">
-          <a class="nav-link" href="/connexion">Connexion</a>
+          <a class="nav-link text-white" href="/connexion">Connexion</a>
         </li>
         {{/unless}}
         
         {{#if user}}
         <li class="nav-item">
           <form method="post" action="/deconnexion">
-            <input type="submit" value="Deconnexion" class="nav-link">
+            <input type="submit" value="Deconnexion" class="nav-link text-white">
           </form>
         </li>
         {{/if}}

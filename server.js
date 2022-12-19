@@ -52,6 +52,16 @@ app.use(express.static('public'));
 
 // Rendement de la page d'accueil
 app.get('/', async (request, response) => {
+
+        // Cree un tableau avec les utilisateur qui son dans les cours
+        let listeCours = await getCoursServeur();
+
+        for (let cours of listeCours) {
+            let UtilisateurCours = await utilisateurCours(cours.id_cours);
+
+            cours.utilisateur = UtilisateurCours
+        }
+
     if (request.user) {
         response.render('accueil', {
             titre: 'BLAK.inc',
