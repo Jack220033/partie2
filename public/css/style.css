@@ -8,6 +8,12 @@ html {
     box-sizing: inherit;
 }
 
+body{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
 h1 {
     margin: 0;
     padding: 2rem;
@@ -30,6 +36,10 @@ main {
     margin: 0 auto;
 }
 
+.footer{
+    margin-top: auto ;
+
+}
 
 .p {
     text-align: center;
@@ -72,4 +82,13 @@ header nav input {
     background-color: white;
     margin-bottom: 1rem;
     cursor: pointer;
+}
+
+.cookies{
+    background-color: red;
+    color: white;
+    font-size: 20px;
+    padding: 20px;
+    border-radius: 15px;
+    margin: 10px;
 }
